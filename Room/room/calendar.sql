@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2023 at 03:43 AM
+-- Generation Time: Sep 28, 2023 at 05:20 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -64,6 +64,7 @@ CREATE TABLE `events` (
   `room_orientation` varchar(255) NOT NULL,
   `room_orientation_other` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `fullName` varchar(255) NOT NULL,
   `user_category` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -72,11 +73,12 @@ CREATE TABLE `events` (
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`, `qty`, `projector`, `whiteboard`, `ext_cord`, `sound`, `sound_simple`, `sound_advance`, `basic_lights`, `cleanup`, `cleanup_before`, `cleanup_after`, `others`, `others1`, `allday`, `x67`, `x78`, `x89`, `x910`, `x1011`, `x1112`, `x121`, `x12`, `x23`, `x34`, `x45`, `x56`, `room_orientation`, `room_orientation_other`, `user_id`, `fullName`, `user_category`) VALUES
-(3, '2023-09-19', '2023-09-19 00:00:00', 'BOARD', '#000000', '#009900', '6', '1', '0', '1', 'sound', '1', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '1', '', 'Workshop', '', 3, 'John Doe', 'USER'),
-(4, '2023-09-20', '2023-09-20 00:00:00', 'BOARD', '#000000', '#ff0000', '6', '0', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '', 'Classroom', '', 3, 'John Doe', 'USER'),
-(31, '2023-09-23', '2023-09-23 00:00:00', 'BOARD', '#000000', '#ffff00', '2', '1', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', '', 'dfwesfrewfe', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'on', '', 1, 'JAMES PHILIP GOMERA', 'ADMIN'),
-(44, '2023-09-27', '2023-09-27 00:00:00', 'BOARD', '#000000', '#ffff00', '6', '1', '1', '1', 'sound', '1', '0', '1', 'cleanup', '1', '0', '', 'Microphone', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'on', 'Bored Room', 1, 'JAMES PHILIP GOMERA', 'ADMIN');
+INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`, `qty`, `projector`, `whiteboard`, `ext_cord`, `sound`, `sound_simple`, `sound_advance`, `basic_lights`, `cleanup`, `cleanup_before`, `cleanup_after`, `others`, `others1`, `allday`, `x67`, `x78`, `x89`, `x910`, `x1011`, `x1112`, `x121`, `x12`, `x23`, `x34`, `x45`, `x56`, `room_orientation`, `room_orientation_other`, `user_id`, `username`, `fullName`, `user_category`) VALUES
+(3, '2023-09-19', '2023-09-19 00:00:00', 'BOARD', '#000000', '#009900', '6', '1', '0', '1', 'sound', '1', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '1', '', 'Workshop', '', 3, '', 'John Doe', 'USER'),
+(4, '2023-09-20', '2023-09-20 00:00:00', 'BOARD', '#000000', '#ff0000', '6', '0', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '', 'Classroom', '', 3, '', 'John Doe', 'USER'),
+(31, '2023-09-23', '2023-09-23 00:00:00', 'BOARD', '#000000', '#ffff00', '2', '1', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', '', 'dfwesfrewfe', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'on', '', 1, '', 'JAMES PHILIP GOMERA', 'ADMIN'),
+(44, '2023-09-27', '2023-09-27 00:00:00', 'BOARD', '#000000', '#ffff00', '6', '1', '1', '1', 'sound', '1', '0', '1', 'cleanup', '1', '0', '', 'Microphone', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'on', 'Bored Room', 1, '', 'JAMES PHILIP GOMERA', 'ADMIN'),
+(47, '2023-09-29', '2023-09-29 00:00:00', 'BOARD', '#000000', '#ffff00', '5', '1', '0', '1', 'sound', '0', '1', '0', 'cleanup', '0', '1', '', 'Microphone', '', '1', '1', '1', '1', '1', '1', '', '', '', '', '', '', 'Training', '', 3, 'johndoe123', 'John Doe', 'USER');
 
 -- --------------------------------------------------------
 
@@ -241,7 +243,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `evt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `evt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `locationpo`

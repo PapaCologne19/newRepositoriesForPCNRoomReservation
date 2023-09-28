@@ -1,7 +1,8 @@
 <?php
+  require "2-cal-lib.php";
+
 if (isset($_POST["req"])) {
   // (A) LOAD LIBRARY
-  require "2-cal-lib.php";
 
   
   switch ($_POST["req"]) {

@@ -36,7 +36,6 @@ var cal = {
       .then(res => res.text())
       .then(txt => onload(txt))
       .catch(err => console.error(err));
-         // Attempt to parse JSON
  
 
   },
@@ -354,15 +353,18 @@ var cal = {
           // Join the merged time ranges with " - " separator
           const formattedTimeSlots = mergedTimeRanges.join(" - ");
 
+
+
           if (cal.events[id]["category"] === "ADMIN") {
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
-            cal.events[id]["t"] + cal.events[id]["fullname"]; //Requestor's Name
-          } else if (cal.hfCategory.value = cal.events[id]["category"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["usernameSESSION"]) {
+          } else if (cal.events[id]["category"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"]){ // && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["usernameSESSION"]
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
-          } else {
+          } else{
             rowB.style.display = "none";
-          }
+          }   
 
+
+          
 
           rowB.style.color = cal.events[id]["c"];
           rowB.style.backgroundColor = cal.events[id]["b"];

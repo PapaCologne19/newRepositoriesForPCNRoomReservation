@@ -286,3 +286,85 @@ element.style {
     width: 100%;
   }
 }
+
+
+
+
+
+.cards {
+  perspective: 1000px;
+  width: 350px;
+  height: 350px;
+  margin: 2rem 1rem;
+}
+
+.contents {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .5s ease; /* Added transition property for smoothness */
+  transform-style: preserve-3d;
+}
+
+.contents:hover {
+  transform: rotateY(180deg);
+}
+
+.back,
+.front {
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+
+.front {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.front::before {
+  position: absolute;
+  content: ' ';
+  display: block;
+  width: 160px;
+  height: 160%;
+  background: linear-gradient(90deg, transparent, #ff9966, #ff9966, #ff9966, #ff9966, transparent);
+  animation: rotation_481 5000ms infinite linear;
+}
+
+.front-content {
+  position: absolute;
+  width: 99%;
+  height: 99%;
+  background-color: #ffffff;
+  border-radius: 5px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+@keyframes rotation_481 {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  0% {
+    transform: rotateZ(360deg);
+  }
+}

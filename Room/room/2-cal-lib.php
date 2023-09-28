@@ -98,10 +98,6 @@ class Calendar
     $user_id = $_SESSION['id'];
     $username = $_SESSION['username'];
     $category = $_SESSION['category'];
-    // (F2) GET EVENTS
-    // s & e : start & end date
-    // c & b : text & background color
-    // t : event text
 
 
     $this->query("SELECT * FROM `events` WHERE (
@@ -137,6 +133,10 @@ class Calendar
     return count($events) == 0 ? false : $events;
   }
 }
+
+
+
+
 
 
 // (G) DATABASE SETTINGS - CHANGE TO YOUR OWN!

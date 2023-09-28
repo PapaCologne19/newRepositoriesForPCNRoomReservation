@@ -305,7 +305,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Julius+Sans+One&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
-    
+
     <!-- PushAlert -->
     <!-- <script type="text/javascript">
             (function(d, t) {
@@ -444,8 +444,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <?php } else {
         ?>
           <div class="evt100">
-            <label for="" class="form-label">Status</label>
-            <select name="evtBG" id="evtBG" class="form-control" aria-placeholder="select" disabled>
+            <select name="evtBG" id="evtBG" class="form-control" aria-placeholder="select" style="display: none;" disabled>
               <option value="#80c87e">Green (Approve)</option>
               <option value="#e0c23b">Yellow (Pending)</option>
               <option value="#f47171">Red (Rejected)</option>
@@ -591,7 +590,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                       <br>
                       <label for="" class="form-label">Select Date</label>
                       <br>
-                      <input id="evtStarts" name="evtStart" type="date"  onchange="checkRoom()" required>
+                      <input id="evtStarts" name="evtStart" type="date" onchange="checkRoom()" required>
 
                     </div>
                     <button type="button" class="btn btn-warning" id="selectingRoomButton" aria-label="Close" required style="display: none;"> Please select </button>
@@ -946,12 +945,24 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                             $descriptions = $row['description'];
 
                         ?>
-                            <div class="col-md-4">
-                              <img src="images/<?php echo $imageUrl; ?>" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>" alt="logo" width="285" height="285" onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();">
-                              <h4><?php echo $roomName; ?></h3>
-                                <div class="card-body">
-                                  <p style="text-align: justify; text-indent: ;"><?php echo $descriptions ?></p>
+                            <div class="cards">
+                              <div class="contents">
+                                <div class="front">
+                                  <div class="front-content">
+                                    <img src="images/<?php echo $imageUrl; ?>" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>" alt="logo" width="285" height="285" onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();">
+                                    <strong><?php echo $roomName; ?></strong>
+                                  </div>
                                 </div>
+                                <div class="back">
+                                  <div class="back-content">
+                                    <div class="description">
+                                      <div class="card-body">
+                                        <p style="text-align: justify; text-indent: ;" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>"  onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();"><?php echo $descriptions ?></p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
 
 
