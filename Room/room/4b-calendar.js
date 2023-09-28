@@ -354,10 +354,10 @@ var cal = {
           // Join the merged time ranges with " - " separator
           const formattedTimeSlots = mergedTimeRanges.join(" - ");
 
-          if (cal.hfCategory.value = cal.events[id]["category"] === "ADMIN") {
+          if (cal.events[id]["category"] === "ADMIN") {
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
             cal.events[id]["t"] + cal.events[id]["fullname"]; //Requestor's Name
-          } else if (cal.hfCategory.value = cal.events[id]["userCategory"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"]) {
+          } else if (cal.hfCategory.value = cal.events[id]["category"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["usernameSESSION"]) {
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
           } else {
             rowB.style.display = "none";

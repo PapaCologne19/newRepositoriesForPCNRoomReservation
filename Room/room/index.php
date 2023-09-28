@@ -14,6 +14,7 @@ if (isset($_POST['SubButton'])) {
 
   $ireserver = "1";
   $userID = $_POST['userID'];
+  $username = $_POST['username'];
   $userCategory = $_POST['userCategory'];
   $firstname = $_POST['firstname'];
   $lastname = $_POST['lastname'];
@@ -246,9 +247,9 @@ if (isset($_POST['SubButton'])) {
 
   // No existing data, proceed with the insertion
   $query = "INSERT INTO events (user_id, evt_start, evt_end, evt_text, evt_color, evt_bg, qty, projector, whiteboard, ext_cord, sound, sound_simple, sound_advance, basic_lights,
-    cleanup, cleanup_before, cleanup_after, others, others1, x67, x78, x89, x910, x1011, x1112, x121, x12, x23, x34, x45, x56, room_orientation, room_orientation_other, fullName, user_category) 
+    cleanup, cleanup_before, cleanup_after, others, others1, x67, x78, x89, x910, x1011, x1112, x121, x12, x23, x34, x45, x56, room_orientation, room_orientation_other, username, fullName, user_category) 
     VALUES ('$userID','$evtStart', '$evtEnd', '$roomko', '#000000', '#ffff00', '$qty', '$cprojector', '$cwhiteboard', '$cextn', 'sound', '$radios', '$radioa', '$basicl',
-    'cleanup', '$c_before', '$c_after', '$other_equipment', '$others_rem', '$x67v', '$x78v', '$x89v', '$x910v', '$x1011v', '$x1112v', '$x121v', '$x12v', '$x23v', '$x34v', '$x45v', '$x56v', '$room_orientation', '$room_orientation_other', '$fullname', '$userCategory')";
+    'cleanup', '$c_before', '$c_after', '$other_equipment', '$others_rem', '$x67v', '$x78v', '$x89v', '$x910v', '$x1011v', '$x1112v', '$x121v', '$x12v', '$x23v', '$x34v', '$x45v', '$x56v', '$room_orientation', '$room_orientation_other', '$username', '$fullname', '$userCategory')";
 
   $result = mysqli_query($connect, $query);
 
@@ -376,7 +377,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       } else {
       ?>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
-        <button type="button" class="gbutton btn btn-primary" data-toggle="modal" data-target="#myModal" style="float:right;">Add Appointment</button> &nbsp;
+        <button type="button" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right;">Add Appointment</button> &nbsp;
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
         <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';">Logout</button>
       <?php } ?>
@@ -582,6 +583,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                   ?>
                   <form action="" method="POST">
                     <input type="hidden" name="userID" id="userID" value="<?php echo $row['id'] ?>">
+                    <input type="hidden" name="username" id="username" value="<?php echo $row['username'] ?>">
                     <input type="hidden" name="userCategory" id="userCategory" value="<?php echo $row['category'] ?>">
                     <input type="hidden" name="firstname" id="firstname" value="<?php echo $row['firstname'] ?>">
                     <input type="hidden" name="lastname" id="lastname" value="<?php echo $row['lastname'] ?>">

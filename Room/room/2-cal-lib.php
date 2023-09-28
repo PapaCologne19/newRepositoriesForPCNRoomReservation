@@ -128,7 +128,7 @@ class Calendar
         "x1011" => $r["x1011"], "x1112" => $r["x1112"], "x121" => $r["x121"], "x12" => $r["x12"], 
         "x23" => $r["x23"], "x34" => $r["x34"], "x45" => $r["x45"], "x56" => $r["x56"],
         "firstname" => $firstname, "lastname" => $lastname, "userCategory" => $r['user_category'], "userID" => $r["user_id"],
-        "category" => $category, "username" => $username, "userIDSESSION" => $user_id, "fullname" => $r["fullName"],
+        "category" => $category, "usernameSESSION" => $username, "userIDSESSION" => $user_id, "fullname" => $r["fullName"], "username" => $r['username']
         
        ];
     }

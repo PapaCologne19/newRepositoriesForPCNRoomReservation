@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2023 at 01:36 AM
+-- Generation Time: Sep 28, 2023 at 03:43 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -62,6 +62,7 @@ CREATE TABLE `events` (
   `x45` varchar(255) NOT NULL,
   `x56` varchar(255) NOT NULL,
   `room_orientation` varchar(255) NOT NULL,
+  `room_orientation_other` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `fullName` varchar(255) NOT NULL,
   `user_category` varchar(255) NOT NULL
@@ -71,11 +72,11 @@ CREATE TABLE `events` (
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`, `qty`, `projector`, `whiteboard`, `ext_cord`, `sound`, `sound_simple`, `sound_advance`, `basic_lights`, `cleanup`, `cleanup_before`, `cleanup_after`, `others`, `others1`, `allday`, `x67`, `x78`, `x89`, `x910`, `x1011`, `x1112`, `x121`, `x12`, `x23`, `x34`, `x45`, `x56`, `room_orientation`, `user_id`, `fullName`, `user_category`) VALUES
-(3, '2023-09-19', '2023-09-19 00:00:00', 'BOARD', '#000000', '#009900', '6', '1', '0', '1', 'sound', '1', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '1', '', 'Workshop', 3, 'John Doe', 'USER'),
-(4, '2023-09-20', '2023-09-20 00:00:00', 'BOARD', '#000000', '#ff0000', '6', '0', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '', 'Classroom', 3, 'John Doe', 'USER'),
-(31, '2023-09-23', '2023-09-23 00:00:00', 'BOARD', '#000000', '#ffff00', '2', '1', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', '', 'dfwesfrewfe', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'on', 1, 'JAMES PHILIP GOMERA', 'ADMIN'),
-(32, '2023-09-27', '2023-09-27 00:00:00', 'BOARD', '#000000', '#ffff00', '6', '1', '1', '0', 'sound', '0', '0', '0', 'cleanup', '0', '0', '', 'Babae', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'Bored Room', 1, 'JAMES PHILIP GOMERA', 'ADMIN');
+INSERT INTO `events` (`evt_id`, `evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`, `qty`, `projector`, `whiteboard`, `ext_cord`, `sound`, `sound_simple`, `sound_advance`, `basic_lights`, `cleanup`, `cleanup_before`, `cleanup_after`, `others`, `others1`, `allday`, `x67`, `x78`, `x89`, `x910`, `x1011`, `x1112`, `x121`, `x12`, `x23`, `x34`, `x45`, `x56`, `room_orientation`, `room_orientation_other`, `user_id`, `fullName`, `user_category`) VALUES
+(3, '2023-09-19', '2023-09-19 00:00:00', 'BOARD', '#000000', '#009900', '6', '1', '0', '1', 'sound', '1', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '1', '', 'Workshop', '', 3, 'John Doe', 'USER'),
+(4, '2023-09-20', '2023-09-20 00:00:00', 'BOARD', '#000000', '#ff0000', '6', '0', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', 'others', '', '', '', '', '', '', '', '', '1', '1', '1', '1', '1', '', 'Classroom', '', 3, 'John Doe', 'USER'),
+(31, '2023-09-23', '2023-09-23 00:00:00', 'BOARD', '#000000', '#ffff00', '2', '1', '1', '1', 'sound', '0', '0', '0', 'cleanup', '0', '0', '', 'dfwesfrewfe', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'on', '', 1, 'JAMES PHILIP GOMERA', 'ADMIN'),
+(44, '2023-09-27', '2023-09-27 00:00:00', 'BOARD', '#000000', '#ffff00', '6', '1', '1', '1', 'sound', '1', '0', '1', 'cleanup', '1', '0', '', 'Microphone', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'on', 'Bored Room', 1, 'JAMES PHILIP GOMERA', 'ADMIN');
 
 -- --------------------------------------------------------
 
@@ -145,8 +146,7 @@ INSERT INTO `rooms` (`id`, `rooms`, `capacity`, `image`, `description`, `active`
 (41, 'MANILA', '10', 'classroom.png', 'Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila Room Manila R', 0, '2023-09-19 06:28:07', '2023-09-19 06:28:07'),
 (42, 'LUZON', '10', 'download.jpg', 'Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Luzon Lu', 0, '2023-09-19 06:28:30', '2023-09-19 06:28:30'),
 (43, 'VISAYAS', '10', 'pcn.png', 'Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visayas Visa', 0, '2023-09-19 06:28:55', '2023-09-19 06:28:55'),
-(44, 'MINDANAO', '10', 'livingroom.jpg', 'Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Minda', 0, '2023-09-19 06:29:19', '2023-09-19 06:29:19'),
-(48, 'ROOM KO', '8', 'tryroom.jpg', '123131321321321', 0, '2023-09-20 05:43:35', '2023-09-20 05:45:08');
+(44, 'MINDANAO', '10', 'livingroom.jpg', 'Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Mindanao Minda', 0, '2023-09-19 06:29:19', '2023-09-19 06:29:19');
 
 -- --------------------------------------------------------
 
@@ -193,7 +193,7 @@ INSERT INTO `user` (`id`, `id_number`, `username`, `password`, `firstname`, `mid
 (4, 1232132123, 'mary123', '$2y$10$8AOn7WgBH5W.tN5npnCb8.Tha/2giwZdjXMHXvcdt52pwM8GHtYhy', 'Mary', 'Middle', 'Smith', '09123456789', 'FINANCE', 'USER', 1, '2023-09-19 02:05:28'),
 (9, 123456767, 'try123', '$2y$10$gT7oUP2Tvuk3PfCEH8pCqeaR6mFE/9HHNESm.hb1Wr.xNe.b/8iSe', 'Try', 'Try', 'Try', '09123456789', 'PPI', 'USER', 2, '2023-09-21 01:09:40'),
 (10, 12345667, 'test123', '$2y$10$AvjhnT8Lsy8gEyBScPYKUeo1zrBWr5464hZw0rz/5zHSBYd7/SRpa', 'Test', 'Test', 'Test', '09123456789', 'PPI', 'USER', 0, '2023-09-21 01:12:34'),
-(11, 1231312312, 'employer@gmail.com', '$2y$10$Axn3G3hNcuJfKDrJ4FemneHrCC/5SZ.F6ruov0uMtXtmsVG4hppxS', 'JAMES PHILIP', 'AMANTE', 'GOMERA', '12313123123', 'BD1-BU3_SPECIAL_ACTIVATION', 'USER', 0, '2023-09-23 06:08:40');
+(11, 1231312312, 'employer@gmail.com', '$2y$10$Axn3G3hNcuJfKDrJ4FemneHrCC/5SZ.F6ruov0uMtXtmsVG4hppxS', 'JAMES PHILIP', 'AMANTE', 'GOMERA', '12313123123', 'BD1-BU3_SPECIAL_ACTIVATION', 'USER', 2, '2023-09-23 06:08:40');
 
 --
 -- Indexes for dumped tables
@@ -241,7 +241,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `evt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `evt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `locationpo`
@@ -253,7 +253,7 @@ ALTER TABLE `locationpo`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `test`
