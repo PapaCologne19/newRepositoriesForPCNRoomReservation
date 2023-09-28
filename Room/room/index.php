@@ -513,7 +513,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
     <!-- Modal for Adding Rooms -->
     <div class="modal" id="addRoom" role="dialog" tabindex="1">
-      <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
@@ -560,7 +560,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog" tabindex="1">
-      <div class="modal-dialog modal-dialog-scrollable modal-xl">
+      <div class="modal-dialog modal-xl">
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
@@ -784,16 +784,15 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                 </Center>
 
                 <!-- Modal for Classroom Seating Setup-->
-                <div class="modal fade" id="myModalroomClassroom" role="dialog">
+                <div class="modal fade" id="myModalroomClassroom" role="dialog" tabindex="1">
 
-                  <div class="modal-dialog modal-dialog-scrollable" style="width:95%;">
+                  <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" onclick="$('#myModalroomClassroom').modal('hide')">&times;</button>
                         <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomClassroom').modal('hide')">
-
+                        <button type="button" class="btn-close" onclick="$('#myModalroomClassroom').modal('hide')"></button>
                       </div>
 
                       <div class="modal-body2">
@@ -805,7 +804,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                           <center>
                             <p style="font-weight: bold;">C L A S S R O O M </p>
                             <img src="./images/classroom.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
-                            <p style="padding: 1rem; margin: 1rem 15rem; text-align: justify; text-indent: 5rem;">A classroom seating arrangements may consist of learners sitting in a circle or around a single large table. This seating arrangement can also be formed using individual desks. Learners and teachers all face one another in this setup, which can support whole-class as well as pair-wise dialogue.</p>
+                            <p style="padding: 1rem; text-align: justify; text-indent: 5rem;">A classroom seating arrangements may consist of learners sitting in a circle or around a single large table. This seating arrangement can also be formed using individual desks. Learners and teachers all face one another in this setup, which can support whole-class as well as pair-wise dialogue.</p>
                           </center>
                         </center>
 
@@ -817,16 +816,15 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
 
                 <!-- Modal for Workshop Seating Setup-->
-                <div class="modal fade" id="myModalroomworkshop" role="dialog">
+                <div class="modal fade" id="myModalroomworkshop" role="dialog" tabindex="1">
 
-                  <div class="modal-dialog modal-dialog-scrollable" style="width:95%;">
+                  <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" onclick="$('#myModalroomworkshop').modal('hide')">&times;</button>
                         <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomworkshop').modal('hide')">
-
+                        <button type="button" class="btn-close" onclick="$('#myModalroomworkshop').modal('hide')"></button>
                       </div>
 
                       <div class="modal-body2">
@@ -848,16 +846,15 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
 
                 <!-- Modal for Training Seating Setup-->
-                <div class="modal fade" id="myModalroomTraining" role="dialog">
+                <div class="modal fade" id="myModalroomTraining" role="dialog" tabindex="1">
 
-                  <div class="modal-dialog modal-dialog-scrollable" style="width:95%;">
+                  <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" onclick="$('#myModalroomTraining').modal('hide')">&times;</button>
                         <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomTraining').modal('hide')">
-
+                        <button type="button" class="btn-close" onclick="$('#myModalroomTraining').modal('hide')"></button>
                       </div>
 
                       <div class="modal-body2">
@@ -879,16 +876,15 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
 
                 <!-- Modal for Open Seating Setup-->
-                <div class="modal fade" id="myModalroomOpen" role="dialog">
+                <div class="modal fade" id="myModalroomOpen" role="dialog" tabindex="1">
 
-                  <div class="modal-dialog modal-dialog-scrollable" style="width:95%;">
+                  <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" onclick="$('#myModalroomOpen').modal('hide')">&times;</button>
                         <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomOpen').modal('hide')">
-
+                        <button type="button" class="btn-close" onclick="$('#myModalroomOpen').modal('hide')"></button>
                       </div>
 
                       <div class="modal-body2">
