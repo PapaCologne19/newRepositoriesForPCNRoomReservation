@@ -18,6 +18,7 @@ if (isset($_POST['login-submit'])) {
         $_SESSION["firstname"] = $row['firstname'];
         $_SESSION["lastname"] = $row['lastname'];
         $_SESSION["category"] = $row['category'];
+        $_SESSION["email"] = $row['email'];
 
         $hashedPassword = $row['password'];
         if (password_verify($password, $hashedPassword)) {
@@ -38,10 +39,10 @@ if (isset($_POST['login-submit'])) {
                 $_SESSION["warning"] =  "Please contact Mr. Deo or Mr. Mike for account approval. Thank you";
             }
         } else {
-            $_SESSION["error"] = "Hacker ka 'no? Huwag kami!🤬";
+            $_SESSION["error"] = "Wrong Username or Password";
         }
     } else {
-        $_SESSION["error"] = "Hacker ka 'no? Huwag kami!🤬";
+        $_SESSION["error"] = "Wrong Username or Password";
     }
 }
 
@@ -53,12 +54,13 @@ if (isset($_POST['register'])) {
     $firstname = mysqli_real_escape_string($connect, $_POST['firstName']);
     $middlename = mysqli_real_escape_string($connect, $_POST['middleName']);
     $lastname = mysqli_real_escape_string($connect, $_POST['lastName']);
+    $email = mysqli_real_escape_string($connect, $_POST['email']);
     $contact_number = mysqli_real_escape_string($connect, $_POST['contactNumber']);
     $division = $_POST['division'];
     $category = "USER";
 
-    $query2 = "INSERT INTO user(id_number, username, password, firstname, middlename, lastname, contactNumber, division, category) 
-    VALUES('$id_number', '$username', '$password', '$firstname', '$middlename', '$lastname', '$contact_number', '$division', '$category')";
+    $query2 = "INSERT INTO user(id_number, username, password, firstname, middlename, lastname, email, contactNumber, division, category) 
+    VALUES('$id_number', '$username', '$password', '$firstname', '$middlename', '$lastname', '$email', '$contact_number', '$division', '$category')";
     $result2 = $connect->query($query2);
 
     if ($result2) {
@@ -206,6 +208,10 @@ if (isset($_POST['register'])) {
                         <div class="mb-3">
                             <label for="" class="form-label">Last Name</label>
                             <input type="text" class="form-control" name="lastName" id="lastName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" name="email" id="email" required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Contact Number</label>

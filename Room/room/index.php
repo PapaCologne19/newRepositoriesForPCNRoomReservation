@@ -5,6 +5,50 @@ date_default_timezone_set('Asia/Hong_Kong');
 $date = date('D : F d, Y');
 $date1 = date('Y-m-d');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/phpmailer/phpmailer/src/Exception.php';
+require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'vendor/phpmailer/phpmailer/src/SMTP.php';
+
+// Load Composer's autoloader
+require 'vendor/autoload.php';
+function sendMail($email)
+{
+  $mail = new PHPMailer();
+
+  try {
+    // Server settings
+    $mail->isSMTP();  // Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
+    $mail->SMTPAuth   = true;  // Enable SMTP authentication
+    $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
+    $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
+    $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
+
+    // Recipients
+    $mail->setFrom('jphigomera0619@gmail.com', 'Mailer');
+    $mail->addAddress($email, '');  // Add a recipient
+
+    // Content
+    $mail->isHTML(true);  // Set email format to HTML
+    $mail->Subject = 'Here is the subject';
+    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    // Send the email
+    if (!$mail->send()) {
+      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    } else {
+      echo "Message has been sent";
+    }
+  } catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+  }
+}
 
 if (isset($_POST['verify'])) {
   echo $date1;
@@ -25,7 +69,7 @@ if (isset($_POST['SubButton'])) {
   $qty = $_POST['qty'];
   $room_orientation = $_POST['roomOrientation'];
   $room_orientation_other = $_POST['roomOrientationOther'];
-
+  $email = $_POST['email'];
 
   $others_rem = $_POST['others_rem'];
   $status = "pending";
@@ -257,6 +301,8 @@ if (isset($_POST['SubButton'])) {
     // Handle the case where the insertion query failed
     echo "Insertion failed.";
   } else {
+    sendMail("$email");
+    $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
     header("location: index.php");
   }
 }
@@ -576,6 +622,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                 <h3>Date</h3>
                 <center>
                   <?php
+
                   $query = "SELECT * FROM user WHERE username = '" . $_SESSION['username'] . "'";
                   $result = $connect->query($query);
                   $row = $result->fetch_assoc();
@@ -586,6 +633,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     <input type="hidden" name="userCategory" id="userCategory" value="<?php echo $row['category'] ?>">
                     <input type="hidden" name="firstname" id="firstname" value="<?php echo $row['firstname'] ?>">
                     <input type="hidden" name="lastname" id="lastname" value="<?php echo $row['lastname'] ?>">
+                    <input type="hidden" name="email" id="email" value="<?php echo $row['email'] ?>">
                     <div class="evt50">
                       <br>
                       <label for="" class="form-label">Select Date</label>
@@ -957,7 +1005,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                   <div class="back-content">
                                     <div class="description">
                                       <div class="card-body">
-                                        <p style="text-align: justify; text-indent: ;" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>"  onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();"><?php echo $descriptions ?></p>
+                                        <p style="text-align: justify; text-indent: ;" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>" onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();"><?php echo $descriptions ?></p>
                                       </div>
                                     </div>
                                   </div>
