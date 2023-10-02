@@ -30,7 +30,7 @@ function sendMail($email)
     $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
 
     // Recipients
-    $mail->setFrom('jphigomera0619@gmail.com', 'Mailer');
+    $mail->setFrom('jphigomera0619@gmail.com', 'PCN Promopro Inc.');
     $mail->addAddress($email, '');  // Add a recipient
 
     // Content
@@ -362,6 +362,21 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
             }(document, "script"));
     </script> -->
     <!-- End PushAlert -->
+
+    <!-- Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('../../service-worker.js')
+          .then(function(registration) {
+            // Registration was successful
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(function(error) {
+            // Registration failed
+            console.error('Service Worker registration failed:', error);
+          });
+      }
+    </script>
 
   </head>
 
@@ -1380,6 +1395,126 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     // Add an event listener to handle date selection
     datePicker.addEventListener("change", function() {
       const selectedDate = this.value;
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /// Define FormData objects at a higher scope
+    const formData = new FormData();
+
+    // Function to generate a random unique ID (replace with your logic)
+    function getUniqueId() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (Math.random() * 16) | 0,
+          v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    }
+
+    // Function to save the unique ID and endpoint URL to your database (using AJAX)
+    function saveDataToDatabase(uniqueId, endpointURL) {
+      formData.append('uniqueId', uniqueId);
+      formData.append('endpointURL', endpointURL);
+
+      fetch('save-id.php', {
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log(data); // Handle the response from the server
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+
+    function getPushSubscription() {
+      const vapidPublicKey = 'BHcUaTv7fmVW-xAQHXhXeQRplQw22KUhntdVjNFXhPotFOkddFZJyFkEJNtpYWNyFDvQf_I5fBfMEEOMDfBBFNQ';
+
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: vapidPublicKey
+          })
+          .then(function(subscription) {
+            // Subscription successful, obtain endpoint URL
+            const endpointURL = subscription.endpoint;
+            // Now you can save the unique ID and endpoint URL to your server/database
+            const uniqueId = getUniqueId();
+            saveDataToDatabase(uniqueId, endpointURL);
+          })
+          .catch(function(error) {
+            console.error('Error subscribing to push:', error);
+          });
+      });
+    }
+
+    // Check if the unique ID is already in localStorage
+    const savedUniqueId = localStorage.getItem('uniqueId');
+
+    // Request permission to send notifications
+    if ('Notification' in window) {
+      Notification.requestPermission().then(function(permission) {
+        if (permission === 'granted') {
+          if (savedUniqueId) {
+            // If a unique ID is already saved, use it
+            getPushSubscription();
+          } else {
+            // If not, generate a new unique ID
+            const uniqueId = getUniqueId();
+            // Save the unique ID to your database and localStorage
+            localStorage.setItem('uniqueId', uniqueId);
+            getPushSubscription();
+          }
+        } else {
+          console.warn('Notification permission denied.');
+        }
+      }).catch(function(error) {
+        console.error('Error requesting notification permission:', error);
+      });
+    } else {
+      console.warn('Notifications not supported in this browser.');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    self.addEventListener('push', function(event) {
+      const options = {
+        body: event.data.text(),
+        icon: 'notification-icon.png',
+      };
+
+      event.waitUntil(
+        self.registration.showNotification('Notification Title', options)
+      );
     });
   </script>
 

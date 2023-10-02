@@ -135,10 +135,6 @@ class Calendar
 }
 
 
-
-
-
-
 // (G) DATABASE SETTINGS - CHANGE TO YOUR OWN!
 define("DB_HOST", "localhost");
 define("DB_NAME", "calendar");

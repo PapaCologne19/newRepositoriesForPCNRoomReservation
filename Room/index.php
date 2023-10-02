@@ -2,6 +2,7 @@
 include 'room/connect.php';
 session_start();
 
+
 if (isset($_POST['login-submit'])) {
     $username = mysqli_real_escape_string($connect, $_POST['username']);
     $password = mysqli_real_escape_string($connect, $_POST['password']);
@@ -24,14 +25,13 @@ if (isset($_POST['login-submit'])) {
         if (password_verify($password, $hashedPassword)) {
 
             if ($row["status"] === "1" && $row["category"] === "USER") {
+                $_SESSION['successMessage'] = "Welcome, " . $_SESSION['firstname'] . "";
                 header("Location: room/index.php");
-            } elseif($row["status"] === "1" && $row["category"] === "SUPER ADMIN"){
-                $_SESSION['success'] = "Successfully Login.
-                Welcome, Admin " . $_SESSION['firstname'];
+            } elseif ($row["status"] === "1" && $row["category"] === "SUPER ADMIN") {
+                $_SESSION['successMessage'] = "Welcome, Admin " . $_SESSION['firstname'] . "";
                 header("Location: admin/admin.php");
-            }
-            elseif ($row['status'] === "1" && $row["category"] === "ADMIN") {
-                $_SESSION['success'] = "Welcome, Admin " . $_SESSION['firstname'] . "";
+            } elseif ($row['status'] === "1" && $row["category"] === "ADMIN") {
+                $_SESSION['successMessage'] = "Welcome, Admin " . $_SESSION['firstname'] . "";
                 header("Location: room/index.php");
             } elseif ($row["status"] === "2" && $row["category"] === "USER") {
                 $_SESSION["error"] =  "Your account has been rejected. Contact Mr. Deo or Mr. Mike for more info. Thank you.";
@@ -158,12 +158,12 @@ if (isset($_POST['register'])) {
                                     <form id="login-form" class="col-lg-offset-1 col-lg-10 forms" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" role="form" style="display: block;">
                                         <div class="form-floating mt-4">
                                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" required>
+                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" autocomplete="on" required>
                                             <label class="username" for="username">USERNAME</label>
                                         </div>
                                         <div class="form-floating mt-4">
                                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                            <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+                                            <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="current-password" required>
                                             <label class="password" for="password">PASSWORD</label>
                                         </div>
                                         <div class="col-sm-6 col-sm-offset-3">
@@ -172,9 +172,8 @@ if (isset($_POST['register'])) {
                                         <div class="col-md-6 pt-4 pb-4">
                                             <a href="javascript:void(0)" class="registerAccount link" style="color: #BABABA; ">Register Account here</a>
                                         </div>
-                                       
+                                    </form>
                                 </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -192,7 +191,7 @@ if (isset($_POST['register'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" class="row g-3 needs-validation">
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="row g-3 needs-validation">
                         <div class="mb-3">
                             <label for="" class="form-label">ID Number</label>
                             <input type="number" class="form-control" name="idnumber" id="idnumber" required>
@@ -233,11 +232,11 @@ if (isset($_POST['register'])) {
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Username</label>
-                            <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                            <input type="text" class="form-control" name="username" id="Username" placeholder="Username" autocomplete="on" required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Password</label>
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                            <input type="password" name="password" id="Password" class="form-control" placeholder="Password" autocomplete="current-password" required>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -269,6 +268,37 @@ if (isset($_POST['register'])) {
 
         });
     });
+
+
+
+    // Function to generate a random unique ID (you can replace this with your own logic)
+    function getUniqueId() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (Math.random() * 16) | 0,
+                v = c === 'x' ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+        });
+    }
+
+    // Function to save the unique ID to your database (using AJAX)
+    function saveToDatabase(uniqueId) {
+        const formData = new FormData();
+        formData.append('uniqueId', uniqueId);
+
+        // Send the unique ID to the PHP script using AJAX
+        fetch('save-unique-id.php', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Handle the response from the server (e.g., display a message to the user)
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 </script>
 
 </html>

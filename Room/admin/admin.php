@@ -19,8 +19,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 
         <!-- Sweet Alert and Jquery -->
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 
 
         <!-- Google Fonts -->
@@ -41,16 +41,15 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
     <body>
         <?php
-        if (isset($_SESSION['success'])) { ?>
+        if (isset($_SESSION['successMessage'])) { ?>
             <script>
                 Swal.fire({
                     icon: 'success',
-                    title: "<?php echo $_SESSION['success']; ?>",
+                    title: "<?php echo $_SESSION['successMessage']; ?>",
                 })
             </script>
-        <?php unset($_SESSION['success']);
-        }
-        ?>
+        <?php unset($_SESSION['successMessage']);
+        } ?>
 
         <center>
             <div class="container">
@@ -140,24 +139,24 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
 
                                                 <td><?php echo $row['date_format'] ?></td>
-                                                
-                                                <?php if($row["status"] === "0"){?>
-                                                <td>
-                                                    <input type="hidden" name="approveID" id="approveID" class="approveID" value="<?php echo $row['id']; ?>">
-                                                    <button type="button" class="btn btn-success btn-sm approveButton" name="approveButton" id="approveButton">Approve</button>
-                                                </td>
-                                                <td>
-                                                    <input type="hidden" name="rejectID" id="rejectID" class="rejectID" value="<?php echo $row['id'] ?>">
-                                                    <button type="button" class="btn btn-danger btn-sm rejectButton" name="rejectButton" id="rejectButton">Reject</button>
-                                                </td>
-                                                <?php } elseif($row["status"] === "1" || $row["status"] === "2"){ ?>
-                                                <td>
-                                                    <button type="button" class="btn btn-success btn-sm approveButton" name="approveButton" id="approveButton" disabled>Approve</button>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-danger btn-sm rejectButton" name="rejectButton" id="rejectButton" disabled>Reject</button>
-                                                </td>
-                                                <?php }?>
+
+                                                <?php if ($row["status"] === "0") { ?>
+                                                    <td>
+                                                        <input type="hidden" name="approveID" id="approveID" class="approveID" value="<?php echo $row['id']; ?>">
+                                                        <button type="button" class="btn btn-success btn-sm approveButton" name="approveButton" id="approveButton">Approve</button>
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" name="rejectID" id="rejectID" class="rejectID" value="<?php echo $row['id'] ?>">
+                                                        <button type="button" class="btn btn-danger btn-sm rejectButton" name="rejectButton" id="rejectButton">Reject</button>
+                                                    </td>
+                                                <?php } elseif ($row["status"] === "1" || $row["status"] === "2") { ?>
+                                                    <td>
+                                                        <button type="button" class="btn btn-success btn-sm approveButton" name="approveButton" id="approveButton" disabled>Approve</button>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btn-sm rejectButton" name="rejectButton" id="rejectButton" disabled>Reject</button>
+                                                    </td>
+                                                <?php } ?>
 
                                         </tr>
                                     <?php } ?>
@@ -206,7 +205,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                             </td>
                                             <td style="text-align: center;"><?php echo $row['active']; ?></td>
                                             <td class="text-center"><?php echo $row['timestamp']; ?></td>
-                                            
+
                                             <td class="text-center">
                                                 <input type="hidden" class="updateID" name="updateID" id="updateID" value="<?php echo $row['id'] ?>">
                                                 <button type="button" class="btn btn-sm updateButton button" name="updateButton" id="updateButton">Update</button>
@@ -258,7 +257,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
             </div>
         </center>
-<br><br><br><br><br>
+        <br><br><br><br><br>
         <!-- Modal For Adding Rooms -->
         <div class="modal fade" id="addRooms" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
