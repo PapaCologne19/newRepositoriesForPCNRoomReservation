@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2023 at 08:09 AM
+-- Generation Time: Oct 02, 2023 at 09:46 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -120,6 +120,30 @@ INSERT INTO `locationpo` (`evt_id`, `evt_start`, `evt_text`, `evt_color`, `qty`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notification`
+--
+
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `endpoint_URL` varchar(300) NOT NULL,
+  `date_allowed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`id`, `user_id`, `endpoint_URL`, `date_allowed`) VALUES
+(54, 3, 'https://fcm.googleapis.com/fcm/send/eZkJLci9IoQ:APA91bEgy8QaMu_EMxcUxfpg6BidjAr2R7c5Zj66N-sz-s8OjFlPOlLabJW64CooZyBdJ0eIHQnmlraJJ9D2zcWdWTNgMso5NaFDq-FiJ3fsghCjdZWDC-DDELxSUG_Pr6WuAt3rnd-W', '2023-10-02 06:48:08'),
+(55, 3, 'https://fcm.googleapis.com/fcm/send/cu38_DmAmY8:APA91bF0vNujhMLlLVedhgdqBuvKFmL6kJ-sfOqttrNgfHxRoAMMzv3NAff76EDJCcCKcmUy84zqkFbQPO-uWApV132r6ErYRd4FA4tfuZYrIbk4hMreX42wQG8BjWrwAUcPRlcCS9xY', '2023-10-02 06:48:31'),
+(56, 4, 'https://fcm.googleapis.com/fcm/send/falK5j14Dbk:APA91bHi4CrVfd9ulj-3Ottsv3ilKenX1ICsOFh67bs-ygsirOAW5fSzmY7plrY8XjtTFmyR3BHywCY-48YExlpKJgbxebqjmF5HB4Qv2Ynm0yMR1WVX6P07l29bd0tg3PbSJ0QIF6cS', '2023-10-02 06:52:20'),
+(57, 12, 'https://fcm.googleapis.com/fcm/send/eZkJLci9IoQ:APA91bEgy8QaMu_EMxcUxfpg6BidjAr2R7c5Zj66N-sz-s8OjFlPOlLabJW64CooZyBdJ0eIHQnmlraJJ9D2zcWdWTNgMso5NaFDq-FiJ3fsghCjdZWDC-DDELxSUG_Pr6WuAt3rnd-W', '2023-10-02 06:54:49'),
+(58, 12, 'https://fcm.googleapis.com/fcm/send/falK5j14Dbk:APA91bHi4CrVfd9ulj-3Ottsv3ilKenX1ICsOFh67bs-ygsirOAW5fSzmY7plrY8XjtTFmyR3BHywCY-48YExlpKJgbxebqjmF5HB4Qv2Ynm0yMR1WVX6P07l29bd0tg3PbSJ0QIF6cS', '2023-10-02 06:55:20');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rooms`
 --
 
@@ -219,6 +243,13 @@ ALTER TABLE `locationpo`
   ADD KEY `evt_start` (`evt_start`);
 
 --
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `rooms`
 --
 ALTER TABLE `rooms`
@@ -253,6 +284,12 @@ ALTER TABLE `locationpo`
   MODIFY `evt_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
+--
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
@@ -279,6 +316,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `events`
   ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `notification`
+--
+ALTER TABLE `notification`
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

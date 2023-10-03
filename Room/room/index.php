@@ -5,10 +5,6 @@ date_default_timezone_set('Asia/Hong_Kong');
 $date = date('D : F d, Y');
 $date1 = date('Y-m-d');
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
 require 'vendor/phpmailer/phpmailer/src/Exception.php';
 require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require 'vendor/phpmailer/phpmailer/src/SMTP.php';
@@ -17,6 +13,10 @@ require 'vendor/phpmailer/phpmailer/src/SMTP.php';
 require 'vendor/autoload.php';
 function sendMail($email)
 {
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\SMTP;
+  use PHPMailer\PHPMailer\Exception;
+
   $mail = new PHPMailer();
 
   try {
@@ -50,6 +50,55 @@ function sendMail($email)
   }
 }
 
+
+function sendPushNotificationForAppointment(){
+  $title = "PCN Room Reservation";
+	$message = "PCN Morning, " . $_SESSION['firstname'] . ". You have set an appointment to https://pcnpromopro.alegariocurehms.com/. Please wait for the approval of Mr. Mike or Mr. Deo";
+	$icon = "images/pcn.png";
+	$url = "https://pcnpromopro.alegariocurehms.com/";
+
+  $fetch = "SELECT endpoint_URL FROM notification WHERE user_id = '" . $_SESSION['id'] . "'";
+  $fetchResult = $connect->query($fetch);
+  $row = $fetchResult->fetch_assoc();
+
+  $subscriber = $row['endpoint_URL'];
+	
+	$apiKey = "39b680c0c9edd0d26d73316d51839ac2";
+
+	$curlUrl = "https://api.pushalert.co/rest/v1/send";
+
+	//POST variables
+	$post_vars = array(
+		"icon" => $icon,
+		"title" => $title,
+		"message" => $message,
+		"url" => $url,
+        "subscriber" => $subscriber
+	);
+
+	$headers = Array();
+	$headers[] = "Authorization: api_key=".$apiKey;
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $curlUrl);
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+	$result = curl_exec($ch);
+
+	$output = json_decode($result, true);
+	if($output["success"]) {
+		echo $output["id"]; //Sent Notification ID
+	}
+	else {
+		//Others like bad request
+	}
+}
+
+
+
 if (isset($_POST['verify'])) {
   echo $date1;
 }
@@ -73,7 +122,7 @@ if (isset($_POST['SubButton'])) {
 
   $others_rem = $_POST['others_rem'];
   $status = "pending";
-  // $other_equipment = $_POST['equi_others'];
+
 
   if (isset($_POST['cprojector'])) {
     $cprojector = 1;
@@ -124,7 +173,6 @@ if (isset($_POST['SubButton'])) {
   }
 
 
-
   if (isset($_POST['c_allday'])) {
     // // Checkbox is selected
     // echo "c_allday selected";
@@ -146,147 +194,9 @@ if (isset($_POST['SubButton'])) {
     $c_alldayv = "x";
   }
 
-
-
-  if (isset($_POST['c67'])) {
-    $start_t = "6am";
-  } else if (!isset($_POST['c67']) && (isset($_POST['c78']))) {
-    $start_t = "7am";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (isset($_POST['c89'])))) {
-    $start_t = "8am";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (isset($_POST['c910'])))) {
-    $start_t = "9am";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (isset($_POST['c1011'])))) {
-    $start_t = "10am";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (isset($_POST['c1112'])))) {
-    $start_t = "11am";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (isset($_POST['c121'])))) {
-    $start_t = "12nn";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (isset($_POST['c12'])))) {
-    $start_t = "1pm";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (isset($_POST['c23'])))) {
-    $start_t = "2pm";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (isset($_POST['c34'])))) {
-    $start_t = "3pm";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (isset($_POST['c45'])))) {
-    $start_t = "4pm";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (isset($_POST['c56'])))) {
-    $start_t = "5pm";
-  }
-
-
-
-
-  if (isset($_POST['c56'])) {
-    $end_t = "6pm";
-  } else if ((isset($_POST['c45'])) && (!isset($_POST['c56']))) {
-    $end_t = "5pm";
-  } else if ((isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
-    $end_t = "4pm";
-  } else if ((isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
-    $end_t = "3pm";
-  } else if ((isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
-    $end_t = "2pm";
-  } else if ((isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
-    $end_t = "1pm";
-  } else if ((isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
-    $end_t = "12nn";
-  } else if ((isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
-    $end_t = "11am";
-  } else if ((isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
-    $end_t = "10am";
-  } else if ((isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
-    $end_t = "9am";
-  } else if ((isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56'])))) {
-    $end_t = "8am";
-  } else if (isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56'])))) {
-    $end_t = "7am";
-  }
-
-  if (isset($_POST['c67'])) {
-    $x67v = $ireserver;
-  } else {
-    $x67v = "";
-  }
-
-
-  if (isset($_POST['c78'])) {
-    $x78v = $ireserver;
-  } else {
-    $x78v = "";
-  }
-
-  if (isset($_POST['c89'])) {
-    $x89v = $ireserver;
-  } else {
-    $x89v = "";
-  }
-
-  if (isset($_POST['c910'])) {
-    $x910v = $ireserver;
-  } else {
-    $x910v = "";
-  }
-
-  if (isset($_POST['c1011'])) {
-    $x1011v = $ireserver;
-  } else {
-    $x1011v = "";
-  }
-
-  if (isset($_POST['c1112'])) {
-    $x1112v = $ireserver;
-  } else {
-    $x1112v = "";
-  }
-
-  if (isset($_POST['c121'])) {
-    $x121v = $ireserver;
-  } else {
-    $x121v = "";
-  }
-
-
-  if (isset($_POST['c12'])) {
-    $x12v = $ireserver;
-  } else {
-    $x12v = "";
-  }
-
-  if (isset($_POST['c23'])) {
-    $x23v = $ireserver;
-  } else {
-    $x23v = "";
-  }
-
-  if (isset($_POST['c34'])) {
-    $x34v = $ireserver;
-  } else {
-    $x34v = "";
-  }
-
-  if (isset($_POST['c45'])) {
-    $x45v = $ireserver;
-  } else {
-    $x45v = "";
-  }
-
-  if (isset($_POST['c56'])) {
-    $x56v = $ireserver;
-  } else {
-    $x56v = "";
-  }
-
-
-  // //echo $evtStart;
-  // echo $start_t;
-  // echo $end_t;
-
-
   //for time
   $string_to_date = $d = strtotime($evtStart);
   $new_date = Date('H:i a', $string_to_date);
-
 
 
   // No existing data, proceed with the insertion
@@ -302,6 +212,7 @@ if (isset($_POST['SubButton'])) {
     echo "Insertion failed.";
   } else {
     sendMail("$email");
+    sendPushNotificationForAppointment();
     $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
     header("location: index.php");
   }
@@ -362,21 +273,6 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
             }(document, "script"));
     </script> -->
     <!-- End PushAlert -->
-
-    <!-- Service Worker -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('../../service-worker.js')
-          .then(function(registration) {
-            // Registration was successful
-            console.log('Service Worker registered with scope:', registration.scope);
-          })
-          .catch(function(error) {
-            // Registration failed
-            console.error('Service Worker registration failed:', error);
-          });
-      }
-    </script>
 
   </head>
 
@@ -1396,127 +1292,28 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     datePicker.addEventListener("change", function() {
       const selectedDate = this.value;
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /// Define FormData objects at a higher scope
-    const formData = new FormData();
-
-    // Function to generate a random unique ID (replace with your logic)
-    function getUniqueId() {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (Math.random() * 16) | 0,
-          v = c === 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      });
-    }
-
-    // Function to save the unique ID and endpoint URL to your database (using AJAX)
-    function saveDataToDatabase(uniqueId, endpointURL) {
-      formData.append('uniqueId', uniqueId);
-      formData.append('endpointURL', endpointURL);
-
-      fetch('save-id.php', {
-          method: 'POST',
-          body: formData,
-        })
-        .then(response => response.text())
-        .then(data => {
-          console.log(data); // Handle the response from the server
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }
-
-    function getPushSubscription() {
-      const vapidPublicKey = 'BHcUaTv7fmVW-xAQHXhXeQRplQw22KUhntdVjNFXhPotFOkddFZJyFkEJNtpYWNyFDvQf_I5fBfMEEOMDfBBFNQ';
-
-      navigator.serviceWorker.ready.then(function(registration) {
-        registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: vapidPublicKey
-          })
-          .then(function(subscription) {
-            // Subscription successful, obtain endpoint URL
-            const endpointURL = subscription.endpoint;
-            // Now you can save the unique ID and endpoint URL to your server/database
-            const uniqueId = getUniqueId();
-            saveDataToDatabase(uniqueId, endpointURL);
-          })
-          .catch(function(error) {
-            console.error('Error subscribing to push:', error);
-          });
-      });
-    }
-
-    // Check if the unique ID is already in localStorage
-    const savedUniqueId = localStorage.getItem('uniqueId');
-
-    // Request permission to send notifications
-    if ('Notification' in window) {
-      Notification.requestPermission().then(function(permission) {
-        if (permission === 'granted') {
-          if (savedUniqueId) {
-            // If a unique ID is already saved, use it
-            getPushSubscription();
-          } else {
-            // If not, generate a new unique ID
-            const uniqueId = getUniqueId();
-            // Save the unique ID to your database and localStorage
-            localStorage.setItem('uniqueId', uniqueId);
-            getPushSubscription();
-          }
-        } else {
-          console.warn('Notification permission denied.');
-        }
-      }).catch(function(error) {
-        console.error('Error requesting notification permission:', error);
-      });
-    } else {
-      console.warn('Notifications not supported in this browser.');
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    self.addEventListener('push', function(event) {
-      const options = {
-        body: event.data.text(),
-        icon: 'notification-icon.png',
-      };
-
-      event.waitUntil(
-        self.registration.showNotification('Notification Title', options)
-      );
-    });
   </script>
+
+
+<script>
+  // ** For Push Alert Code ** //
+
+    (pushalertbyiw = window.pushalertbyiw || []).push(['onSuccess', callbackOnSuccess]);
+
+    function callbackOnSuccess(result) {
+        console.log(result.subscriber_id); //will output the user's subscriberId
+        console.log(result.alreadySubscribed); // False means user just Subscribed
+
+    }
+    
+    (pushalertbyiw = window.pushalertbyiw || []).push(['onFailure', callbackOnFailure]);
+
+    function callbackOnFailure(result) {
+        console.log(result.status); //-1 - blocked, 0 - canceled or 1 - unsubscribed
+    }
+</script>
+    
+
 
   </html>
 <?php
