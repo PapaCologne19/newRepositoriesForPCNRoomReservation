@@ -359,7 +359,10 @@ var cal = {
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
           } else if (cal.events[id]["category"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"]){ // && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["usernameSESSION"]
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
-          } else{
+          } else if(cal.events[id]["category"] === "VIEWER"){
+            rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
+          }
+          else{
             rowB.style.display = "none";
           }   
 
@@ -388,7 +391,10 @@ var cal = {
       cal.hfStart.value = cal.events[id]["s"]; //Start Time
       cal.hfEnd.value = cal.events[id]["e"]; //End Time
 
-      if (cal.hfCategory.value = cal.events[id]["category"] === "ADMIN") {
+      if (cal.hfCategory.value = cal.events[id]["category"] === "ADMIN") { // For Admin Viewing of requestor's full name
+        cal.hfRequestor.value = cal.events[id]["fullname"]; //Requestor's Name
+      }
+      if (cal.hfCategory.value = cal.events[id]["category"] === "VIEWER") { // For Viewer Viewing of requestor's full name
         cal.hfRequestor.value = cal.events[id]["fullname"]; //Requestor's Name
       }
       if (cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"] && cal.events[id]["category"] === "USER") {

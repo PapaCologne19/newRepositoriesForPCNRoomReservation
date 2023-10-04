@@ -136,11 +136,17 @@ class Calendar
 
 
 // (G) DATABASE SETTINGS - CHANGE TO YOUR OWN!
+// define("DB_HOST", "localhost");
+// define("DB_NAME", "u685566035_pcn");
+// define("DB_CHARSET", "utf8mb4");
+// define("DB_USER", "u685566035_pcn");
+// define("DB_PASSWORD", "Pcn123456789");
+
 define("DB_HOST", "localhost");
-define("DB_NAME", "u685566035_pcn");
+define("DB_NAME", "calendar");
 define("DB_CHARSET", "utf8mb4");
-define("DB_USER", "u685566035_pcn");
-define("DB_PASSWORD", "Pcn123456789");
+define("DB_USER", "root");
+define("DB_PASSWORD", "");
 
 // (H) NEW CALENDAR OBJECT
 $_CAL = new Calendar();

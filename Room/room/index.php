@@ -167,55 +167,55 @@ if (isset($_POST['SubButton'])) {
     // Handle the case where the insertion query failed
     echo "Insertion failed.";
   } else {
-      
-    
-    $title = "PCN Room Reservation";
-	$message = "PCN Morning, " . $_SESSION['firstname'] . ". You have set an appointment to https://room.pcnpromopro.com/Room/room/save-id.php. Please wait for the approval of Mr. Mike or Mr. Deo";
-	$icon = "images/pcn.png";
-	$url = "https://room.pcnpromopro.com/";
 
-    $fetch = "SELECT * FROM notification WHERE user_id = '" . $_SESSION['id'] . "' ORDER BY id DESC";
+
+    $title = "PCN Room Reservation";
+    $message = "PCN Morning, " . $_SESSION['firstname'] . ". You have set an appointment to PCN Promopro Room Reservation. Please wait for the approval of Mr. Mike or Mr. Deo";
+    $icon = "images/pcn.png";
+    $url = "https://room.pcnpromopro.com/";
+
+
+    $getNewInsertedId = mysqli_insert_id($connect);
+    $fetch = "SELECT * FROM notification WHERE user_id = '" . $_SESSION['id'] . "' AND id = '$getNewInsertId'";
     $fetchResult = $connect->query($fetch);
     $rows = mysqli_fetch_assoc($fetchResult);
 
     $subscriber = $rows['endpoint_URL'];
-    
-	$apiKey = "6e773d10538052e78488f3b6e50cb0c3";
 
-	$curlUrl = "https://api.pushalert.co/rest/v1/send";
+    $apiKey = "6e773d10538052e78488f3b6e50cb0c3";
 
-	//POST variables
-	$post_vars = array(
-		"icon" => $icon,
-		"title" => $title,
-		"message" => $message,
-		"url" => $url,
-        "subscriber" => $subscriber
-	);
+    $curlUrl = "https://api.pushalert.co/rest/v1/send";
 
-	$headers = Array();
-	$headers[] = "Authorization: api_key=".$apiKey;
+    //POST variables
+    $post_vars = array(
+      "icon" => $icon,
+      "title" => $title,
+      "message" => $message,
+      "url" => $url,
+      "subscriber" => $subscriber
+    );
 
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $curlUrl);
-	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    $headers = array();
+    $headers[] = "Authorization: api_key=" . $apiKey;
 
-	$result = curl_exec($ch);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $curlUrl);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-	$output = json_decode($result, true);
-	if($output["success"]) {
-		echo $output["id"]; //Sent Notification ID
-		sendMail("$email");
-        $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
-        header("location: index.php?id=$subscriber");
-	}
-	else {
-		//Others like bad request
-	}
-    
+    $result = curl_exec($ch);
+
+    $output = json_decode($result, true);
+    if ($output["success"]) {
+      echo $output["id"]; //Sent Notification ID
+      sendMail("$email");
+      $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
+      header("location: index.php?id=$subscriber");
+    } else {
+      //Others like bad request
+    }
   }
 }
 
@@ -231,7 +231,18 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <title>Calendar</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-    <meta http-equiv="refresh" content="1800; url=logout.php">
+
+  <?php 
+    $query = "SELECT * FROM user WHERE username = '" . $_SESSION['username'] . "'";
+    $result = $connect->query($query);
+    $rows = $result->fetch_assoc();
+
+    if($rows['category'] === "VIEWER"){
+  ?>
+    <meta http-equiv="refresh" content="10; url=index.php">
+  <?php } else {?>
+    <meta http-equiv="refresh" content="600; url=logout.php">
+  <?php } ?>
 
     <!-- ANDROID + CHROME + APPLE + WINDOWS APP -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -265,17 +276,17 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Julius+Sans+One&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
 
     <!-- PushAlert -->
-      <script type="text/javascript">
-              (function(d, t) {
-                      var g = d.createElement(t),
-                      s = d.getElementsByTagName(t)[0];
-                      g.src = "https://cdn.pushalert.co/integrate_ad8fb1ea176a91f76871fee6fb1143b9.js";
-                      s.parentNode.insertBefore(g, s);
-              }(document, "script"));
-      </script>
+    <script type="text/javascript">
+      (function(d, t) {
+        var g = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        g.src = "https://cdn.pushalert.co/integrate_ad8fb1ea176a91f76871fee6fb1143b9.js";
+        s.parentNode.insertBefore(g, s);
+      }(document, "script"));
+    </script>
     <!-- End PushAlert -->
-    
-    
+
+
 
   </head>
 
@@ -317,9 +328,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <input id="calYear" type="number" value="<?= $yearNow ?>">
         <input id="calNext" type="button" class="mi" value="&gt;">
       </div>
-      <center>
-        <img src="images/pcn.png" alt="" id="image_logo" width="15%">
-      </center>
+      
       <?php
       $query = "SELECT * FROM user WHERE category = '" . $_SESSION['category'] . "'";
       $result = $connect->query($query);
@@ -328,14 +337,26 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       if ($row['category'] === "ADMIN") {
 
       ?>
+        <center>
+          <img src="images/pcn.png" alt="" id="image_logo" width="15%" style="margin-left: -20rem;">
+        </center>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
         <button type="button" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right">Add Appointment</button> &nbsp;
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoom" style="float:right">Add Room</button>&nbsp;
         <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';">Logout</button>
 
       <?php
-      } else {
+      } elseif($row['category'] === "VIEWER"){ ?>
+        <img src="images/pcn.png" alt="" id="image_logo" width="10%">
+        <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
+        <button type="hidden" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right; display: none;">Add Appointment</button> &nbsp;
+        <button type="hidden" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
+        <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';">Logout</button>
+      <?php } else {
       ?>
+        <center>
+          <img src="images/pcn.png" alt="" id="image_logo" width="15%" style="margin-left: -20rem;">
+        </center>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
         <button type="button" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right;">Add Appointment</button> &nbsp;
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
@@ -530,7 +551,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
           <div class="modal-body">
           </div>
 
-          <div class="row" style="margin: 10px !important;">
+          <div class="row" id="form-row" style="margin: 10px !important;">
             <div class="column">
               <div class="card">
                 <h3>Date</h3>
@@ -937,11 +958,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
               </div>
             </div>
           </div>
-
-
-
-
-
+          
   </body>
 
 
@@ -1295,53 +1312,54 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     datePicker.addEventListener("change", function() {
       const selectedDate = this.value;
     });
-
-</script>
-
+  </script>
 
 
 
 
-<script>
+
+  <script>
     (pushalertbyiw = window.pushalertbyiw || []).push(['onSuccess', callbackOnSuccess]);
 
     function callbackOnSuccess(result) {
-        console.log(result.subscriber_id); //will output the user's subscriberId
-        console.log(result.alreadySubscribed); // False means user just Subscribed
-        
-        saveSubscriberIdToDatabase(result.subscriber_id);
+      console.log(result.subscriber_id); //will output the user's subscriberId
+      console.log(result.alreadySubscribed); // False means user just Subscribed
+
+      saveSubscriberIdToDatabase(result.subscriber_id);
     }
-    
+
     (pushalertbyiw = window.pushalertbyiw || []).push(['onFailure', callbackOnFailure]);
 
     function callbackOnFailure(result) {
-        console.log(result.status); //-1 - blocked, 0 - canceled or 1 - unsubscribed
+      console.log(result.status); //-1 - blocked, 0 - canceled or 1 - unsubscribed
     }
-    
-    
+
+
     function saveSubscriberIdToDatabase(subscriberId) {
-        fetch('https://room.pcnpromopro.com/Room/room/save-id.php', {
-            method: 'POST',
-            body: JSON.stringify({ subscriberId: subscriberId }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+      fetch('https://room.pcnpromopro.com/Room/room/save-id.php', {
+          method: 'POST',
+          body: JSON.stringify({
+            subscriberId: subscriberId
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
         })
         .then(response => {
-            if (response.ok) {
-                console.log('Subscriber ID saved to the database.');
-            } else {
-                console.error('Failed to save subscriber ID to the database.');
-            }
+          if (response.ok) {
+            console.log('Subscriber ID saved to the database.');
+          } else {
+            console.error('Failed to save subscriber ID to the database.');
+          }
         })
         .catch(error => {
-            console.error('Error:', error);
+          console.error('Error:', error);
         });
     }
-</script>
-    
-    
-    
+  </script>
+
+
+
 
 
 

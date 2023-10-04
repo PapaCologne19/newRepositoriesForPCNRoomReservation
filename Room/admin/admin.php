@@ -20,7 +20,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
         <!-- Sweet Alert and Jquery -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 
         <!-- Google Fonts -->
@@ -353,7 +353,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
                     var approveID = $(this).closest("tr").find('.approveID').val();
 
-                    swal({
+                    Swal.fire({
                             title: "Are you sure you want to approve this user?",
                             icon: "warning",
                             buttons: true,
@@ -371,7 +371,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                     },
                                     success: function(response) {
 
-                                        swal("Successfully Approved!", {
+                                        Swal.fire("Successfully Approved!", {
                                             icon: "success",
                                         }).then((result) => {
                                             location.reload();
@@ -394,7 +394,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
                     var rejectID = $(this).closest("tr").find('.rejectID').val();
 
-                    swal({
+                    Swal.fire({
                             title: "Are you sure you want to reject this user?",
                             icon: "warning",
                             buttons: true,
@@ -412,7 +412,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                     },
                                     success: function(response) {
 
-                                        swal("Successfully Rejected!", {
+                                        Swal.fire("Successfully Rejected!", {
                                             icon: "success",
                                         }).then((result) => {
                                             location.reload();
@@ -438,7 +438,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
                     var deleteID = $(this).closest("tr").find('.deleteID').val();
 
-                    swal({
+                    Swal.fire({
                             title: "Are you sure you want to delete this room?",
                             icon: "warning",
                             buttons: true,
@@ -456,7 +456,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                     },
                                     success: function(response) {
 
-                                        swal("Successfully Deleted!", {
+                                        Swal.fire("Successfully Deleted!", {
                                             icon: "success",
                                         }).then((result) => {
                                             location.reload();

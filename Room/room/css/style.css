@@ -347,6 +347,30 @@ element.style {
   }
 }
 
+@media screen and (max-width: 1200px) and (min-width: 601px){
+  #form-row{
+    display: flex;
+    flex-direction: column !important;
+    width: 100%;
+  }
+  .column{
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .card{
+    width: 50%;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 991px) and (min-width: 601px){
+  .card{
+    width: 80%;
+  }
+}
 /* Responsive columns */
 @media screen and (max-width: 600px) {
   .column {
