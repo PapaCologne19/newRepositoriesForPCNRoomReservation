@@ -5,6 +5,10 @@ date_default_timezone_set('Asia/Hong_Kong');
 $date = date('D : F d, Y');
 $date1 = date('Y-m-d');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 require 'vendor/phpmailer/phpmailer/src/Exception.php';
 require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require 'vendor/phpmailer/phpmailer/src/SMTP.php';
@@ -13,10 +17,6 @@ require 'vendor/phpmailer/phpmailer/src/SMTP.php';
 require 'vendor/autoload.php';
 function sendMail($email)
 {
-  use PHPMailer\PHPMailer\PHPMailer;
-  use PHPMailer\PHPMailer\SMTP;
-  use PHPMailer\PHPMailer\Exception;
-
   $mail = new PHPMailer();
 
   try {
@@ -51,54 +51,6 @@ function sendMail($email)
 }
 
 
-function sendPushNotificationForAppointment(){
-  $title = "PCN Room Reservation";
-	$message = "PCN Morning, " . $_SESSION['firstname'] . ". You have set an appointment to https://pcnpromopro.alegariocurehms.com/. Please wait for the approval of Mr. Mike or Mr. Deo";
-	$icon = "images/pcn.png";
-	$url = "https://pcnpromopro.alegariocurehms.com/";
-
-  $fetch = "SELECT endpoint_URL FROM notification WHERE user_id = '" . $_SESSION['id'] . "'";
-  $fetchResult = $connect->query($fetch);
-  $row = $fetchResult->fetch_assoc();
-
-  $subscriber = $row['endpoint_URL'];
-	
-	$apiKey = "39b680c0c9edd0d26d73316d51839ac2";
-
-	$curlUrl = "https://api.pushalert.co/rest/v1/send";
-
-	//POST variables
-	$post_vars = array(
-		"icon" => $icon,
-		"title" => $title,
-		"message" => $message,
-		"url" => $url,
-        "subscriber" => $subscriber
-	);
-
-	$headers = Array();
-	$headers[] = "Authorization: api_key=".$apiKey;
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $curlUrl);
-	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-	$result = curl_exec($ch);
-
-	$output = json_decode($result, true);
-	if($output["success"]) {
-		echo $output["id"]; //Sent Notification ID
-	}
-	else {
-		//Others like bad request
-	}
-}
-
-
-
 if (isset($_POST['verify'])) {
   echo $date1;
 }
@@ -122,7 +74,7 @@ if (isset($_POST['SubButton'])) {
 
   $others_rem = $_POST['others_rem'];
   $status = "pending";
-
+  // $other_equipment = $_POST['equi_others'];
 
   if (isset($_POST['cprojector'])) {
     $cprojector = 1;
@@ -173,6 +125,7 @@ if (isset($_POST['SubButton'])) {
   }
 
 
+
   if (isset($_POST['c_allday'])) {
     // // Checkbox is selected
     // echo "c_allday selected";
@@ -194,9 +147,12 @@ if (isset($_POST['SubButton'])) {
     $c_alldayv = "x";
   }
 
+
+
   //for time
   $string_to_date = $d = strtotime($evtStart);
   $new_date = Date('H:i a', $string_to_date);
+
 
 
   // No existing data, proceed with the insertion
@@ -211,10 +167,55 @@ if (isset($_POST['SubButton'])) {
     // Handle the case where the insertion query failed
     echo "Insertion failed.";
   } else {
-    sendMail("$email");
-    sendPushNotificationForAppointment();
-    $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
-    header("location: index.php");
+      
+    
+    $title = "PCN Room Reservation";
+	$message = "PCN Morning, " . $_SESSION['firstname'] . ". You have set an appointment to https://room.pcnpromopro.com/Room/room/save-id.php. Please wait for the approval of Mr. Mike or Mr. Deo";
+	$icon = "images/pcn.png";
+	$url = "https://room.pcnpromopro.com/";
+
+    $fetch = "SELECT * FROM notification WHERE user_id = '" . $_SESSION['id'] . "' ORDER BY id DESC";
+    $fetchResult = $connect->query($fetch);
+    $rows = mysqli_fetch_assoc($fetchResult);
+
+    $subscriber = $rows['endpoint_URL'];
+    
+	$apiKey = "6e773d10538052e78488f3b6e50cb0c3";
+
+	$curlUrl = "https://api.pushalert.co/rest/v1/send";
+
+	//POST variables
+	$post_vars = array(
+		"icon" => $icon,
+		"title" => $title,
+		"message" => $message,
+		"url" => $url,
+        "subscriber" => $subscriber
+	);
+
+	$headers = Array();
+	$headers[] = "Authorization: api_key=".$apiKey;
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $curlUrl);
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+	$result = curl_exec($ch);
+
+	$output = json_decode($result, true);
+	if($output["success"]) {
+		echo $output["id"]; //Sent Notification ID
+		sendMail("$email");
+        $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
+        header("location: index.php?id=$subscriber");
+	}
+	else {
+		//Others like bad request
+	}
+    
   }
 }
 
@@ -264,15 +265,17 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Julius+Sans+One&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
 
     <!-- PushAlert -->
-    <!-- <script type="text/javascript">
-            (function(d, t) {
-                    var g = d.createElement(t),
-                    s = d.getElementsByTagName(t)[0];
-                    g.src = "https://cdn.pushalert.co/integrate_380cf0527b74bfea4b9b8da3817d55a1.js";
-                    s.parentNode.insertBefore(g, s);
-            }(document, "script"));
-    </script> -->
+      <script type="text/javascript">
+              (function(d, t) {
+                      var g = d.createElement(t),
+                      s = d.getElementsByTagName(t)[0];
+                      g.src = "https://cdn.pushalert.co/integrate_ad8fb1ea176a91f76871fee6fb1143b9.js";
+                      s.parentNode.insertBefore(g, s);
+              }(document, "script"));
+      </script>
     <!-- End PushAlert -->
+    
+    
 
   </head>
 
@@ -1292,18 +1295,21 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     datePicker.addEventListener("change", function() {
       const selectedDate = this.value;
     });
-  </script>
+
+</script>
+
+
+
 
 
 <script>
-  // ** For Push Alert Code ** //
-
     (pushalertbyiw = window.pushalertbyiw || []).push(['onSuccess', callbackOnSuccess]);
 
     function callbackOnSuccess(result) {
         console.log(result.subscriber_id); //will output the user's subscriberId
         console.log(result.alreadySubscribed); // False means user just Subscribed
-
+        
+        saveSubscriberIdToDatabase(result.subscriber_id);
     }
     
     (pushalertbyiw = window.pushalertbyiw || []).push(['onFailure', callbackOnFailure]);
@@ -1311,8 +1317,32 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     function callbackOnFailure(result) {
         console.log(result.status); //-1 - blocked, 0 - canceled or 1 - unsubscribed
     }
+    
+    
+    function saveSubscriberIdToDatabase(subscriberId) {
+        fetch('https://room.pcnpromopro.com/Room/room/save-id.php', {
+            method: 'POST',
+            body: JSON.stringify({ subscriberId: subscriberId }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Subscriber ID saved to the database.');
+            } else {
+                console.error('Failed to save subscriber ID to the database.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 </script>
     
+    
+    
+
 
 
   </html>

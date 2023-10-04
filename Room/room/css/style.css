@@ -143,15 +143,6 @@ input[type="checkbox"]:disabled::after {
   border: #000 !important;
 }
 
-/* Responsive columns */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-}
-
 /* Style the counter cards */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -278,19 +269,6 @@ element.style {
   display: inline !important;
 }
 
-@media only screen and (max-width: 600px) {
-  .card {
-    height: 65vh;
-  }
-  .loginButton{
-    width: 100%;
-  }
-}
-
-
-
-
-
 .cards {
   perspective: 1000px;
   width: 350px;
@@ -368,3 +346,19 @@ element.style {
     transform: rotateZ(360deg);
   }
 }
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+   .card {
+    height: 100%;
+  }
+  .loginButton{
+    width: 100%;
+  }
+}
+

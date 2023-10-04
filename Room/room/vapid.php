@@ -4,7 +4,7 @@
 	$message = "Hello pp, Sir.";
 	$icon = "images/pcn.png";
 	$url = "https://pcnpromopro.alegariocurehms.com/";
-    $subscriber = "pIta55boQcwNBSIgVNZ48/A==";
+    $subscriber = "pFmHFZKdSIz6m9Mleiyap0A==";
 	
 	$apiKey = "39b680c0c9edd0d26d73316d51839ac2";
 

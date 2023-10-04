@@ -169,7 +169,7 @@ if (isset($_POST['register'])) {
                                         <div class="col-sm-6 col-sm-offset-3">
                                             <button type="submit" name="login-submit" id="login-submit" tabindex="3" class="form-control btn btn-login" value="LOGIN"><i class="fas fa-sign-in-alt"></i> Login</button>
                                         </div>
-                                        <div class="col-md-6 pt-4 pb-4">
+                                        <div class="col-sm-6 col-md-6 pt-4 pb-4">
                                             <a href="javascript:void(0)" class="registerAccount link" style="color: #BABABA; ">Register Account here</a>
                                         </div>
                                     </form>
@@ -268,37 +268,6 @@ if (isset($_POST['register'])) {
 
         });
     });
-
-
-
-    // Function to generate a random unique ID (you can replace this with your own logic)
-    function getUniqueId() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = (Math.random() * 16) | 0,
-                v = c === 'x' ? r : (r & 0x3) | 0x8;
-            return v.toString(16);
-        });
-    }
-
-    // Function to save the unique ID to your database (using AJAX)
-    function saveToDatabase(uniqueId) {
-        const formData = new FormData();
-        formData.append('uniqueId', uniqueId);
-
-        // Send the unique ID to the PHP script using AJAX
-        fetch('save-unique-id.php', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Handle the response from the server (e.g., display a message to the user)
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
 </script>
 
 </html>
