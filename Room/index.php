@@ -53,7 +53,8 @@ if (isset($_POST['login-submit'])) {
 if (isset($_POST['register'])) {
     $id_number = mysqli_real_escape_string($connect, $_POST['idnumber']);
     $username = mysqli_real_escape_string($connect, $_POST['username']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = mysqli_real_escape_string($connect, $_POST['password']);
+    $passwordHashed = password_hash($password, PASSWORD_DEFAULT);
     $confirmPassword = mysqli_real_escape_string($connect, $_POST['confirmpassword']);
     $firstname = mysqli_real_escape_string($connect, $_POST['firstName']);
     $middlename = mysqli_real_escape_string($connect, $_POST['middleName']);
@@ -65,7 +66,7 @@ if (isset($_POST['register'])) {
 
     if($password === $confirmPassword){
         $query2 = "INSERT INTO user(id_number, username, password, firstname, middlename, lastname, email, contactNumber, division, category) 
-        VALUES('$id_number', '$username', '$password', '$firstname', '$middlename', '$lastname', '$email', '$contact_number', '$division', '$category')";
+        VALUES('$id_number', '$username', '$passwordHashed', '$firstname', '$middlename', '$lastname', '$email', '$contact_number', '$division', '$category')";
         $result2 = $connect->query($query2);
 
         if ($result2) {
@@ -87,12 +88,6 @@ if (isset($_POST['register'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="room/images/pcn.png" type="image/x-icon">
-    <!-- <link rel="stylesheet" href="bootstrap/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap/bootstrap/css/bootstrap.min.css">
-    <script src="bootstrap/bootstrap/js/bootstrap.js"></script>
-    <script src="bootstrap/bootstrap/js/bootstrap.min.js"></script>
-    <script src="room/strap/jquery.min.js"></script>
-    <script src="room/strap/bootstrap.min.js"></script> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -153,6 +148,11 @@ if (isset($_POST['register'])) {
     ?>
     <center>
         <div class="container">
+
+            <!-- <div class="row justify-content-start">
+                <img src="room/images/cute.jpg" alt="" width="10%" style="width: 10%;">
+            </div> -->
+
             <div class="row justify-content-center">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel">

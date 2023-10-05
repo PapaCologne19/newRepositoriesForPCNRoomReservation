@@ -30,14 +30,27 @@ function sendMail($email)
     $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
 
     // Recipients
-    $mail->setFrom('jphigomera0619@gmail.com', 'PCN Promopro Inc.');
+    $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
     $mail->addAddress($email, '');  // Add a recipient
 
     // Content
     $mail->isHTML(true);  // Set email format to HTML
-    $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    $mail->Subject = 'PCN Room Reservation';
+    $mail->Body    = '<center>
+                        <div class="container" style="margin: 10rem;">
+                            <div class="logo">
+                                <img src="images/pcn.png" alt="" width="15%">
+                            </div>
+                            <div class="div-message" style="margin:0 20rem;">
+                                <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $_SESSION['firstname'] . ', </h3>
+                                <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Your room reservation has been successfully submitted. Our team is now processing your request, and we will notify you about the status of your reservation. Thank you and have a good day.</p>
+                                  <br>
+                              </div>
+                              <div class="footer-message" style="margin: 0 16rem;">
+                                  <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Best Regards, MIS Department</p>
+                              </div>
+                          </div>
+                      </center>';
 
     // Send the email
     if (!$mail->send()) {
@@ -147,6 +160,134 @@ if (isset($_POST['SubButton'])) {
     $c_alldayv = "x";
   }
 
+  if (isset($_POST['c67'])) {
+    $start_t = "6am";
+  } else if (!isset($_POST['c67']) && (isset($_POST['c78']))) {
+    $start_t = "7am";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (isset($_POST['c89'])))) {
+    $start_t = "8am";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (isset($_POST['c910'])))) {
+    $start_t = "9am";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (isset($_POST['c1011'])))) {
+    $start_t = "10am";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (isset($_POST['c1112'])))) {
+    $start_t = "11am";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (isset($_POST['c121'])))) {
+    $start_t = "12nn";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (isset($_POST['c12'])))) {
+    $start_t = "1pm";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (isset($_POST['c23'])))) {
+    $start_t = "2pm";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (isset($_POST['c34'])))) {
+    $start_t = "3pm";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (isset($_POST['c45'])))) {
+    $start_t = "4pm";
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (isset($_POST['c56'])))) {
+    $start_t = "5pm";
+  }
+
+
+
+
+  if (isset($_POST['c56'])) {
+    $end_t = "6pm";
+  } else if ((isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+    $end_t = "5pm";
+  } else if ((isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+    $end_t = "4pm";
+  } else if ((isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+    $end_t = "3pm";
+  } else if ((isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+    $end_t = "2pm";
+  } else if ((isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+    $end_t = "1pm";
+  } else if ((isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+    $end_t = "12nn";
+  } else if ((isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+    $end_t = "11am";
+  } else if ((isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+    $end_t = "10am";
+  } else if ((isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+    $end_t = "9am";
+  } else if ((isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56'])))) {
+    $end_t = "8am";
+  } else if (isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56'])))) {
+    $end_t = "7am";
+  }
+
+  if (isset($_POST['c67'])) {
+    $x67v = $ireserver;
+  } else {
+    $x67v = "";
+  }
+
+
+  if (isset($_POST['c78'])) {
+    $x78v = $ireserver;
+  } else {
+    $x78v = "";
+  }
+
+  if (isset($_POST['c89'])) {
+    $x89v = $ireserver;
+  } else {
+    $x89v = "";
+  }
+
+  if (isset($_POST['c910'])) {
+    $x910v = $ireserver;
+  } else {
+    $x910v = "";
+  }
+
+  if (isset($_POST['c1011'])) {
+    $x1011v = $ireserver;
+  } else {
+    $x1011v = "";
+  }
+
+  if (isset($_POST['c1112'])) {
+    $x1112v = $ireserver;
+  } else {
+    $x1112v = "";
+  }
+
+  if (isset($_POST['c121'])) {
+    $x121v = $ireserver;
+  } else {
+    $x121v = "";
+  }
+
+
+  if (isset($_POST['c12'])) {
+    $x12v = $ireserver;
+  } else {
+    $x12v = "";
+  }
+
+  if (isset($_POST['c23'])) {
+    $x23v = $ireserver;
+  } else {
+    $x23v = "";
+  }
+
+  if (isset($_POST['c34'])) {
+    $x34v = $ireserver;
+  } else {
+    $x34v = "";
+  }
+
+  if (isset($_POST['c45'])) {
+    $x45v = $ireserver;
+  } else {
+    $x45v = "";
+  }
+
+  if (isset($_POST['c56'])) {
+    $x56v = $ireserver;
+  } else {
+    $x56v = "";
+  }
 
 
   //for time
@@ -158,8 +299,8 @@ if (isset($_POST['SubButton'])) {
   // No existing data, proceed with the insertion
   $query = "INSERT INTO events (user_id, evt_start, evt_end, evt_text, evt_color, evt_bg, qty, projector, whiteboard, ext_cord, sound, sound_simple, sound_advance, basic_lights,
     cleanup, cleanup_before, cleanup_after, others, others1, x67, x78, x89, x910, x1011, x1112, x121, x12, x23, x34, x45, x56, room_orientation, room_orientation_other, username, fullName, user_category) 
-    VALUES ('$userID','$evtStart', '$evtEnd', '$roomko', '#000000', '#ffff00', '$qty', '$cprojector', '$cwhiteboard', '$cextn', 'sound', '$radios', '$radioa', '$basicl',
-    'cleanup', '$c_before', '$c_after', '$other_equipment', '$others_rem', '$x67v', '$x78v', '$x89v', '$x910v', '$x1011v', '$x1112v', '$x121v', '$x12v', '$x23v', '$x34v', '$x45v', '$x56v', '$room_orientation', '$room_orientation_other', '$username', '$fullname', '$userCategory')";
+    VALUES ('$userID','$evtStart', '$evtEnd', '$roomko', '#000000', '#f1f100', '$qty', '$cprojector', '$cwhiteboard', '$cextn', 'sound', '$radios', '$radioa', '$basicl',
+    'cleanup', '$c_before', '$c_after', '$others_rem', '$others_rem', '$x67v', '$x78v', '$x89v', '$x910v', '$x1011v', '$x1112v', '$x121v', '$x12v', '$x23v', '$x34v', '$x45v', '$x56v', '$room_orientation', '$room_orientation_other', '$username', '$fullname', '$userCategory')";
 
   $result = mysqli_query($connect, $query);
 
@@ -170,13 +311,13 @@ if (isset($_POST['SubButton'])) {
 
 
     $title = "PCN Room Reservation";
-    $message = "PCN Morning, " . $_SESSION['firstname'] . ". You have set an appointment to PCN Promopro Room Reservation. Please wait for the approval of Mr. Mike or Mr. Deo";
+    $message = 'PCN Morning, '. $_SESSION['firstname']. '. You have successfully set an appointment. Kindly please wait for the approval of Mr. Deo or Mr. Mike. Thank you.';
     $icon = "images/pcn.png";
     $url = "https://room.pcnpromopro.com/";
 
 
     $getNewInsertedId = mysqli_insert_id($connect);
-    $fetch = "SELECT * FROM notification WHERE user_id = '" . $_SESSION['id'] . "' AND id = '$getNewInsertId'";
+    $fetch = "SELECT * FROM notification WHERE user_id = '" . $_SESSION['id'] . "'";
     $fetchResult = $connect->query($fetch);
     $rows = mysqli_fetch_assoc($fetchResult);
 
@@ -232,17 +373,17 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
 
-  <?php 
+    <?php
     $query = "SELECT * FROM user WHERE username = '" . $_SESSION['username'] . "'";
     $result = $connect->query($query);
     $rows = $result->fetch_assoc();
 
-    if($rows['category'] === "VIEWER"){
-  ?>
-    <meta http-equiv="refresh" content="10; url=index.php">
-  <?php } else {?>
-    <meta http-equiv="refresh" content="600; url=logout.php">
-  <?php } ?>
+    if ($rows['category'] === "VIEWER") {
+    ?>
+      <meta http-equiv="refresh" content="10; url=index.php">
+    <?php } else { ?>
+      <meta http-equiv="refresh" content="600; url=logout.php">
+    <?php } ?>
 
     <!-- ANDROID + CHROME + APPLE + WINDOWS APP -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -328,7 +469,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <input id="calYear" type="number" value="<?= $yearNow ?>">
         <input id="calNext" type="button" class="mi" value="&gt;">
       </div>
-      
+
       <?php
       $query = "SELECT * FROM user WHERE category = '" . $_SESSION['category'] . "'";
       $result = $connect->query($query);
@@ -346,7 +487,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';">Logout</button>
 
       <?php
-      } elseif($row['category'] === "VIEWER"){ ?>
+      } elseif ($row['category'] === "VIEWER") { ?>
         <img src="images/pcn.png" alt="" id="image_logo" width="10%">
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
         <button type="hidden" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right; display: none;">Add Appointment</button> &nbsp;
@@ -958,7 +1099,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
               </div>
             </div>
           </div>
-          
+
   </body>
 
 
