@@ -36,8 +36,6 @@ var cal = {
       .then(res => res.text())
       .then(txt => onload(txt))
       .catch(err => console.error(err));
- 
-
   },
 
   // (C) INIT CALENDAR
@@ -284,12 +282,6 @@ var cal = {
           rowA = document.getElementById("calRow" + r);
           rowB = document.createElement("div");
           rowB.className = "calRowEvt";
-
-
-
-
-
-
 
           // Assuming you have fetched the data from PHP and stored it in cal.events[id]
           const selectedColumns = ["x67", "x78", "x89", "x910", "x1011", "x1112", "x121", "x12", "x23", "x34", "x45", "x56"];
@@ -564,11 +556,7 @@ var cal = {
     }
     cal.hFormWrap.show();
   },
-
-
-
-
-
+  
 
   // (H) SAVE EVENT
   save: () => {

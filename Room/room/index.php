@@ -39,7 +39,7 @@ function sendMail($email)
     $mail->Body    = '<center>
                         <div class="container" style="margin: 10rem;">
                             <div class="logo">
-                                <img src="images/pcn.png" alt="" width="15%">
+                                <img src="/images/pcn.png" alt="" width="15%">
                             </div>
                             <div class="div-message" style="margin:0 20rem;">
                                 <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $_SESSION['firstname'] . ', </h3>

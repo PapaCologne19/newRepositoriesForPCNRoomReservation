@@ -2,9 +2,7 @@
   require "2-cal-lib.php";
 
 if (isset($_POST["req"])) {
-  // (A) LOAD LIBRARY
-
-  
+  // (A) LOAD LIBRARY  
   switch ($_POST["req"]) {
     // (B) GET DATES & EVENTS FOR SELECTED PERIOD
     case "get":
@@ -25,3 +23,7 @@ if (isset($_POST["req"])) {
       )  ? "OK" : $_CAL->error;
       break;
 }}
+
+
+
+

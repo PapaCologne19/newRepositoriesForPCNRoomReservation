@@ -1,5 +1,17 @@
 <?php
 session_start();
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/phpmailer/phpmailer/src/Exception.php';
+require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'vendor/phpmailer/phpmailer/src/SMTP.php';
+
+// Load Composer's autoloader
+require 'vendor/autoload.php';
+
 class Calendar
 {
   // (A) CONSTRUCTOR - CONNECT TO DATABASE
@@ -38,25 +50,65 @@ class Calendar
   }
 
 
-
-
   // (D) SAVE EVENT
-  function save($start, $end, $txt, $color, $bg , $id = null)
+  function save($start, $end, $txt, $color, $bg, $id = null)
   {
-      $bg = "#009900";
+    $bg = "#009900";
 
     // (D2) RUN SQL
     if ($id === null) {
       $sql = "INSERT INTO `events` (`evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`) VALUES (?,?,?,?,?)";
       $data = [$start, $end, strip_tags($txt), $color, $bg];
     } else {
+
+      $mail = new PHPMailer();
+      $email = $_SESSION['email'];
+
+      try {
+        // Server settings
+        $mail->isSMTP();  // Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
+        $mail->SMTPAuth   = true;  // Enable SMTP authentication
+        $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
+        $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
+        $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
+
+        // Recipients
+        $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
+        $mail->addAddress($email, '');  // Add a recipient
+
+        // Content
+        $mail->isHTML(true);  // Set email format to HTML
+        $mail->Subject = 'PCN Room Reservation';
+        $mail->Body    = '<center>
+                        <div class="container" style="margin: 10rem;">
+                            <div class="logo">
+                                <img src="/images/pcn.png" alt="" width="15%">
+                            </div>
+                            <div class="div-message" style="margin:0 20rem;">
+                                <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $_SESSION['firstname'] . ', </h3>
+                                <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Your room reservation has been successfully submitted. Our team is now processing your request, and we will notify you about the status of your reservation. Thank you and have a good day.</p>
+                                  <br>
+                              </div>
+                              <div class="footer-message" style="margin: 0 16rem;">
+                                  <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Best Regards, MIS Department</p>
+                              </div>
+                          </div>
+                      </center>';
+
+        // Send the email
+        if (!$mail->send()) {
+          echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        } else {
+          echo "Message has been sent";
+        }
+      } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+      }
       $sql = "UPDATE `events` SET `evt_start`= ?, `evt_end`= ?, `evt_text`= ?, `evt_color`= ?, `evt_bg`= ?  
       WHERE `evt_id`= ?";
       $data = [$start, $end, strip_tags($txt), $color, $bg, $id];
-
-      // $sql = "UPDATE `events` SET `evt_start`=?, `evt_end`=?, `evt_text`=?, `evt_color`=?, `evt_bg`=? WHERE `evt_id`=?";
-      // $data = [$start, $end, strip_tags($txt), $color, $bg, $id];
-
     }
     $this->query($sql, $data);
 
@@ -79,9 +131,6 @@ class Calendar
     $this->query($sql, $data);
     return true;
   }
-
-
-
 
 
   // (F) GET EVENTS FOR SELECTED PERIOD
@@ -111,7 +160,7 @@ class Calendar
     while ($r = $this->stmt->fetch()) {
       $events[$r["evt_id"]] = [
         "s" => $r["evt_start"], "e" => $r["evt_end"],
-        "c" => $r["evt_color"], "b" => $r["evt_bg"], 
+        "c" => $r["evt_color"], "b" => $r["evt_bg"],
         "t" => $r["evt_text"], "q" => $r["qty"], "time" => $r["allday"],
         "projector" => $r["projector"], "whiteboard" => $r["whiteboard"],
         "ext_cord" => $r["ext_cord"], "sound" => $r["sound"],
@@ -120,13 +169,13 @@ class Calendar
         "cleanup_before" => $r["cleanup_before"], "cleanup_after" => $r["cleanup_after"],
         "room_orientation" => $r["room_orientation"], "other_equipment" => $r['others1'], "other_room_orientation" => $r['room_orientation_other'],
 
-        "x67" => $r["x67"], "x78" => $r["x78"], "x89" => $r["x89"], "x910" => $r["x910"], 
-        "x1011" => $r["x1011"], "x1112" => $r["x1112"], "x121" => $r["x121"], "x12" => $r["x12"], 
+        "x67" => $r["x67"], "x78" => $r["x78"], "x89" => $r["x89"], "x910" => $r["x910"],
+        "x1011" => $r["x1011"], "x1112" => $r["x1112"], "x121" => $r["x121"], "x12" => $r["x12"],
         "x23" => $r["x23"], "x34" => $r["x34"], "x45" => $r["x45"], "x56" => $r["x56"],
         "firstname" => $firstname, "lastname" => $lastname, "userCategory" => $r['user_category'], "userID" => $r["user_id"],
         "category" => $category, "usernameSESSION" => $username, "userIDSESSION" => $user_id, "fullname" => $r["fullName"], "username" => $r['username']
-        
-       ];
+
+      ];
     }
 
     // (F3) RESULTS
@@ -142,13 +191,17 @@ class Calendar
 // define("DB_USER", "u685566035_pcn");
 // define("DB_PASSWORD", "Pcn123456789");
 
+// define("DB_HOST", "localhost");
+// define("DB_NAME", "calendar");
+// define("DB_CHARSET", "utf8mb4");
+// define("DB_USER", "root");
+// define("DB_PASSWORD", "");
+
 define("DB_HOST", "localhost");
-define("DB_NAME", "calendar");
+define("DB_NAME", "msileen_room");
 define("DB_CHARSET", "utf8mb4");
-define("DB_USER", "root");
-define("DB_PASSWORD", "");
+define("DB_USER", "msileen_james");
+define("DB_PASSWORD", "James2023");
 
 // (H) NEW CALENDAR OBJECT
 $_CAL = new Calendar();
-
-
