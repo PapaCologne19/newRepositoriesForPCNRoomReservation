@@ -51,9 +51,9 @@ class Calendar
 
 
   // (D) SAVE EVENT
-  function save($start, $end, $txt, $color, $bg, $id = null)
+  function save($start, $end, $txt, $color, $bg, $id)
   {
-    $bg = "#009900";
+    $bg = "#3c763d";
 
     // (D2) RUN SQL
     if ($id === null) {
@@ -61,54 +61,70 @@ class Calendar
       $data = [$start, $end, strip_tags($txt), $color, $bg];
     } else {
 
-      $mail = new PHPMailer();
-      $email = $_SESSION['email'];
+    //   $emailQuery = "SELECT * FROM `user` WHERE `id` = ?";
+    //   $this->query($emailQuery, [$id]);
+    //   $fetch = $this->stmt->fetch();
+    //   $email = $fetch['email'];
 
-      try {
-        // Server settings
-        $mail->isSMTP();  // Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
-        $mail->SMTPAuth   = true;  // Enable SMTP authentication
-        $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
-        $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
-        $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
 
-        // Recipients
-        $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
-        $mail->addAddress($email, '');  // Add a recipient
+    //   // Sending mail
+    //   $mail = new PHPMailer();
+    
+    //   try {
+    //     // Server settings
+    //     $mail->isSMTP();  // Send using SMTP
+    //     $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
+    //     $mail->SMTPAuth   = true;  // Enable SMTP authentication
+    //     $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
+    //     $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
+    //     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
+    //     $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
 
-        // Content
-        $mail->isHTML(true);  // Set email format to HTML
-        $mail->Subject = 'PCN Room Reservation';
-        $mail->Body    = '<center>
-                        <div class="container" style="margin: 10rem;">
-                            <div class="logo">
-                                <img src="/images/pcn.png" alt="" width="15%">
-                            </div>
-                            <div class="div-message" style="margin:0 20rem;">
-                                <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $_SESSION['firstname'] . ', </h3>
-                                <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Your room reservation has been successfully submitted. Our team is now processing your request, and we will notify you about the status of your reservation. Thank you and have a good day.</p>
-                                  <br>
-                              </div>
-                              <div class="footer-message" style="margin: 0 16rem;">
-                                  <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Best Regards, MIS Department</p>
-                              </div>
-                          </div>
-                      </center>';
+    //     // Recipients
+    //     $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
+    //     $mail->addAddress($email, $_SESSION['firstname']);  // Add a recipient
 
-        // Send the email
-        if (!$mail->send()) {
-          echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-        } else {
-          echo "Message has been sent";
-        }
-      } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-      }
+    //     // Content
+    //     $mail->isHTML(true);  // Set email format to HTML
+    //     $mail->Subject = 'PCN Room Reservation';
+    //     $mail->Body    = '<center>
+    //                         <div class="container" style="margin: 10rem;">
+    //                           <div class="logo">
+    //                               <img src="/images/pcn.png" alt="" width="15%">
+    //                           </div>
+    //                           <div class="div-message" style="margin:0 20rem;">
+    //                               <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $_SESSION['firstname'] . ', </h3>
+    //                               <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Your room reservation has been approved. You can now use the room. Thank you and have a good day.</p>
+    //                                 <br>
+    //                             </div>
+    //                             <div class="footer-message" style="margin: 0 16rem;">
+    //                                 <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Best Regards, MIS Department</p>
+    //                             </div>
+    //                         </div>
+    //                       </center>';
+
+    //     // Send the email
+    //     if (!$mail->send()) {
+    //       echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";        
+    //       echo "Email Address: ". $email;
+    //     } else {
+    //       // Updating the data 
+    //       $sql = "UPDATE `events` SET `evt_start`= ?, `evt_end`= ?, `evt_text`= ?, `evt_color`= ?, `evt_bg`= ?  
+    //       WHERE `evt_id`= ?";
+    //       $data = [$start, $end, strip_tags($txt), $color, $bg, $id];
+    //       $_SESSION['successMessage'] = "Message has been sent";
+    //     }
+    // $this->query($sql, $data);
+
+    //   } catch (Exception $e) {
+    //     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    //     echo "Email Address: ". $email;
+    //   }
+
       $sql = "UPDATE `events` SET `evt_start`= ?, `evt_end`= ?, `evt_text`= ?, `evt_color`= ?, `evt_bg`= ?  
-      WHERE `evt_id`= ?";
-      $data = [$start, $end, strip_tags($txt), $color, $bg, $id];
+          WHERE `evt_id`= ?";
+          $data = [$start, $end, strip_tags($txt), $color, $bg, $id];
+          $_SESSION['successMessage'] = "Message has been sent";
     }
     $this->query($sql, $data);
 
@@ -183,7 +199,6 @@ class Calendar
   }
 }
 
-
 // (G) DATABASE SETTINGS - CHANGE TO YOUR OWN!
 // define("DB_HOST", "localhost");
 // define("DB_NAME", "u685566035_pcn");
@@ -191,17 +206,17 @@ class Calendar
 // define("DB_USER", "u685566035_pcn");
 // define("DB_PASSWORD", "Pcn123456789");
 
-// define("DB_HOST", "localhost");
-// define("DB_NAME", "calendar");
-// define("DB_CHARSET", "utf8mb4");
-// define("DB_USER", "root");
-// define("DB_PASSWORD", "");
-
 define("DB_HOST", "localhost");
-define("DB_NAME", "msileen_room");
+define("DB_NAME", "calendar");
 define("DB_CHARSET", "utf8mb4");
-define("DB_USER", "msileen_james");
-define("DB_PASSWORD", "James2023");
+define("DB_USER", "root");
+define("DB_PASSWORD", "");
+
+// define("DB_HOST", "localhost");
+// define("DB_NAME", "msileen_room");
+// define("DB_CHARSET", "utf8mb4");
+// define("DB_USER", "msileen_james");
+// define("DB_PASSWORD", "James2023");
 
 // (H) NEW CALENDAR OBJECT
 $_CAL = new Calendar();

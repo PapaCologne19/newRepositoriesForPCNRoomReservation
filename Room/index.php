@@ -148,41 +148,35 @@ if (isset($_POST['register'])) {
     ?>
     <center>
         <div class="container">
-
-            <!-- <div class="row justify-content-start">
-                <img src="room/images/cute.jpg" alt="" width="10%" style="width: 10%;">
-            </div> -->
-
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-md-offset-3">
+           <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-md-offset-3" style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
                     <div class="panel">
                         <div class="panel-heading pt-3">
-                            <img src="room/images/pcn.png" alt="PCN LOGO" class="img-responsive" width="15%">
+                            <img src="room/images/pcn.png" alt="PCN LOGO" class="img-responsive" width="20%">
                             <div class="panel-title text-center" id="title">Room Reservation</div>
-                            <hr>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body mt-3">
                             <div class="row">
-                                <div class="col-lg-12 forms ">
+                                <div class="col-lg-12 forms">
                                     <form id="login-form" class="col-lg-offset-1 col-lg-10 forms" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" role="form" style="display: block;">
-                                        <div class="form-floating mt-4 mb-5">
+                                        <div class="form-floating mt-4">
                                             <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" autocomplete="on" required>
-                                            <label class="username" for="username">USERNAME</label>
+                                            <label class="username" for="username"  id="usernameLabel">Username</label>
                                         </div>
-                                        <div class="form-floating mt-5">
+                                        <div class="form-floating mt-4">
                                             <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="current-password" required>
-                                            <label class="password" for="password">PASSWORD</label>
+                                            <label class="password" for="password"  id="passwordLabel">Password</label>
                                         </div>
                                         <div class="form-check mt-3">
                                             <input class="form-check-input" type="checkbox" value="" onclick="showPasswords()" id="showPassword" style="border: 1px solid gray !important;">
-                                            <label class="form-check-label" for="showPassword" style="transform: none !important; float: left;">
+                                            <label class="form-check-label" for="showPassword" id="showPasswordLabel" style="transform: none !important; float: left;">
                                                 Show password
                                             </label>
                                         </div>
-                                        <div class="col-sm-6 col-sm-offset-3 mt-3">
+                                        <div class="col-md-12 col-sm-6 col-sm-offset-3 mt-5">
                                             <button type="submit" name="login-submit" id="login-submit" tabindex="3" class="form-control btn btn-login" value="LOGIN"> Login</button>
                                         </div>
-                                        <div class="col-sm-6 col-md-6 pt-4 pb-4">
+                                        <div class="col-sm-6 col-md-6 pt-4 pb-4 mb-5">
                                             <a href="javascript:void(0)" class="registerAccount link" style="color: #BABABA; ">Register Account here</a>
                                         </div>
                                     </form>

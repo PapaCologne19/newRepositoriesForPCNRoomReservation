@@ -24,18 +24,6 @@
   */
 }
 
-.panel-login>.panel-heading hr {
-  margin-top: 10px;
-  margin-bottom: 0px;
-  clear: both;
-  border: 0;
-  height: 1px;
-  background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-  background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-  background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-  background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-}
-
 .panel-login input[type="text"],
 .panel-login input[type="email"],
 .panel-login input[type="password"] {
@@ -64,14 +52,16 @@
   font-size: 18px;
   height: auto;
   font-weight: normal;
-  border-color: rgb(125, 123, 123);
+  border: none;
   color: #6c6c6c !important;
+  border-radius: 20px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.40) 0px 1px 3px 1px;
 }
 
 .btn-login:hover {
-  background-color: lightskyblue !important;
+  background-color: #121212 !important;
   color: white !important;
-  border-color: .1px solid lightskyblue;
+  border: none;
   transition: .4s ease-in-out !important;
   outline: none !important;
 }
@@ -80,16 +70,6 @@
   margin-top: 35px;
 }
 
-#username:focus,
-#password:focus {
-  /* border-top: 2px solid #0db8de;
-  border-right: 2px solid #0db8de;
-  border-bottom: 2px solid #0db8de;
- */
-
-  border-bottom: 2px solid #b1b1b1;
-  padding-bottom: 3.5px;
-}
 
 #username,
 #password {
@@ -100,25 +80,22 @@
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgb(207, 207, 207);
 }
 
 #username:focus,
 #password:focus {
   box-shadow: none !important;
+  border-bottom: 2px solid #b1b1b1;
+  padding-bottom: 3.5px;
 }
 
-#login-submit {
-  color: #008080;
-  background-color: #fff;
-  margin-top: 25px;
-  transition: all 0.1s ease;
-}
-
-#login-submit:hover {
-  border-color: #66afe9;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+#usernameLabel,
+#passwordLabel,
+#showPassword,
+#showPasswordLabel {
+  opacity: 50;
+  color: #7c7c7c;
 }
 
 .form-control-focused {

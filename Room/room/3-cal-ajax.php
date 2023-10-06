@@ -22,6 +22,7 @@ if (isset($_POST["req"])) {
       echo $_CAL->del($_POST["bg"], isset($_POST['id']) ? $_POST["id"] : null
       )  ? "OK" : $_CAL->error;
       break;
+
 }}
 
 

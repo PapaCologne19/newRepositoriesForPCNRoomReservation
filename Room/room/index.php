@@ -457,7 +457,6 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <!-- (B) PERIOD SELECTOR -->
     <div id="calHead">
       <div id="calPeriod">
-        <input id="calBack" type="button" class="mi" value="&lt;">
         <select id="calMonth"><?php foreach ($months as $m => $mth) {
                                 printf(
                                   "<option value='%u'%s>%s</option>",
@@ -467,6 +466,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                 );
                               } ?></select>
         <input id="calYear" type="number" value="<?= $yearNow ?>">
+        <input id="calBack" type="button" class="mi" value="&lt;">
         <input id="calNext" type="button" class="mi" value="&gt;">
       </div>
 
@@ -482,26 +482,26 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
           <img src="images/pcn.png" alt="" id="image_logo" width="15%" style="margin-left: -20rem;">
         </center>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
-        <button type="button" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right">Add Appointment</button> &nbsp;
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoom" style="float:right">Add Room</button>&nbsp;
-        <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';">Logout</button>
+        <button type="button" class="gbutton btn btn-primary btn-sm" data-bs-toggle="modal" id="calButton" data-bs-target="#myModal" style="float:right;">ADD EVENT</button> &nbsp; &nbsp; &nbsp; &nbsp;
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addRoom" id="calButton" style="float:right;">ADD ROOM</button>&nbsp; &nbsp; &nbsp;
+        <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
 
       <?php
       } elseif ($row['category'] === "VIEWER") { ?>
         <img src="images/pcn.png" alt="" id="image_logo" width="10%">
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
-        <button type="hidden" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right; display: none;">Add Appointment</button> &nbsp;
+        <button type="hidden" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"  style="float:right; display: none;">Add Appointment</button> &nbsp;
         <button type="hidden" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
-        <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';">Logout</button>
+        <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
       <?php } else {
       ?>
         <center>
           <img src="images/pcn.png" alt="" id="image_logo" width="15%" style="margin-left: -20rem;">
         </center>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
-        <button type="button" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right;">Add Appointment</button> &nbsp;
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
-        <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';">Logout</button>
+        <button type="button" class="gbutton btn btn-primary btn-sm" id="calButton" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right;">ADD EVENT</button> &nbsp;
+        <button type="button" class="btn btn-primary" id="calButton" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
+        <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
       <?php } ?>
 
 
@@ -524,6 +524,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <h2 class="evt100">CALENDAR EVENT</h2>
         <input type="hidden" name="evtCategory" id="evtCategory">
         <input type="hidden" name="evtUserID" id="evtUserID">
+        
         <div class="evt50">
           <label for=""> Requestor</label>
           <input type="text" name="evtRequestor" id="evtRequestor" disabled>
