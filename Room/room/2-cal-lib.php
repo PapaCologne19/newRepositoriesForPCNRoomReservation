@@ -51,98 +51,213 @@ class Calendar
 
 
   // (D) SAVE EVENT
-  function save($start, $end, $txt, $color, $bg, $id)
-  {
-    $bg = "#3c763d";
+ 
+function save($start, $end, $txt, $color, $bg, $email, $endpoint, $fullname, $id)
+{
+  $bg = "#3c763d";
 
-    // (D2) RUN SQL
-    if ($id === null) {
-      $sql = "INSERT INTO `events` (`evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`) VALUES (?,?,?,?,?)";
-      $data = [$start, $end, strip_tags($txt), $color, $bg];
-    } else {
+  // (D2) RUN SQL
+  if ($id === null) {
+    $sql = "INSERT INTO `events` (`evt_start`, `evt_end`, `evt_text`, `evt_color`, `evt_bg`) VALUES (?,?,?,?,?)";
+    $data = [$start, $end, strip_tags($txt), $color, $bg];
+  } 
+  else {
+    // Sending mail
+    $mail = new PHPMailer();
 
-    //   $emailQuery = "SELECT * FROM `user` WHERE `id` = ?";
-    //   $this->query($emailQuery, [$id]);
-    //   $fetch = $this->stmt->fetch();
-    //   $email = $fetch['email'];
+    try {
+      // Server settings
+      $mail->isSMTP();  // Send using SMTP
+      $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
+      $mail->SMTPAuth   = true;  // Enable SMTP authentication
+      $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
+      $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
+      $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
 
+      // Recipients
+      $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
+      $mail->addAddress($email, '');  // Add a recipient
 
-    //   // Sending mail
-    //   $mail = new PHPMailer();
-    
-    //   try {
-    //     // Server settings
-    //     $mail->isSMTP();  // Send using SMTP
-    //     $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
-    //     $mail->SMTPAuth   = true;  // Enable SMTP authentication
-    //     $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
-    //     $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
-    //     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
-    //     $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
+      // Content
+      $mail->isHTML(true);  // Set email format to HTML
+      $mail->Subject = 'PCN Room Reservation';
+      $mail->Body    = '<center>
+                          <div class="container" style="margin: 10rem;">
+                            <div class="logo">
+                                <img src="/images/pcn.png" alt="" width="15%">
+                            </div>
+                            <div class="div-message" style="margin:0 20rem;">
+                                <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $fullname . ', </h3>
+                                <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Your room reservation has been approved. You can now use the room. Thank you and have a good day.</p>
+                                  <br>
+                              </div>
+                              <div class="footer-message" style="margin: 0 16rem;">
+                                  <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Best Regards, MIS Department</p>
+                              </div>
+                          </div>
+                        </center>';
 
-    //     // Recipients
-    //     $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
-    //     $mail->addAddress($email, $_SESSION['firstname']);  // Add a recipient
+      // Send the email
+      if (!$mail->send()) {
+        echo "Message could not be sent.";
+      } 
+      else {
 
-    //     // Content
-    //     $mail->isHTML(true);  // Set email format to HTML
-    //     $mail->Subject = 'PCN Room Reservation';
-    //     $mail->Body    = '<center>
-    //                         <div class="container" style="margin: 10rem;">
-    //                           <div class="logo">
-    //                               <img src="/images/pcn.png" alt="" width="15%">
-    //                           </div>
-    //                           <div class="div-message" style="margin:0 20rem;">
-    //                               <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $_SESSION['firstname'] . ', </h3>
-    //                               <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Your room reservation has been approved. You can now use the room. Thank you and have a good day.</p>
-    //                                 <br>
-    //                             </div>
-    //                             <div class="footer-message" style="margin: 0 16rem;">
-    //                                 <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Best Regards, MIS Department</p>
-    //                             </div>
-    //                         </div>
-    //                       </center>';
+        $title = "PCN Room Reservation";
+        $message = 'PCN Morning, ' . $fullname . '. Your request appointment has been approved. You can now use the room. Thank you and have a good day.';
+        $icon = 'images/pcn.png';
+        $url = "https://room.pcnpromopro.com/";
 
-    //     // Send the email
-    //     if (!$mail->send()) {
-    //       echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";        
-    //       echo "Email Address: ". $email;
-    //     } else {
-    //       // Updating the data 
-    //       $sql = "UPDATE `events` SET `evt_start`= ?, `evt_end`= ?, `evt_text`= ?, `evt_color`= ?, `evt_bg`= ?  
-    //       WHERE `evt_id`= ?";
-    //       $data = [$start, $end, strip_tags($txt), $color, $bg, $id];
-    //       $_SESSION['successMessage'] = "Message has been sent";
-    //     }
-    // $this->query($sql, $data);
+        $apiKey = "b17c6b66a316dd5114f9ea2533bdc879";
+        $curlUrl = "https://api.pushalert.co/rest/v1/send";
 
-    //   } catch (Exception $e) {
-    //     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    //     echo "Email Address: ". $email;
-    //   }
+        $post_vars = array(
+          "icon" => $icon,
+          "title" => $title,
+          "message" => $message,
+          "url" => $url,
+          "subscriber" => $endpoint
+        );
 
-      $sql = "UPDATE `events` SET `evt_start`= ?, `evt_end`= ?, `evt_text`= ?, `evt_color`= ?, `evt_bg`= ?  
-          WHERE `evt_id`= ?";
-          $data = [$start, $end, strip_tags($txt), $color, $bg, $id];
-          $_SESSION['successMessage'] = "Message has been sent";
+        $headers = array();
+        $headers[] = "Authorization: api_key=" . $apiKey;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $curlUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+
+        $output = json_decode($result, true);
+          if ($output["success"]) {
+            $sql = "UPDATE `events` SET `evt_start`= ?, `evt_end`= ?, `evt_text`= ?, `evt_color`= ?, `evt_bg`= ?  
+                    WHERE `evt_id`= ?";
+            $data = [$start, $end, strip_tags($txt), $color, $bg, $id];
+        }
+        else {
+          //Others like bad request
+          echo "Error in push notifications";
+          echo "Email Address: " . $email;
+        }
+        $this->query($sql, $data);
+      }
+      // $this->query($sql, $data);
+    } catch (Exception $e) {
+      echo "Message could not be sent.";
+      echo "Email Address: " . $email;
     }
-    $this->query($sql, $data);
-
-    return true;
   }
+  $this->query($sql, $data);
+
+  return true;
+}
+
 
 
 
 
   // (E) DELETE EVENT
-  function del($bg, $id)
+  function del($bg, $email, $endpoint, $fullname, $id)
   {
     $bg = "#ff0000";
 
     if ($id != null) {
-      $sql = "UPDATE `events` SET `evt_bg`= ?  
-      WHERE `evt_id`= ?";
-      $data = [$bg, $id];
+      // Send rejection email
+      $mail = new PHPMailer();
+      try {
+        // Server settings
+        $mail->isSMTP();  // Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
+        $mail->SMTPAuth   = true;  // Enable SMTP authentication
+        $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
+        $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
+        $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
+  
+        // Recipients
+        $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
+        $mail->addAddress($email, '');  // Add a recipient
+  
+        // Content
+        $mail->isHTML(true);  // Set email format to HTML
+        $mail->Subject = 'PCN Room Reservation';
+        $mail->Body    = '<center>
+                            <div class="container" style="margin: 10rem;">
+                              <div class="logo">
+                                  <img src="/images/pcn.png" alt="" width="15%">
+                              </div>
+                              <div class="div-message" style="margin:0 20rem;">
+                                  <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $fullname . ', </h3>
+                                  <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Your room reservation has been rejected. You can contact Mr. Deo or Mr. Mike regarding on this matter. Thank you and have a good day.</p>
+                                    <br>
+                                </div>
+                                <div class="footer-message" style="margin: 0 16rem;">
+                                    <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Best Regards, MIS Department</p>
+                                </div>
+                            </div>
+                          </center>';
+  
+        // Send the email
+        if (!$mail->send()) {
+          echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        } 
+        else {
+
+          $title = "PCN Room Reservation";
+          $message = 'PCN Morning, ' . $fullname . '. Your request appointment has been rejected. Kindly contact Mr. Deo or Mr. Mike regarding on this matter. Thank you and have a good day.';
+          $icon = 'images/pcn.png';
+          $url = "https://room.pcnpromopro.com/";
+  
+          $apiKey = "b17c6b66a316dd5114f9ea2533bdc879";
+          $curlUrl = "https://api.pushalert.co/rest/v1/send";
+  
+          $post_vars = array(
+            "icon" => $icon,
+            "title" => $title,
+            "message" => $message,
+            "url" => $url,
+            "subscriber" => $endpoint
+          );
+  
+          $headers = array();
+          $headers[] = "Authorization: api_key=" . $apiKey;
+  
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $curlUrl);
+          curl_setopt($ch, CURLOPT_POST, true);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+  
+          $result = curl_exec($ch);
+  
+          $output = json_decode($result, true);
+            if ($output["success"]) {
+              $sql = "UPDATE `events` SET `evt_bg`= ?  
+              WHERE `evt_id`= ?";
+              $data = [$bg, $id];
+              $this->query($sql, $data);
+
+              $_SESSION['successMessage'] = "Successfully rejected";
+          }
+          
+          else {
+            //Others like bad request
+            echo "Error in push notifications";
+            echo "Email Address: " . $email;
+          }
+          
+        }
+        // $this->query($sql, $data);
+      } catch (Exception $e) {
+        echo "Message could not be sentssss.";
+        echo "Email Address: " . $email;
+      }
+
     }
     $this->query($sql, $data);
     return true;
@@ -188,7 +303,7 @@ class Calendar
         "x67" => $r["x67"], "x78" => $r["x78"], "x89" => $r["x89"], "x910" => $r["x910"],
         "x1011" => $r["x1011"], "x1112" => $r["x1112"], "x121" => $r["x121"], "x12" => $r["x12"],
         "x23" => $r["x23"], "x34" => $r["x34"], "x45" => $r["x45"], "x56" => $r["x56"],
-        "firstname" => $firstname, "lastname" => $lastname, "userCategory" => $r['user_category'], "userID" => $r["user_id"],
+        "firstname" => $firstname, "lastname" => $lastname, "userCategory" => $r['user_category'], "userID" => $r["user_id"], "emails" => $r["email"], "endpoint" => $r["endpoint"],
         "category" => $category, "usernameSESSION" => $username, "userIDSESSION" => $user_id, "fullname" => $r["fullName"], "username" => $r['username']
 
       ];
@@ -206,17 +321,17 @@ class Calendar
 // define("DB_USER", "u685566035_pcn");
 // define("DB_PASSWORD", "Pcn123456789");
 
-define("DB_HOST", "localhost");
-define("DB_NAME", "calendar");
-define("DB_CHARSET", "utf8mb4");
-define("DB_USER", "root");
-define("DB_PASSWORD", "");
-
 // define("DB_HOST", "localhost");
-// define("DB_NAME", "msileen_room");
+// define("DB_NAME", "calendar");
 // define("DB_CHARSET", "utf8mb4");
-// define("DB_USER", "msileen_james");
-// define("DB_PASSWORD", "James2023");
+// define("DB_USER", "root");
+// define("DB_PASSWORD", "");
+
+define("DB_HOST", "localhost");
+define("DB_NAME", "msileen_room");
+define("DB_CHARSET", "utf8mb4");
+define("DB_USER", "msileen_james");
+define("DB_PASSWORD", "James2023");
 
 // (H) NEW CALENDAR OBJECT
 $_CAL = new Calendar();

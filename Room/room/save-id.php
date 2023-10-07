@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'));
     $user_id = $_SESSION['id'];
     $subscriberId = $data->subscriberId;
-    
+    $email = $_SESSION['email'];
     
     $query = "SELECT user_id, endpoint_URL FROM notification WHERE user_id = '$user_id' AND endpoint_URL = '$subscriberId'";
     $res = $connect->query($query);

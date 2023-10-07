@@ -48,6 +48,8 @@ var cal = {
     cal.hFormWrap = document.getElementById("calForm");
     cal.hForm = cal.hFormWrap.querySelector("form");
     cal.hfID = document.getElementById("evtID");
+    cal.hfEmail = document.getElementById("evtEmail");
+    cal.hfEndpoint = document.getElementById("evtEndpoint");
     cal.hfCategory = document.getElementById("evtCategory");
     cal.hfRequestor = document.getElementById('evtRequestor');
     cal.hfStart = document.getElementById("evtStart");
@@ -545,6 +547,8 @@ var cal = {
       }
 
       cal.hfCategory.value = cal.events[id]["userCategory"];
+      cal.hfEmail.value = cal.events[id]["emails"];
+      cal.hfEndpoint.value = cal.events[id]["endpoint"];
       cal.hfColor.value = cal.events[id]["c"];
       cal.hfBG.value = cal.events[id]["b"];
       cal.hfDel.style.display = "inline-block";
@@ -567,7 +571,10 @@ var cal = {
       end: cal.hfEnd.value,
       txt: cal.hfTxt.value,
       color: cal.hfColor.value,
-      bg: cal.hfBG.value
+      bg: cal.hfBG.value,
+      email: cal.hfEmail.value,
+      endpoint: cal.hfEndpoint.value,
+      fullname: cal.hfRequestor.value,
     };
     if (cal.hfID.value != "") {
       data.id = cal.hfID.value;
@@ -591,7 +598,7 @@ var cal = {
           if (res == "OK") {
             Swal.fire(
               'Saved!',
-              'Your event has been saved.',
+              'Successfully Approved.',
               'success'
             ).then(() => {
               cal.hFormWrap.close();
@@ -601,7 +608,7 @@ var cal = {
             Swal.fire(
               'Error',
               res,
-              'error'
+              'error',
             );
           }
         });
@@ -617,24 +624,14 @@ var cal = {
   del: () => {
     var data = {
       req: "del",
-      bg: cal.hfBG.value
+      bg: cal.hfBG.value,
+      email: cal.hfEmail.value,
+      endpoint: cal.hfEndpoint.value,
+      fullname: cal.hfRequestor.value
     };
     if (cal.hfID.value != "") {
       data.id = cal.hfID.value;
     }
-
-    // Define custom CSS class for the SweetAlert dialog
-    const customClass = {
-      container: 'custom-swal-container',
-      popup: 'custom-swal-popup',
-      header: 'custom-swal-header',
-      title: 'custom-swal-title',
-      closeButton: 'custom-swal-closeButton',
-      content: 'custom-swal-content',
-      actions: 'custom-swal-actions',
-      confirmButton: 'custom-swal-confirmButton',
-      cancelButton: 'custom-swal-cancelButton',
-    };
 
     // Display a SweetAlert confirmation dialog with custom size
     Swal.fire({
@@ -645,14 +642,20 @@ var cal = {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, reject it!',
-      customClass: customClass // Apply custom CSS class
+      cancelButtonText: 'Cancel' // Apply custom CSS class
     }).then((result) => {
       if (result.isConfirmed) {
         // User clicked the "Yes, delete it!" button
         cal.ajax(data, res => {
           if (res == "OK") {
+            Swal.fire(
+              'Saved!',
+              'Successfully Rejected.',
+              'success'
+            ).then(() => {
             cal.hFormWrap.close();
             cal.load();
+            });
           } else {
             Swal.fire(
               'Error',

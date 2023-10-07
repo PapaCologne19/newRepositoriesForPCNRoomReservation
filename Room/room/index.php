@@ -295,12 +295,17 @@ if (isset($_POST['SubButton'])) {
   $new_date = Date('H:i a', $string_to_date);
 
 
+  $fetchData = "SELECT * FROM notification WHERE user_id = '$userID'";
+  $fetchResult = $connect->query($fetchData);
+  $fetchRow = $fetchResult->fetch_assoc();
+  $fetchEmail = $_SESSION['email'];
+  $fetchEndpoint = $fetchRow['endpoint_URL'];
 
   // No existing data, proceed with the insertion
   $query = "INSERT INTO events (user_id, evt_start, evt_end, evt_text, evt_color, evt_bg, qty, projector, whiteboard, ext_cord, sound, sound_simple, sound_advance, basic_lights,
-    cleanup, cleanup_before, cleanup_after, others, others1, x67, x78, x89, x910, x1011, x1112, x121, x12, x23, x34, x45, x56, room_orientation, room_orientation_other, username, fullName, user_category) 
+    cleanup, cleanup_before, cleanup_after, others, others1, x67, x78, x89, x910, x1011, x1112, x121, x12, x23, x34, x45, x56, room_orientation, room_orientation_other, username, fullName, user_category, email, endpoint) 
     VALUES ('$userID','$evtStart', '$evtEnd', '$roomko', '#000000', '#f1f100', '$qty', '$cprojector', '$cwhiteboard', '$cextn', 'sound', '$radios', '$radioa', '$basicl',
-    'cleanup', '$c_before', '$c_after', '$others_rem', '$others_rem', '$x67v', '$x78v', '$x89v', '$x910v', '$x1011v', '$x1112v', '$x121v', '$x12v', '$x23v', '$x34v', '$x45v', '$x56v', '$room_orientation', '$room_orientation_other', '$username', '$fullname', '$userCategory')";
+    'cleanup', '$c_before', '$c_after', '$others_rem', '$others_rem', '$x67v', '$x78v', '$x89v', '$x910v', '$x1011v', '$x1112v', '$x121v', '$x12v', '$x23v', '$x34v', '$x45v', '$x56v', '$room_orientation', '$room_orientation_other', '$username', '$fullname', '$userCategory', '$fetchEmail', '$fetchEndpoint')";
 
   $result = mysqli_query($connect, $query);
 
@@ -315,15 +320,13 @@ if (isset($_POST['SubButton'])) {
     $icon = "images/pcn.png";
     $url = "https://room.pcnpromopro.com/";
 
-
-    $getNewInsertedId = mysqli_insert_id($connect);
     $fetch = "SELECT * FROM notification WHERE user_id = '" . $_SESSION['id'] . "'";
     $fetchResult = $connect->query($fetch);
     $rows = mysqli_fetch_assoc($fetchResult);
 
     $subscriber = $rows['endpoint_URL'];
 
-    $apiKey = "6e773d10538052e78488f3b6e50cb0c3";
+    $apiKey = "b17c6b66a316dd5114f9ea2533bdc879";
 
     $curlUrl = "https://api.pushalert.co/rest/v1/send";
 
@@ -380,7 +383,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
     if ($rows['category'] === "VIEWER") {
     ?>
-      <meta http-equiv="refresh" content="10; url=index.php">
+      <meta http-equiv="refresh" content="3600; url=index.php">
     <?php } else { ?>
       <meta http-equiv="refresh" content="600; url=logout.php">
     <?php } ?>
@@ -416,16 +419,16 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Julius+Sans+One&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
 
-    <!-- PushAlert -->
-    <script type="text/javascript">
-      (function(d, t) {
-        var g = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-        g.src = "https://cdn.pushalert.co/integrate_ad8fb1ea176a91f76871fee6fb1143b9.js";
-        s.parentNode.insertBefore(g, s);
-      }(document, "script"));
-    </script>
-    <!-- End PushAlert -->
+  <!-- PushAlert -->
+  <script type="text/javascript">
+          (function(d, t) {
+                  var g = d.createElement(t),
+                  s = d.getElementsByTagName(t)[0];
+                  g.src = "https://cdn.pushalert.co/integrate_528125d5243c8061f0582c3236426e8d.js";
+                  s.parentNode.insertBefore(g, s);
+          }(document, "script"));
+  </script>
+  <!-- End PushAlert -->
 
 
 
@@ -442,6 +445,16 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         })
       </script>
     <?php unset($_SESSION['successMessage']);
+    } ?>
+    <?php
+    if (isset($_SESSION['error'])) { ?>
+      <script>
+        Swal.fire({
+          icon: 'error',
+          title: "<?php echo $_SESSION['error']; ?>",
+        })
+      </script>
+    <?php unset($_SESSION['error']);
     } ?>
 
     <?php
@@ -488,11 +501,13 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
       <?php
       } elseif ($row['category'] === "VIEWER") { ?>
-        <img src="images/pcn.png" alt="" id="image_logo" width="10%">
+        <center>
+          <img src="images/pcn.png" alt="" id="image_logo_viewer" width="15%" style="position: relative; margin-left: -50rem;">
+        </center>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
         <button type="hidden" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"  style="float:right; display: none;">Add Appointment</button> &nbsp;
         <button type="hidden" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
-        <button type="button" class="btn btn-danger" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
       <?php } else {
       ?>
         <center>
@@ -524,6 +539,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <h2 class="evt100">CALENDAR EVENT</h2>
         <input type="hidden" name="evtCategory" id="evtCategory">
         <input type="hidden" name="evtUserID" id="evtUserID">
+        <input type="text" name="evtEmail" id="evtEmail" disabled>
+        <input type="text" name="evtEndpoint" id="evtEndpoint" disabled>
         
         <div class="evt50">
           <label for=""> Requestor</label>
@@ -1478,7 +1495,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
 
     function saveSubscriberIdToDatabase(subscriberId) {
-      fetch('https://room.pcnpromopro.com/Room/room/save-id.php', {
+      fetch('save-id.php', {
           method: 'POST',
           body: JSON.stringify({
             subscriberId: subscriberId

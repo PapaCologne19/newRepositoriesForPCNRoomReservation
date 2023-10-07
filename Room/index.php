@@ -64,7 +64,7 @@ if (isset($_POST['register'])) {
     $division = $_POST['division'];
     $category = "USER";
 
-    if($password === $confirmPassword){
+    if ($password === $confirmPassword) {
         $query2 = "INSERT INTO user(id_number, username, password, firstname, middlename, lastname, email, contactNumber, division, category) 
         VALUES('$id_number', '$username', '$passwordHashed', '$firstname', '$middlename', '$lastname', '$email', '$contact_number', '$division', '$category')";
         $result2 = $connect->query($query2);
@@ -74,8 +74,7 @@ if (isset($_POST['register'])) {
         } else {
             $_SESSION['error'] = "Error";
         }
-    }
-    else{
+    } else {
         $_SESSION['error'] = "Password and Confirm Password does not match. Ipilit mo pa!";
     }
 }
@@ -148,7 +147,7 @@ if (isset($_POST['register'])) {
     ?>
     <center>
         <div class="container">
-           <div class="row justify-content-center">
+            <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 col-sm-12 col-md-offset-3" style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
                     <div class="panel">
                         <div class="panel-heading pt-3">
@@ -161,11 +160,11 @@ if (isset($_POST['register'])) {
                                     <form id="login-form" class="col-lg-offset-1 col-lg-10 forms" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" role="form" style="display: block;">
                                         <div class="form-floating mt-4">
                                             <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" autocomplete="on" required>
-                                            <label class="username" for="username"  id="usernameLabel">Username</label>
+                                            <label class="username" for="username" id="usernameLabel">Username</label>
                                         </div>
                                         <div class="form-floating mt-4">
                                             <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="current-password" required>
-                                            <label class="password" for="password"  id="passwordLabel">Password</label>
+                                            <label class="password" for="password" id="passwordLabel">Password</label>
                                         </div>
                                         <div class="form-check mt-3">
                                             <input class="form-check-input" type="checkbox" value="" onclick="showPasswords()" id="showPassword" style="border: 1px solid gray !important;">
@@ -200,7 +199,7 @@ if (isset($_POST['register'])) {
                 <div class="modal-body">
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="row g-3 needs-validation">
                         <div class="mb-3">
-                            <label for="" class="form-label">ID Number</label>
+                            <label for="" class="form-label">PCN ID Number</label>
                             <input type="number" class="form-control" name="idnumber" id="idnumber" required>
                         </div>
                         <div class="col-md-4 col-sm-12 mb-3">
@@ -253,6 +252,7 @@ if (isset($_POST['register'])) {
                             <ul>
                                 <li class="requirements leng"><i class="fas fa-check green-text"></i></i></i><i class="fas fa-times red-text"></i> Your password must have at least 8 characters.</li>
                                 <li class="requirements big-letter"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 big letter.</li>
+                                <li class="requirements small-letter"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 small letter.</li>
                                 <li class="requirements num"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 number.</li>
                             </ul>
                         </div>
@@ -354,79 +354,75 @@ if (isset($_POST['register'])) {
 
     // Password Input Checker
     $(function() {
-      var $password = $(".form-control[type='password']");
-      var $passwordAlert = $(".password-alert");
-      var $requirements = $(".requirements");
-      var leng, bigLetter, num, specialChar;
-      var $leng = $(".leng");
-      var $bigLetter = $(".big-letter");
-      var $num = $(".num");
-      var numbers = "0123456789";
+        var $password = $(".form-control[type='password']");
+        var $passwordAlert = $(".password-alert");
+        var $requirements = $(".requirements");
+        var leng, bigLetter, smallLetter, num, specialChar;
+        var $leng = $(".leng");
+        var $bigLetter = $(".big-letter");
+        var $smallLetter = $(".small-letter");
+        var $num = $(".num");
+        var numbers = "0123456789";
+        var lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
 
-      $requirements.addClass("wrong");
-      $password.on("focus", function() {
-        $passwordAlert.show();
-      });
+        $requirements.addClass("wrong");
+        $password.on("focus", function() {
+            $passwordAlert.show();
+        });
 
-      $password.on("input blur", function(e) {
-        var el = $(this);
-        var val = el.val();
-        $passwordAlert.show();
+        $password.on("input blur", function(e) {
+            var el = $(this);
+            var val = el.val();
+            $passwordAlert.show();
 
-        if (val.length < 8) {
-          leng = false;
-        } else if (val.length > 7) {
-          leng = true;
-        }
-
-
-        if (val.toLowerCase() == val) {
-          bigLetter = false;
-        } else {
-          bigLetter = true;
-        }
-
-        num = false;
-        for (var i = 0; i < val.length; i++) {
-          for (var j = 0; j < numbers.length; j++) {
-            if (val[i] == numbers[j]) {
-              num = true;
+            if (val.length < 8) {
+                leng = false;
+            } else {
+                leng = true;
             }
-          }
-        }
 
-        if (leng == true && bigLetter == true && num == true) {
-          $(this).addClass("valid").removeClass("invalid");
-          $requirements.removeClass("wrong").addClass("good");
-          $passwordAlert.removeClass("alert-warning").addClass("alert-success");
-        } else {
-          $(this).addClass("invalid").removeClass("valid");
-          $passwordAlert.removeClass("alert-success").addClass("alert-warning");
+            if (val.toLowerCase() == val) {
+                bigLetter = false;
+            } else {
+                bigLetter = true;
+            }
 
-          if (leng == false) {
-            $leng.addClass("wrong").removeClass("good");
-          } else {
-            $leng.addClass("good").removeClass("wrong");
-          }
+            smallLetter = false;
+            for (var i = 0; i < val.length; i++) {
+                for (var j = 0; j < lowercaseLetters.length; j++) {
+                    if (val[i] == lowercaseLetters[j]) {
+                        smallLetter = true;
+                    }
+                }
+            }
 
-          if (bigLetter == false) {
-            $bigLetter.addClass("wrong").removeClass("good");
-          } else {
-            $bigLetter.addClass("good").removeClass("wrong");
-          }
+            num = false;
+            for (var i = 0; i < val.length; i++) {
+                for (var j = 0; j < numbers.length; j++) {
+                    if (val[i] == numbers[j]) {
+                        num = true;
+                    }
+                }
+            }
 
-          if (num == false) {
-            $num.addClass("wrong").removeClass("good");
-          } else {
-            $num.addClass("good").removeClass("wrong");
-          }
-        }
+            if (leng && bigLetter && smallLetter && num) {
+                $(this).addClass("valid").removeClass("invalid");
+                $requirements.removeClass("wrong").addClass("good");
+                $passwordAlert.removeClass("alert-warning").addClass("alert-success");
+            } else {
+                $(this).addClass("invalid").removeClass("valid");
+                $passwordAlert.removeClass("alert-success").addClass("alert-warning");
 
+                $leng.toggleClass("wrong", !leng);
+                $bigLetter.toggleClass("wrong", !bigLetter);
+                $smallLetter.toggleClass("wrong", !smallLetter);
+                $num.toggleClass("wrong", !num);
+            }
 
-        if (e.type == "blur") {
-          $passwordAlert.hide();
-        }
-      });
+            if (e.type == "blur") {
+                $passwordAlert.hide();
+            }
+        });
     });
 </script>
 
