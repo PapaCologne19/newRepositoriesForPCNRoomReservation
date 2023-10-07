@@ -405,7 +405,7 @@ if (isset($_POST['register'])) {
                 }
             }
 
-            if (leng && bigLetter && smallLetter && num) {
+            if (leng == true && bigLetter == true && smallLetter == true && num == true) {
                 $(this).addClass("valid").removeClass("invalid");
                 $requirements.removeClass("wrong").addClass("good");
                 $passwordAlert.removeClass("alert-warning").addClass("alert-success");
@@ -413,10 +413,29 @@ if (isset($_POST['register'])) {
                 $(this).addClass("invalid").removeClass("valid");
                 $passwordAlert.removeClass("alert-success").addClass("alert-warning");
 
-                $leng.toggleClass("wrong", !leng);
-                $bigLetter.toggleClass("wrong", !bigLetter);
-                $smallLetter.toggleClass("wrong", !smallLetter);
-                $num.toggleClass("wrong", !num);
+                if (leng == false) {
+                    $leng.addClass("wrong").removeClass("good");
+                } else {
+                    $leng.addClass("good").removeClass("wrong");
+                }
+
+                if (bigLetter == false) {
+                    $bigLetter.addClass("wrong").removeClass("good");
+                } else {
+                    $bigLetter.addClass("good").removeClass("wrong");
+                }
+
+                if (smallLetter == false) {
+                    $smallLetter.addClass("wrong").removeClass("good");
+                } else {
+                    $smallLetter.addClass("good").removeClass("wrong");
+                }
+
+                if (num == false) {
+                    $num.addClass("wrong").removeClass("good");
+                } else {
+                    $num.addClass("good").removeClass("wrong");
+                }
             }
 
             if (e.type == "blur") {

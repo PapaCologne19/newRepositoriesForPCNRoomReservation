@@ -539,8 +539,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <h2 class="evt100">CALENDAR EVENT</h2>
         <input type="hidden" name="evtCategory" id="evtCategory">
         <input type="hidden" name="evtUserID" id="evtUserID">
-        <input type="text" name="evtEmail" id="evtEmail" disabled>
-        <input type="text" name="evtEndpoint" id="evtEndpoint" disabled>
+        <input type="hidden" name="evtEmail" id="evtEmail" disabled>
+        <input type="hidden" name="evtEndpoint" id="evtEndpoint" disabled>
         
         <div class="evt50">
           <label for=""> Requestor</label>
