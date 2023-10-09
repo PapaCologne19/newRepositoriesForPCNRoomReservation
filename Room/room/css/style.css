@@ -269,6 +269,7 @@ element.style {
   display: inline !important;
 }
 
+/* For Rotating Images */
 .cards {
   perspective: 1000px;
   width: 350px;
@@ -279,12 +280,11 @@ element.style {
 .contents {
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  transition: transform .5s ease; /* Added transition property for smoothness */
+  transition: transform .4s ease-in-out; /* Added transition property for smoothness */
   transform-style: preserve-3d;
 }
 
-.contents:hover {
+.cards:hover .contents {
   transform: rotateY(180deg);
 }
 
@@ -319,7 +319,7 @@ element.style {
   display: block;
   width: 160px;
   height: 160%;
-  background: linear-gradient(90deg, transparent, #ff9966, #ff9966, #ff9966, #ff9966, transparent);
+  background: linear-gradient(90deg, transparent, #557aff, #ff9966, #ff9966, #ff9966, transparent);
   animation: rotation_481 5000ms infinite linear;
 }
 

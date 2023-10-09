@@ -54,9 +54,9 @@ function sendMail($email)
 
     // Send the email
     if (!$mail->send()) {
-      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+      echo "Message could not be sent. {$mail->ErrorInfo}";
     } else {
-      echo "Message has been sent";
+      // echo "Message has been sent";
     }
   } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -303,9 +303,9 @@ if (isset($_POST['SubButton'])) {
 
   // No existing data, proceed with the insertion
   $query = "INSERT INTO events (user_id, evt_start, evt_end, evt_text, evt_color, evt_bg, qty, projector, whiteboard, ext_cord, sound, sound_simple, sound_advance, basic_lights,
-    cleanup, cleanup_before, cleanup_after, others, others1, x67, x78, x89, x910, x1011, x1112, x121, x12, x23, x34, x45, x56, room_orientation, room_orientation_other, username, fullName, user_category, email, endpoint) 
+    cleanup, cleanup_before, cleanup_after, others, others1, x67, x78, x89, x910, x1011, x1112, x121, x12, x23, x34, x45, x56, room_orientation, room_orientation_other, status, username, fullName, user_category, email, endpoint) 
     VALUES ('$userID','$evtStart', '$evtEnd', '$roomko', '#000000', '#f1f100', '$qty', '$cprojector', '$cwhiteboard', '$cextn', 'sound', '$radios', '$radioa', '$basicl',
-    'cleanup', '$c_before', '$c_after', '$others_rem', '$others_rem', '$x67v', '$x78v', '$x89v', '$x910v', '$x1011v', '$x1112v', '$x121v', '$x12v', '$x23v', '$x34v', '$x45v', '$x56v', '$room_orientation', '$room_orientation_other', '$username', '$fullname', '$userCategory', '$fetchEmail', '$fetchEndpoint')";
+    'cleanup', '$c_before', '$c_after', '$others_rem', '$others_rem', '$x67v', '$x78v', '$x89v', '$x910v', '$x1011v', '$x1112v', '$x121v', '$x12v', '$x23v', '$x34v', '$x45v', '$x56v', '$room_orientation', '$room_orientation_other', '$status', '$username', '$fullname', '$userCategory', '$fetchEmail', '$fetchEndpoint')";
 
   $result = mysqli_query($connect, $query);
 
@@ -320,46 +320,53 @@ if (isset($_POST['SubButton'])) {
     $icon = "images/pcn.png";
     $url = "https://room.pcnpromopro.com/";
 
-    $fetch = "SELECT * FROM notification WHERE user_id = '" . $_SESSION['id'] . "'";
+    // Fetch all endpoint URLs for the user
+    $fetch = "SELECT endpoint_URL FROM notification WHERE user_id = '" . $_SESSION['id'] . "'";
     $fetchResult = $connect->query($fetch);
-    $rows = mysqli_fetch_assoc($fetchResult);
 
-    $subscriber = $rows['endpoint_URL'];
+    $subscribers = array();
+    while ($row = mysqli_fetch_assoc($fetchResult)) {
+        $subscribers[] = $row['endpoint_URL'];
+    }
 
     $apiKey = "b17c6b66a316dd5114f9ea2533bdc879";
 
     $curlUrl = "https://api.pushalert.co/rest/v1/send";
 
-    //POST variables
-    $post_vars = array(
-      "icon" => $icon,
-      "title" => $title,
-      "message" => $message,
-      "url" => $url,
-      "subscriber" => $subscriber
-    );
+    // Loop through all subscribers and send notifications to each one
+    foreach ($subscribers as $subscriber) {
+        $post_vars = array(
+            "icon" => $icon,
+            "title" => $title,
+            "message" => $message,
+            "url" => $url,
+            "subscriber" => $subscriber
+        );
 
-    $headers = array();
-    $headers[] = "Authorization: api_key=" . $apiKey;
+        $headers = array();
+        $headers[] = "Authorization: api_key=" . $apiKey;
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $curlUrl);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $curlUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-    $result = curl_exec($ch);
+        $result = curl_exec($ch);
 
-    $output = json_decode($result, true);
-    if ($output["success"]) {
-      echo $output["id"]; //Sent Notification ID
-      sendMail("$email");
-      $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
-      header("location: index.php?id=$subscriber");
-    } else {
-      //Others like bad request
+        $output = json_decode($result, true);
+
+        if ($output["success"]) {
+          sendMail("$email");
+          $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
+
+        } else {
+
+        }
     }
+
+    // You can add further logic here if needed, such as checking if any notifications failed for all subscribers.
   }
 }
 
@@ -537,10 +544,11 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       <form method="dialog">
         <div id="evtCX">&times;</div>
         <h2 class="evt100">CALENDAR EVENT</h2>
-        <input type="hidden" name="evtCategory" id="evtCategory">
+        <input type="text" name="evtCategory" id="evtCategory" disabled>
         <input type="hidden" name="evtUserID" id="evtUserID">
         <input type="hidden" name="evtEmail" id="evtEmail" disabled>
         <input type="hidden" name="evtEndpoint" id="evtEndpoint" disabled>
+        <input type="text" name="evtStatus" id="evtStatus" disabled>
         
         <div class="evt50">
           <label for=""> Requestor</label>
@@ -626,7 +634,10 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
 
         <?php
-        $query = "SELECT * FROM user WHERE category = '" . $_SESSION['category'] . "'";
+        $query = "SELECT *
+        FROM user 
+        WHERE category = '" . $_SESSION['category'] . "'";
+
         $result = $connect->query($query);
         $row = $result->fetch_assoc();
 
@@ -635,18 +646,27 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         ?>
           <div class="evt100">
             <input type="hidden" id="evtID">
+            <input type="hidden" class="btn btn-dark" name="evtCancel" id="evtCancel" value="Cancel">
             <input class="btn btn-danger" type="submit" id="evtDel" name="evtDel" value="Reject">
             <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Approve">
           </div>
-        <?php } else {
+        <?php } elseif($row['category'] === "USER") {
         ?>
           <div class="evt100">
             <input type="hidden" id="evtID">
+            <input type="submit" class="btn btn-danger" name="evtCancel" id="evtCancel" value="Cancel">
+            <input class="btn btn-danger" type="hidden" id="evtDel" name="evtDel" value="Delete" style="display: none !important;">
+            <input class="btn btn-success" type="hidden" id="evtSave" name="evtSave" value="Accept" style="display: none;">
+          </div>
+        <?php } 
+        else { ?>
+          <div class="evt100">
+            <input type="hidden" id="evtID">
+            <input type="hidden" class="btn btn-dark" name="evtCancel" id="evtCancel" value="Cancel">
             <input class="btn btn-danger" type="hidden" id="evtDel" name="evtDel" value="Delete" style="display: none !important;">
             <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Accept" style="display: none;">
           </div>
-        <?php } ?>
-
+          <?php } ?>
       </form>
     </dialog>
 
@@ -1099,7 +1119,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                   <div class="back-content">
                                     <div class="description">
                                       <div class="card-body">
-                                        <p style="text-align: justify; text-indent: ;" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>" onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();"><?php echo $descriptions ?></p>
+                                        <p style="text-align: justify; cursor: pointer;" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>" onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();"><?php echo $descriptions ?></p>
                                       </div>
                                     </div>
                                   </div>
@@ -1400,60 +1420,63 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     }
 
 
-    // JavaScript code for checking room availability and setting border color
-    function checkRoom() {
-      $('#myModalroom').modal('show');
+// JavaScript code for checking room availability and setting border color
+function checkRoom() {
+  // Always open the modal
+  $('#myModalroom').modal('show');
 
-      // Get the selected date
-      const selectedDate = document.getElementById('evtStarts').value;
+  // Get the selected date
+  const selectedDate = document.getElementById('evtStarts').value;
+  console.log("Selected Date: ", selectedDate);
 
-      // Send an AJAX request to the server to check availability
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", "check_room.php", true);
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // Send an AJAX request to the server to check availability
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "check_room.php", true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-      // Define the data to be sent in the request (only selectedDate)
-      const data = `selectedDate=${selectedDate}`;
+  // Define the data to be sent in the request (only selectedDate)
+  const data = `selectedDate=${selectedDate}`;
 
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) { // Check readyState only once
-          if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) { // Check readyState only once
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
 
-            try {
-              // Loop through the response to set border colors for each room
-              for (const roomName in response) {
-                const color = response[roomName];
+        try {
+          // Loop through the response to set border colors for each room
+          for (const roomName in response) {
+            const color = response[roomName];
 
-                // Convert room name to a suitable format for id (lowercase, replace spaces with hyphens)
-                const roomId = roomName.toLowerCase().replace(/ /g, '-');
+            // Convert room name to a suitable format for id (lowercase, replace spaces with hyphens)
+            const roomId = roomName.toLowerCase().replace(/ /g, '-');
 
-                // Try to find an element with this id
-                const roomElement = document.getElementById(roomId);
+            // Try to find an element with this id
+            const roomElement = document.getElementById(roomId);
 
-                // If such an element exists, change its border color
-                if (roomElement) {
-                  roomElement.style.borderColor = color;
-                  roomElement.style.borderWidth = "10px";
-                  roomElement.style.borderStyle = "solid";
-                  roomElement.style.borderRadius = "10px";
-                } else {
-                  console.error('No element found with id:', roomId);
-                }
-              }
-            } catch (error) {
-              console.error('Error parsing JSON response:', error);
+            // If such an element exists, change its border color
+            if (roomElement) {
+              roomElement.style.borderColor = color;
+              roomElement.style.borderWidth = "10px";
+              roomElement.style.borderStyle = "solid";
+              roomElement.style.borderRadius = "10px";
+            } else {
+              console.error('No element found with id:', roomId);
             }
-          } else {
-            // Handle the request error here
-            console.error('Request failed with status:', xhr.status);
           }
+        } catch (error) {
+          console.error('Error parsing JSON response:', error);
         }
-      };
-
-      // Send the request
-      xhr.send(data);
+      } else {
+        // Handle the request error here
+        console.error('Request failed with status:', xhr.status);
+      }
     }
+  };
+
+  // Send the request
+  xhr.send(data);
+}
+
 
     // Add an event listener to trigger the room availability check when the date selection changes
     document.getElementById('evtStarts').addEventListener('change', checkRoom);

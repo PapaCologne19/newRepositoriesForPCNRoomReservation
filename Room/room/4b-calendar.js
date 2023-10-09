@@ -18,6 +18,7 @@ var cal = {
   hfColor: null,
   hfBG: null,
   hfDel: null,
+  hfCancel: null,
 
   // (B) SUPPORT FUNCTION - AJAX FETCH
   ajax: (data, onload) => {
@@ -63,7 +64,9 @@ var cal = {
     cal.hfTxt = document.getElementById("evtTxt");
     cal.hfColor = document.getElementById("evtColor");
     cal.hfBG = document.getElementById("evtBG");
+    cal.hfStatus = document.getElementById("evtStatus");
     cal.hfDel = document.getElementById("evtDel");
+    cal.hfCancel = document.getElementById("evtCancel");
     cal.hfOther_equipment = document.getElementById('evtOthers');
 
     cal.hfQuantity = document.getElementById("evtQuantity");
@@ -91,8 +94,9 @@ var cal = {
     document.getElementById("evtCX").onclick = () => {
       cal.hFormWrap.close();
       location.reload();
-    };
+    }; 
     cal.hfDel.onclick = cal.del;
+    cal.hfCancel.onclick = cal.cncl;
 
     // (C3) DRAW DAY NAMES
     let days = ["MON", "TUE", "WED", "THU", "FRI", "SAT"];
@@ -351,17 +355,16 @@ var cal = {
 
           if (cal.events[id]["category"] === "ADMIN") {
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
-          } else if (cal.events[id]["category"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"]){ // && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["usernameSESSION"]
+          } else if (cal.events[id]["category"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"]) { // && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["usernameSESSION"]
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
-          } else if(cal.events[id]["category"] === "VIEWER"){
+          } else if (cal.events[id]["category"] === "VIEWER") {
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
-          }
-          else{
+          } else {
             rowB.style.display = "none";
-          }   
+          }
 
 
-          
+
 
           rowB.style.color = cal.events[id]["c"];
           rowB.style.backgroundColor = cal.events[id]["b"];
@@ -471,7 +474,7 @@ var cal = {
         cal.hfEnd1.value = timeSlotsText.join(",  ");
       } else {
         cal.hfEnd1.style.display = "none";
-       
+
       }
 
 
@@ -537,11 +540,10 @@ var cal = {
       cal.hfRoomOrientation.value = cal.events[id]["room_orientation"]; //Room Orientation
 
 
-      if(cal.events[id]["room_orientation"] === null || cal.events[id]["room_orientation"] === undefined || cal.events[id]["room_orientation"] === "on" || cal.events[id]['room_orientation'] === ""){
+      if (cal.events[id]["room_orientation"] === null || cal.events[id]["room_orientation"] === undefined || cal.events[id]["room_orientation"] === "on" || cal.events[id]['room_orientation'] === "") {
         cal.hfRoomOrientation.style.display = "none";
         cal.hfRoomOrientationOther.value = cal.events[id]["other_room_orientation"];
-      }
-      else{
+      } else {
         cal.hfRoomOrientation.value = cal.events[id]["room_orientation"];
         cal.hfRoomOrientationOther.style.display = "none";
       }
@@ -551,16 +553,19 @@ var cal = {
       cal.hfEndpoint.value = cal.events[id]["endpoint"];
       cal.hfColor.value = cal.events[id]["c"];
       cal.hfBG.value = cal.events[id]["b"];
+      cal.hfStatus.value = cal.events[id]["status"];
       cal.hfDel.style.display = "inline-block";
+      cal.hfCancel.style.display = "inline-block";
 
     } else {
       cal.hForm.reset();
       cal.hfID.value = "";
       cal.hfDel.style.display = "none";
+      cal.hfCancel.style.display = "none";
     }
     cal.hFormWrap.show();
   },
-  
+
 
   // (H) SAVE EVENT
   save: () => {
@@ -572,6 +577,7 @@ var cal = {
       txt: cal.hfTxt.value,
       color: cal.hfColor.value,
       bg: cal.hfBG.value,
+      status: cal.hfStatus.value,
       email: cal.hfEmail.value,
       endpoint: cal.hfEndpoint.value,
       fullname: cal.hfRequestor.value,
@@ -619,12 +625,64 @@ var cal = {
   },
 
 
+  cncl: () => {
+    var data = {
+      req: "cncl",
+      status: cal.hfStatus.value,
+      email: cal.hfEmail.value,
+      fullname: cal.hfRequestor.value
+    };
+
+    if (cal.hfID.value != "") {
+      data.id = cal.hfID.value;
+    }
+
+    Swal.fire({
+      title: 'Are you sure you want to cancel this?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel it!',
+      cancelButtonText: 'Cancel' // Apply custom CSS class
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User clicked the "Yes, cancel it!" button
+        cal.ajax(data, res => {
+          if (res == "OK") {
+            Swal.fire(
+              'Saved!',
+              'Successfully Canceled.',
+              'success'
+            ).then(() => {
+              cal.hFormWrap.close();
+              cal.load();
+            });
+          } else {
+            Swal.fire(
+              'Error',
+              res, 
+              'error',
+              console.log("cal.hfStatus.value:", cal.hfStatus.value),
+console.log("cal.hfEmail.value:", cal.hfEmail.value),
+console.log("cal.hfRequestor.value:", cal.hfRequestor.value),
+console.log("Response from server:", res)
+            );
+          }
+        });
+      }
+    });
+
+    return false;
+
+  },
 
   // (I) DELETE EVENT
   del: () => {
     var data = {
       req: "del",
       bg: cal.hfBG.value,
+      status: cal.hfStatus.value,
       email: cal.hfEmail.value,
       endpoint: cal.hfEndpoint.value,
       fullname: cal.hfRequestor.value
@@ -653,8 +711,8 @@ var cal = {
               'Successfully Rejected.',
               'success'
             ).then(() => {
-            cal.hFormWrap.close();
-            cal.load();
+              cal.hFormWrap.close();
+              cal.load();
             });
           } else {
             Swal.fire(
