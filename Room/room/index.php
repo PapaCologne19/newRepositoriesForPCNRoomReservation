@@ -316,7 +316,7 @@ if (isset($_POST['SubButton'])) {
 
 
     $title = "PCN Room Reservation";
-    $message = 'PCN Morning, '. $_SESSION['firstname']. '. You have successfully set an appointment. Kindly please wait for the approval of Mr. Deo or Mr. Mike. Thank you.';
+    $message = 'PCN Morning, ' . $_SESSION['firstname'] . '. You have successfully set an appointment. Kindly please wait for the approval of Mr. Deo or Mr. Mike. Thank you.';
     $icon = "images/pcn.png";
     $url = "https://room.pcnpromopro.com/";
 
@@ -326,7 +326,7 @@ if (isset($_POST['SubButton'])) {
 
     $subscribers = array();
     while ($row = mysqli_fetch_assoc($fetchResult)) {
-        $subscribers[] = $row['endpoint_URL'];
+      $subscribers[] = $row['endpoint_URL'];
     }
 
     $apiKey = "b17c6b66a316dd5114f9ea2533bdc879";
@@ -335,35 +335,33 @@ if (isset($_POST['SubButton'])) {
 
     // Loop through all subscribers and send notifications to each one
     foreach ($subscribers as $subscriber) {
-        $post_vars = array(
-            "icon" => $icon,
-            "title" => $title,
-            "message" => $message,
-            "url" => $url,
-            "subscriber" => $subscriber
-        );
+      $post_vars = array(
+        "icon" => $icon,
+        "title" => $title,
+        "message" => $message,
+        "url" => $url,
+        "subscriber" => $subscriber
+      );
 
-        $headers = array();
-        $headers[] = "Authorization: api_key=" . $apiKey;
+      $headers = array();
+      $headers[] = "Authorization: api_key=" . $apiKey;
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $curlUrl);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $curlUrl);
+      curl_setopt($ch, CURLOPT_POST, true);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vars));
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-        $result = curl_exec($ch);
+      $result = curl_exec($ch);
 
-        $output = json_decode($result, true);
+      $output = json_decode($result, true);
 
-        if ($output["success"]) {
-          sendMail("$email");
-          $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
-
-        } else {
-
-        }
+      if ($output["success"]) {
+        sendMail("$email");
+        $_SESSION['successMessage'] = "Set Appointment Successfully. Kindly check your email for the status of your appointment.";
+      } else {
+      }
     }
 
     // You can add further logic here if needed, such as checking if any notifications failed for all subscribers.
@@ -426,16 +424,16 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Julius+Sans+One&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
 
-  <!-- PushAlert -->
-  <script type="text/javascript">
-          (function(d, t) {
-                  var g = d.createElement(t),
-                  s = d.getElementsByTagName(t)[0];
-                  g.src = "https://cdn.pushalert.co/integrate_528125d5243c8061f0582c3236426e8d.js";
-                  s.parentNode.insertBefore(g, s);
-          }(document, "script"));
-  </script>
-  <!-- End PushAlert -->
+    <!-- PushAlert -->
+    <script type="text/javascript">
+      (function(d, t) {
+        var g = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        g.src = "https://cdn.pushalert.co/integrate_528125d5243c8061f0582c3236426e8d.js";
+        s.parentNode.insertBefore(g, s);
+      }(document, "script"));
+    </script>
+    <!-- End PushAlert -->
 
 
 
@@ -462,6 +460,16 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         })
       </script>
     <?php unset($_SESSION['error']);
+    } ?>
+     <?php
+    if (isset($_SESSION['warning'])) { ?>
+      <script>
+        Swal.fire({
+          icon: 'warning',
+          title: "<?php echo $_SESSION['warning']; ?>",
+        })
+      </script>
+    <?php unset($_SESSION['warning']);
     } ?>
 
     <?php
@@ -504,6 +512,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
         <button type="button" class="gbutton btn btn-primary btn-sm" data-bs-toggle="modal" id="calButton" data-bs-target="#myModal" style="float:right;">ADD EVENT</button> &nbsp; &nbsp; &nbsp; &nbsp;
         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addRoom" id="calButton" style="float:right;">ADD ROOM</button>&nbsp; &nbsp; &nbsp;
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#approveAll" id="calButton" style="float:right;">APPROVE ALL</button>&nbsp; &nbsp; &nbsp;
         <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
 
       <?php
@@ -512,7 +521,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
           <img src="images/pcn.png" alt="" id="image_logo_viewer" width="15%" style="position: relative; margin-left: -50rem;">
         </center>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
-        <button type="hidden" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"  style="float:right; display: none;">Add Appointment</button> &nbsp;
+        <button type="hidden" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right; display: none;">Add Appointment</button> &nbsp;
         <button type="hidden" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
         <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
       <?php } else {
@@ -527,6 +536,36 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       <?php } ?>
 
 
+    </div>
+
+
+    <!-- Modal for Approve all -->
+    <div class="modal fade" id="approveAll" role="dialog" tabindex="1">
+
+      <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomOpen').modal('hide')">
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <form action="approve.php" method="POST" class="form-group">
+              <div class="col-md-7 mt-5">
+                <label for="" class="form-label">Select Date</label>
+                <input type="date" name="approveDate" id="approveDate" class="form-control" required style="width: 20vw !important; display: block !important;">
+              </div>
+              <div class="col-md-7 mt-5">
+                <button type="submit" class="btn btn-primary" id="approveBtn" name="approveBtn">Approve All</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -549,7 +588,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <input type="hidden" name="evtEmail" id="evtEmail" disabled>
         <input type="hidden" name="evtEndpoint" id="evtEndpoint" disabled>
         <input type="hidden" name="evtStatus" id="evtStatus" disabled>
-        
+
         <div class="evt50">
           <label for="">Requestor</label>
           <input type="text" name="evtRequestor" id="evtRequestor" disabled>
@@ -650,7 +689,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
             <input class="btn btn-danger" type="submit" id="evtDel" name="evtDel" value="Reject">
             <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Approve">
           </div>
-        <?php } elseif($row['category'] === "USER") {
+        <?php } elseif ($row['category'] === "USER") {
         ?>
           <div class="evt100">
             <input type="hidden" id="evtID">
@@ -658,15 +697,14 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
             <input class="btn btn-danger" type="hidden" id="evtDel" name="evtDel" value="Delete" style="display: none !important;">
             <input class="btn btn-success" type="hidden" id="evtSave" name="evtSave" value="Accept" style="display: none;">
           </div>
-        <?php } 
-        else { ?>
+        <?php } else { ?>
           <div class="evt100">
             <input type="hidden" id="evtID">
             <input type="hidden" class="btn btn-dark" name="evtCancel" id="evtCancel" value="Cancel">
             <input class="btn btn-danger" type="hidden" id="evtDel" name="evtDel" value="Delete" style="display: none !important;">
             <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Accept" style="display: none;">
           </div>
-          <?php } ?>
+        <?php } ?>
       </form>
     </dialog>
 
@@ -1138,6 +1176,10 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
             </div>
           </div>
 
+
+
+
+
   </body>
 
 
@@ -1420,62 +1462,62 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     }
 
 
-// JavaScript code for checking room availability and setting border color
-function checkRoom() {
-  // Always open the modal
-  $('#myModalroom').modal('show');
+    // JavaScript code for checking room availability and setting border color
+    function checkRoom() {
+      // Always open the modal
+      $('#myModalroom').modal('show');
 
-  // Get the selected date
-  const selectedDate = document.getElementById('evtStarts').value;
-  console.log("Selected Date: ", selectedDate);
+      // Get the selected date
+      const selectedDate = document.getElementById('evtStarts').value;
+      console.log("Selected Date: ", selectedDate);
 
-  // Send an AJAX request to the server to check availability
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "check_room.php", true);
-  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      // Send an AJAX request to the server to check availability
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "check_room.php", true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-  // Define the data to be sent in the request (only selectedDate)
-  const data = `selectedDate=${selectedDate}`;
+      // Define the data to be sent in the request (only selectedDate)
+      const data = `selectedDate=${selectedDate}`;
 
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) { // Check readyState only once
-      if (xhr.status === 200) {
-        const response = JSON.parse(xhr.responseText);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) { // Check readyState only once
+          if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
 
-        try {
-          // Loop through the response to set border colors for each room
-          for (const roomName in response) {
-            const color = response[roomName];
+            try {
+              // Loop through the response to set border colors for each room
+              for (const roomName in response) {
+                const color = response[roomName];
 
-            // Convert room name to a suitable format for id (lowercase, replace spaces with hyphens)
-            const roomId = roomName.toLowerCase().replace(/ /g, '-');
+                // Convert room name to a suitable format for id (lowercase, replace spaces with hyphens)
+                const roomId = roomName.toLowerCase().replace(/ /g, '-');
 
-            // Try to find an element with this id
-            const roomElement = document.getElementById(roomId);
+                // Try to find an element with this id
+                const roomElement = document.getElementById(roomId);
 
-            // If such an element exists, change its border color
-            if (roomElement) {
-              roomElement.style.borderColor = color;
-              roomElement.style.borderWidth = "10px";
-              roomElement.style.borderStyle = "solid";
-              roomElement.style.borderRadius = "10px";
-            } else {
-              console.error('No element found with id:', roomId);
+                // If such an element exists, change its border color
+                if (roomElement) {
+                  roomElement.style.borderColor = color;
+                  roomElement.style.borderWidth = "10px";
+                  roomElement.style.borderStyle = "solid";
+                  roomElement.style.borderRadius = "10px";
+                } else {
+                  console.error('No element found with id:', roomId);
+                }
+              }
+            } catch (error) {
+              console.error('Error parsing JSON response:', error);
             }
+          } else {
+            // Handle the request error here
+            console.error('Request failed with status:', xhr.status);
           }
-        } catch (error) {
-          console.error('Error parsing JSON response:', error);
         }
-      } else {
-        // Handle the request error here
-        console.error('Request failed with status:', xhr.status);
-      }
-    }
-  };
+      };
 
-  // Send the request
-  xhr.send(data);
-}
+      // Send the request
+      xhr.send(data);
+    }
 
 
     // Add an event listener to trigger the room availability check when the date selection changes
