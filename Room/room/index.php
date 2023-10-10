@@ -544,14 +544,14 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       <form method="dialog">
         <div id="evtCX">&times;</div>
         <h2 class="evt100">CALENDAR EVENT</h2>
-        <input type="text" name="evtCategory" id="evtCategory" disabled>
+        <input type="hidden" name="evtCategory" id="evtCategory" disabled>
         <input type="hidden" name="evtUserID" id="evtUserID">
         <input type="hidden" name="evtEmail" id="evtEmail" disabled>
         <input type="hidden" name="evtEndpoint" id="evtEndpoint" disabled>
-        <input type="text" name="evtStatus" id="evtStatus" disabled>
+        <input type="hidden" name="evtStatus" id="evtStatus" disabled>
         
         <div class="evt50">
-          <label for=""> Requestor</label>
+          <label for="">Requestor</label>
           <input type="text" name="evtRequestor" id="evtRequestor" disabled>
         </div>
 

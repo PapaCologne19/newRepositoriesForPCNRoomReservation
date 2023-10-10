@@ -94,7 +94,7 @@ var cal = {
     document.getElementById("evtCX").onclick = () => {
       cal.hFormWrap.close();
       location.reload();
-    }; 
+    };
     cal.hfDel.onclick = cal.del;
     cal.hfCancel.onclick = cal.cncl;
 
@@ -355,6 +355,8 @@ var cal = {
 
           if (cal.events[id]["category"] === "ADMIN") {
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
+          } else if (cal.events[id]["category"] === "USER" && cal.events[id]["app_status"] === "canceled" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["usernameSESSION"]) {
+            rowB.style.display = "none"; 
           } else if (cal.events[id]["category"] === "USER" && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"]) { // && cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["usernameSESSION"]
             rowB.innerHTML = cal.events[id]["t"] + " | " + formattedTimeSlots;
           } else if (cal.events[id]["category"] === "VIEWER") {
@@ -397,6 +399,7 @@ var cal = {
       if (cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] && cal.events[id]["username"] === cal.events[id]["username"] && cal.events[id]["category"] === "USER") {
         cal.hfRequestor.value = cal.events[id]["firstname"] + " " + cal.events[id]["lastname"]; //Requestor's Name
       }
+     
 
       // Time
       const timeSlots = [{
@@ -548,14 +551,29 @@ var cal = {
         cal.hfRoomOrientationOther.style.display = "none";
       }
 
+      if(cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] 
+      && cal.events[id]["username"] === cal.events[id]["username"] 
+      && cal.events[id]["category"] === "USER"
+      && cal.events[id]["app_status"] === "pending"){
+        cal.hfCancel.style.display = "inline-block";
+      }
+      else if(cal.events[id]["userID"] === cal.events[id]["userIDSESSION"] 
+      && cal.events[id]["username"] === cal.events[id]["username"] 
+      && cal.events[id]["category"] === "USER"
+      && cal.events[id]["app_status"] === "approved" 
+      || cal.events[id]["app_status"] === "rejected"
+      || cal.events[id]["app_status"] === "canceled"
+      || cal.events[id]["app_status"] === ""){
+        cal.hfCancel.style.display = "none";
+      }
+
       cal.hfCategory.value = cal.events[id]["userCategory"];
       cal.hfEmail.value = cal.events[id]["emails"];
       cal.hfEndpoint.value = cal.events[id]["endpoint"];
       cal.hfColor.value = cal.events[id]["c"];
       cal.hfBG.value = cal.events[id]["b"];
-      cal.hfStatus.value = cal.events[id]["status"];
+      cal.hfStatus.value = cal.events[id]["app_status"];
       cal.hfDel.style.display = "inline-block";
-      cal.hfCancel.style.display = "inline-block";
 
     } else {
       cal.hForm.reset();
@@ -624,59 +642,6 @@ var cal = {
     return false;
   },
 
-
-  cncl: () => {
-    var data = {
-      req: "cncl",
-      status: cal.hfStatus.value,
-      email: cal.hfEmail.value,
-      fullname: cal.hfRequestor.value
-    };
-
-    if (cal.hfID.value != "") {
-      data.id = cal.hfID.value;
-    }
-
-    Swal.fire({
-      title: 'Are you sure you want to cancel this?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, cancel it!',
-      cancelButtonText: 'Cancel' // Apply custom CSS class
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // User clicked the "Yes, cancel it!" button
-        cal.ajax(data, res => {
-          if (res == "OK") {
-            Swal.fire(
-              'Saved!',
-              'Successfully Canceled.',
-              'success'
-            ).then(() => {
-              cal.hFormWrap.close();
-              cal.load();
-            });
-          } else {
-            Swal.fire(
-              'Error',
-              res, 
-              'error',
-              console.log("cal.hfStatus.value:", cal.hfStatus.value),
-console.log("cal.hfEmail.value:", cal.hfEmail.value),
-console.log("cal.hfRequestor.value:", cal.hfRequestor.value),
-console.log("Response from server:", res)
-            );
-          }
-        });
-      }
-    });
-
-    return false;
-
-  },
-
   // (I) DELETE EVENT
   del: () => {
     var data = {
@@ -726,9 +691,61 @@ console.log("Response from server:", res)
     });
 
     return false;
+  },
+
+
+  cncl: () => {
+    var data = {
+      req: "cncl",
+      status: cal.hfStatus.value,
+      bg: cal.hfBG.value,
+      email: cal.hfEmail.value,
+      fullname: cal.hfRequestor.value
+    };
+
+    if (cal.hfID.value != "") {
+      data.id = cal.hfID.value;
+    }
+
+    Swal.fire({
+      title: 'Are you sure you want to cancel this?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel it!',
+      cancelButtonText: 'Cancel' // Apply custom CSS class
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User clicked the "Yes, cancel it!" button
+        cal.ajax(data, res => {
+          if (res == "OK") {
+            Swal.fire(
+              'Saved!',
+              'Successfully Canceled.',
+              'success'
+            ).then(() => {
+              cal.hFormWrap.close();
+              cal.load();
+            });
+          } else {
+            Swal.fire(
+              'Error',
+              res,
+              'error',
+              console.log("cal.hfStatus.value:", cal.hfStatus.value),
+              console.log("cal.hfEmail.value:", cal.hfEmail.value),
+              console.log("cal.hfRequestor.value:", cal.hfRequestor.value),
+              console.log("Response from server:", res)
+            );
+          }
+        });
+      }
+    });
+
+    return false;
+
   }
-
-
 
 
 

@@ -22,13 +22,15 @@ if (isset($_POST["req"])) {
       echo $_CAL->del($_POST["bg"], $_POST["status"], $_POST['email'], $_POST['endpoint'], $_POST['fullname'], isset($_POST['id']) ? $_POST["id"] : null
       ) ? "OK" : $_CAL->error;
       break;
-
-    case "cancel":
-      echo $_CAL->cncl($_POST['status'], $_POST['email'], $_POST['fullname'], isset($_POST['id']) ? $_POST['id'] : null
+    
+    //(E) CANCEL EVENT 
+    case "cncl":
+      echo $_CAL->cncl($_POST["status"], $_POST['bg'], $_POST["email"], $_POST["fullname"], isset($_POST["id"]) ? $_POST["id"] : null
       ) ? "OK" : $_CAL->error;
       break;
 
-}}
+}
+}
 
 
 

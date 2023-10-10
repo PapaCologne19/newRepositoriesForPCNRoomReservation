@@ -157,6 +157,63 @@ class Calendar
 
 
 
+  function cncl($status, $bg, $email, $fullname, $id)
+  {
+    $status = "canceled";
+    $bg = "#000000";
+
+    if ($id != null) {
+
+      $mail = new PHPMailer();
+      try {
+        // Server settings
+        $mail->isSMTP();  // Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
+        $mail->SMTPAuth   = true;  // Enable SMTP authentication
+        $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
+        $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
+        $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
+
+        // Recipients
+        $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
+        $mail->addAddress($email, '');  // Add a recipient
+
+        // Content
+        $mail->isHTML(true);  // Set email format to HTML
+        $mail->Subject = 'PCN Room Reservation';
+        $mail->Body    = '<center>
+                            <div class="container" style="margin: 10rem;">
+                              <div class="logo">
+                                  <img src="/images/pcn.png" alt="" width="15%">
+                              </div>
+                              <div class="div-message" style="margin:0 20rem;">
+                                  <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $fullname . ', </h3>
+                                  <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">You have successfully canceled your room reservation appointment. Thank you for using our service. Have a good day.</p>
+                                    <br>
+                                </div>
+                                <div class="footer-message" style="margin: 0 16rem;">
+                                    <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Best Regards, MIS Department</p>
+                                </div>
+                            </div>
+                          </center>';
+
+        // Send the email
+        if (!$mail->send()) {
+          echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        } else {
+          $sql = "UPDATE `events` SET `status` = ?, `evt_bg` = ? 
+          WHERE `evt_id` = ?";
+          $data = [$status, $bg, $id];
+        }
+        $this->query($sql, $data);
+      } catch (Exception $e) {
+        echo "Message could not be sent.";
+      }
+    }
+    $this->query($sql, $data);
+    return true;
+  }
 
   // (E) DELETE EVENT
   function del($bg, $status, $email, $endpoint, $fullname, $id)
@@ -258,62 +315,6 @@ class Calendar
   }
 
 
-  function cncl($status, $email, $fullname, $id)
-  {
-    $status = "canceled";
-
-    if ($id != null) {
-      $mail = new PHPMailer();
-      try {
-        // Server settings
-        $mail->isSMTP();  // Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
-        $mail->SMTPAuth   = true;  // Enable SMTP authentication
-        $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
-        $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
-        $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
-
-        // Recipients
-        $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
-        $mail->addAddress($email, '');  // Add a recipient
-
-        // Content
-        $mail->isHTML(true);  // Set email format to HTML
-        $mail->Subject = 'PCN Room Reservation';
-        $mail->Body    = '<center>
-                            <div class="container" style="margin: 10rem;">
-                              <div class="logo">
-                                  <img src="/images/pcn.png" alt="" width="15%">
-                              </div>
-                              <div class="div-message" style="margin:0 20rem;">
-                                  <h3 style="font-family: Arial, Helvetica, sans-serif; text-align: justify;">PCN Morning, ' . $fullname . ', </h3>
-                                  <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Your room reservation has been rejected. You can contact Mr. Deo or Mr. Mike regarding on this matter. Thank you and have a good day.</p>
-                                    <br>
-                                </div>
-                                <div class="footer-message" style="margin: 0 16rem;">
-                                    <p style="font-family: Arial, Helvetica, sans-serif; text-align: justify; text-indent: 4rem;">Best Regards, MIS Department</p>
-                                </div>
-                            </div>
-                          </center>';
-
-        // Send the email
-        if (!$mail->send()) {
-          echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-        } else {
-          $sql = "UPDATE `events` SET `status` = ? 
-          WHERE `evt_id` = ?";
-          $data = [$status, $id];
-            $this->query($sql, $data);
-        }
-      } catch (Exception $e) {
-        echo "Message could not be sent.";
-        echo "Email Address: " . $email;
-      }
-    }
-    $this->query($sql, $data);
-    return true;
-  }
 
   // (F) GET EVENTS FOR SELECTED PERIOD
   function get($month, $year)
@@ -342,7 +343,7 @@ class Calendar
     while ($r = $this->stmt->fetch()) {
       $events[$r["evt_id"]] = [
         "s" => $r["evt_start"], "e" => $r["evt_end"],
-        "c" => $r["evt_color"], "b" => $r["evt_bg"], "status" => $r['status'],
+        "c" => $r["evt_color"], "b" => $r["evt_bg"], "app_status" => $r['status'],
         "t" => $r["evt_text"], "q" => $r["qty"], "time" => $r["allday"],
         "projector" => $r["projector"], "whiteboard" => $r["whiteboard"],
         "ext_cord" => $r["ext_cord"], "sound" => $r["sound"],
