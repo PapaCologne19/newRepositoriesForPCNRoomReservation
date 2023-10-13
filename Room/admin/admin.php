@@ -51,6 +51,17 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <?php unset($_SESSION['successMessage']);
         } ?>
 
+        <?php
+        if (isset($_SESSION['errorMessage'])) { ?>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: "<?php echo $_SESSION['errorMessage']; ?>",
+                })
+            </script>
+        <?php unset($_SESSION['errorMessage']);
+        } ?>
+
         <center>
             <div class="container">
                 <div class="row pt-3" style="float: right !important;">
@@ -208,7 +219,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
                                             <td class="text-center">
                                                 <input type="hidden" class="updateID" name="updateID" id="updateID" value="<?php echo $row['id'] ?>">
-                                                <button type="button" class="btn btn-sm updateButton button" name="updateButton" id="updateButton">Update</button>
+                                                <button type="button" class="btn btn-success btn-sm updateButton" name="updateButton" id="updateButton">Update</button>
                                             <td class="text-center">
                                                 <input type="hidden" class="deleteID" name="deleteID" id="deleteID" value="<?php echo $row['id'] ?>">
                                                 <button type="button" class="btn btn-sm deleteButton" name="deleteButton" id="deleteButton">Delete</button>
@@ -237,7 +248,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn button" name="updateImageButton" id="updateImageButton">Save changes</button>
+                                                        <button type="submit" class="btn btn-primary" name="updateImageButton" id="updateImageButton">Save changes</button>
                                                     </div>
                                                     </form>
 
@@ -291,7 +302,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn button" name="addRoom" id="addRoom">Save changes</button>
+                        <button type="submit" class="btn btn-primary" name="addRoom" id="addRoom">Save changes</button>
                     </div>
                     </form>
                 </div>
@@ -333,7 +344,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn button" name="updateRoom" id="updateRoom">Save changes</button>
+                        <button type="submit" class="btn btn-primary" name="updateRoom" id="updateRoom">Save changes</button>
                     </div>
                     </form>
                 <?php }
@@ -371,8 +382,9 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                     },
                                     success: function(response) {
 
-                                        Swal.fire("Successfully Approved!", {
-                                            icon: "success",
+                                        Swal.fire({
+                                            title: "Successfully Approved!",
+                                            icon: "success"
                                         }).then((result) => {
                                             location.reload();
                                         });
@@ -412,8 +424,9 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                     },
                                     success: function(response) {
 
-                                        Swal.fire("Successfully Rejected!", {
-                                            icon: "success",
+                                        Swal.fire({
+                                            title: "Successfully Rejected!",
+                                            icon: "success"
                                         }).then((result) => {
                                             location.reload();
                                         });
@@ -437,17 +450,15 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     e.preventDefault();
 
                     var deleteID = $(this).closest("tr").find('.deleteID').val();
-
                     Swal.fire({
-                            title: "Are you sure you want to delete this room?",
-                            icon: "warning",
-                            buttons: true,
-                            dangerMode: true,
-                        })
-                        .then((willDelete) => {
-                            if (willDelete) {
-
-                                $.ajax({
+                        title: "Are you sure you want to delete this room?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel",
+                    }).then((willDelete) => {
+                        if (willDelete.isConfirmed) {
+                            $.ajax({
                                     type: "POST",
                                     url: "room_maintenance/action.php",
                                     data: {
@@ -456,18 +467,17 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                     },
                                     success: function(response) {
 
-                                        Swal.fire("Successfully Deleted!", {
-                                            icon: "success",
+                                        Swal.fire({
+                                            title: "Successfully Deleted!",
+                                            icon: "success"
                                         }).then((result) => {
                                             location.reload();
                                         });
 
                                     }
                                 });
-
-                            }
-                        });
-
+                        }
+                    });
                 });
             });
 

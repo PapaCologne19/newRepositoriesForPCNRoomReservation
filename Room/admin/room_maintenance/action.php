@@ -15,7 +15,7 @@ if (isset($_POST['addRoom'])) {
   $fileSize = $_FILES["image"]["size"];
   $fileError = $_FILES["image"]["error"];
   $fileType = $_FILES["image"]["type"];
-  $folder = "../images/" . $fileName;
+  $folder = "../../room/images/" . $fileName;
 
   $fileExt = explode('.', $fileName);
   $fileActualExt = strtolower(end($fileExt));
@@ -34,7 +34,7 @@ if (isset($_POST['addRoom'])) {
           $result = $connect->query($sql);
 
           if ($result) {
-            $_SESSION['success'] = "Successfully Added";
+            $_SESSION['successMessage'] = "Successfully Added";
             header('Location: ../admin.php');
           } else {
             echo "Error";
@@ -61,7 +61,7 @@ if (isset($_POST['delete_button_click'])) {
   $query = "DELETE FROM rooms WHERE id = '$id'";
   $result = $connect->query($query);
 
-  $_SESSION['success'] = "Successfully Deleted";
+  $_SESSION['successMessage'] = "Successfully Deleted";
   header('Location: ../admin.php');
 }
 
@@ -76,7 +76,7 @@ if (isset($_POST['updateRoom'])) {
   $updateResults = $connect->query($updateQuery);
 
   if ($updateResults) {
-    $_SESSION['success'] = "Successfully Updated";
+    $_SESSION['successMessage'] = "Successfully Updated";
     header('Location: ../admin.php');
   }
 }
@@ -93,7 +93,7 @@ if (isset($_POST['updateImageButton'])) {
   $fileSize = $_FILES["updateImage"]["size"];
   $fileError = $_FILES["updateImage"]["error"];
   $fileType = $_FILES["updateImage"]["type"];
-  $folder = "../images/" . $fileName;
+  $folder = "../../room/images/" . $fileName;
 
   $fileExt = explode('.', $fileName);
   $fileActualExt = strtolower(end($fileExt));
@@ -112,7 +112,7 @@ if (isset($_POST['updateImageButton'])) {
           $result = $connect->query($updateRoomImageQuery);
 
           if ($result) {
-            $_SESSION['success'] = "Successfully Updated";
+            $_SESSION['successMessage'] = "Successfully Updated";
             header('Location: ../admin.php');
           } else {
             echo "Error";
