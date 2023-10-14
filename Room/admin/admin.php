@@ -529,7 +529,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     </html>
 <?php
 } else {
-    header("Location: index.php");
+    header("Location: ../index.php");
     session_destroy();
 }
 mysqli_close($connect);
