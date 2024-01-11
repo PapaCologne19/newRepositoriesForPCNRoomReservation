@@ -482,7 +482,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     $monthNow = date("m");
     $yearNow = date("Y"); ?>
 
-    <!-- (B) PERIOD SELECTOR -->
+    <!-- (B) PERIOD SELECTOR --> 
     <div id="calHead">
       <div id="calPeriod">
         <select id="calMonth"><?php foreach ($months as $m => $mth) {
@@ -583,30 +583,30 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       <form method="dialog">
         <div id="evtCX">&times;</div>
         <h2 class="evt100">CALENDAR EVENT</h2>
-        <input type="hidden" name="evtCategory" id="evtCategory" disabled>
+        <input type="hidden" name="evtCategory" id="evtCategory" readonly>
         <input type="hidden" name="evtUserID" id="evtUserID">
-        <input type="hidden" name="evtEmail" id="evtEmail" disabled>
-        <input type="hidden" name="evtEndpoint" id="evtEndpoint" disabled>
-        <input type="hidden" name="evtStatus" id="evtStatus" disabled>
+        <input type="hidden" name="evtEmail" id="evtEmail" readonly>
+        <input type="hidden" name="evtEndpoint" id="evtEndpoint" readonly>
+        <input type="hidden" name="evtStatus" id="evtStatus" readonly>
 
         <div class="evt50">
           <label for="">Requestor</label>
-          <input type="text" name="evtRequestor" id="evtRequestor" disabled>
+          <input type="text" name="evtRequestor" id="evtRequestor" readonly>
         </div>
 
         <div class="evt50">
           <label>Requested Date</label>
-          <input id="evtStart" name="evtStart" type="text" disabled onclick="fwriteme()">
+          <input id="evtStart" name="evtStart" type="text" readonly onclick="fwriteme()">
         </div>
 
         <div class="evt50">
-          <input type="hidden" name="evtEnd" id="evtEnd" disabled>
+          <input type="hidden" name="evtEnd" id="evtEnd" readonly>
         </div>
 
         <div class="evt100">
           <label for="">Time</label>
-          <input type="text" name="evtEndAll" id="evtEndAll" disabled>
-          <input type="text" name="evtEnd1" id="evtEnd1" disabled>
+          <input type="text" name="evtEndAll" id="evtEndAll" readonly>
+          <input type="text" name="evtEnd1" id="evtEnd1" readonly>
         </div>
 
         <div class="evt100">
