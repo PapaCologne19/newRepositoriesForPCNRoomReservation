@@ -22,12 +22,12 @@ function sendMail($email)
   try {
     // Server settings
     $mail->isSMTP();  // Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';  // Set the SMTP server to send through
-    $mail->SMTPAuth   = true;  // Enable SMTP authentication
-    $mail->Username   = 'jphigomera0619@gmail.com';  // SMTP username
-    $mail->Password   = 'hbofxxnqvkeyhgkf';  // SMTP password
+    $mail->Host = 'smtp.gmail.com';  // Set the SMTP server to send through
+    $mail->SMTPAuth = true;  // Enable SMTP authentication
+    $mail->Username = 'jphigomera0619@gmail.com';  // SMTP username
+    $mail->Password = 'hbofxxnqvkeyhgkf';  // SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable STARTTLS encryption
-    $mail->Port       = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
+    $mail->Port = 587;  // TCP port to connect to (use 587 if you set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`)
 
     // Recipients
     $mail->setFrom('PCNPromopro@gmail.com', 'PCN Promopro Inc.');
@@ -36,7 +36,7 @@ function sendMail($email)
     // Content
     $mail->isHTML(true);  // Set email format to HTML
     $mail->Subject = 'PCN Room Reservation';
-    $mail->Body    = '<center>
+    $mail->Body = '<center>
                         <div class="container" style="margin: 10rem;">
                             <div class="logo">
                                 <img src="/images/pcn.png" alt="" width="15%">
@@ -166,23 +166,23 @@ if (isset($_POST['SubButton'])) {
     $start_t = "7am";
   } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (isset($_POST['c89'])))) {
     $start_t = "8am";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (isset($_POST['c910'])))) {
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (isset($_POST['c910'])))) {
     $start_t = "9am";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (isset($_POST['c1011'])))) {
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (isset($_POST['c1011'])))) {
     $start_t = "10am";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (isset($_POST['c1112'])))) {
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (isset($_POST['c1112'])))) {
     $start_t = "11am";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (isset($_POST['c121'])))) {
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (isset($_POST['c121'])))) {
     $start_t = "12nn";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (isset($_POST['c12'])))) {
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (isset($_POST['c12'])))) {
     $start_t = "1pm";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (isset($_POST['c23'])))) {
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (isset($_POST['c23'])))) {
     $start_t = "2pm";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (isset($_POST['c34'])))) {
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (isset($_POST['c34'])))) {
     $start_t = "3pm";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (isset($_POST['c45'])))) {
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (isset($_POST['c45'])))) {
     $start_t = "4pm";
-  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (isset($_POST['c56'])))) {
+  } else if (!isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (isset($_POST['c56'])))) {
     $start_t = "5pm";
   }
 
@@ -207,11 +207,11 @@ if (isset($_POST['SubButton'])) {
     $end_t = "11am";
   } else if ((isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
     $end_t = "10am";
-  } else if ((isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
+  } else if ((isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56']))) {
     $end_t = "9am";
-  } else if ((isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56'])))) {
+  } else if ((isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56'])))) {
     $end_t = "8am";
-  } else if (isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89']))  && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56'])))) {
+  } else if (isset($_POST['c67']) && (!isset($_POST['c78']) && (!isset($_POST['c89'])) && (!isset($_POST['c910'])) && (!isset($_POST['c1011'])) && (!isset($_POST['c1112'])) && (!isset($_POST['c121'])) && (!isset($_POST['c12'])) && (!isset($_POST['c23'])) && (!isset($_POST['c34'])) && (!isset($_POST['c45'])) && (!isset($_POST['c56'])))) {
     $end_t = "7am";
   }
 
@@ -369,7 +369,7 @@ if (isset($_POST['SubButton'])) {
 }
 
 if (isset($_SESSION["username"], $_SESSION["password"])) {
-?>
+  ?>
 
 
   <!-- HTML Start here -->
@@ -387,7 +387,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     $rows = $result->fetch_assoc();
 
     if ($rows['category'] === "VIEWER") {
-    ?>
+      ?>
       <meta http-equiv="refresh" content="3600; url=index.php">
     <?php } else { ?>
       <meta http-equiv="refresh" content="600; url=logout.php">
@@ -422,11 +422,13 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <!-- Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Julius+Sans+One&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&family=Julius+Sans+One&family=Poppins&family=Roboto&family=Thasadith&display=swap"
+      rel="stylesheet">
 
     <!-- PushAlert -->
     <script type="text/javascript">
-      (function(d, t) {
+      (function (d, t) {
         var g = d.createElement(t),
           s = d.getElementsByTagName(t)[0];
         g.src = "https://cdn.pushalert.co/integrate_528125d5243c8061f0582c3236426e8d.js";
@@ -449,7 +451,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
           title: "<?php echo $_SESSION['successMessage']; ?>",
         })
       </script>
-    <?php unset($_SESSION['successMessage']);
+      <?php unset($_SESSION['successMessage']);
     } ?>
     <?php
     if (isset($_SESSION['error'])) { ?>
@@ -459,9 +461,9 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
           title: "<?php echo $_SESSION['error']; ?>",
         })
       </script>
-    <?php unset($_SESSION['error']);
+      <?php unset($_SESSION['error']);
     } ?>
-     <?php
+    <?php
     if (isset($_SESSION['warning'])) { ?>
       <script>
         Swal.fire({
@@ -469,30 +471,41 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
           title: "<?php echo $_SESSION['warning']; ?>",
         })
       </script>
-    <?php unset($_SESSION['warning']);
+      <?php unset($_SESSION['warning']);
     } ?>
 
     <?php
     // (A) DAYS MONTHS YEAR
     $months = [
-      1 => "January", 2 => "Febuary", 3 => "March", 4 => "April",
-      5 => "May", 6 => "June", 7 => "July", 8 => "August",
-      9 => "September", 10 => "October", 11 => "November", 12 => "December"
+      1 => "January",
+      2 => "Febuary",
+      3 => "March",
+      4 => "April",
+      5 => "May",
+      6 => "June",
+      7 => "July",
+      8 => "August",
+      9 => "September",
+      10 => "October",
+      11 => "November",
+      12 => "December"
     ];
     $monthNow = date("m");
     $yearNow = date("Y"); ?>
 
-    <!-- (B) PERIOD SELECTOR --> 
+    <!-- (B) PERIOD SELECTOR -->
     <div id="calHead">
       <div id="calPeriod">
-        <select id="calMonth"><?php foreach ($months as $m => $mth) {
-                                printf(
-                                  "<option value='%u'%s>%s</option>",
-                                  $m,
-                                  $m == $monthNow ? " selected" : "",
-                                  $mth
-                                );
-                              } ?></select>
+        <select id="calMonth">
+          <?php foreach ($months as $m => $mth) {
+            printf(
+              "<option value='%u'%s>%s</option>",
+              $m,
+              $m == $monthNow ? " selected" : "",
+              $mth
+            );
+          } ?>
+        </select>
         <input id="calYear" type="number" value="<?= $yearNow ?>">
         <input id="calBack" type="button" class="mi" value="&lt;">
         <input id="calNext" type="button" class="mi" value="&gt;">
@@ -505,34 +518,45 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
       if ($row['category'] === "ADMIN") {
 
-      ?>
+        ?>
         <center>
           <img src="images/pcn.png" alt="" id="image_logo" width="15%" style="margin-left: -20rem;">
         </center>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
-        <button type="button" class="gbutton btn btn-primary btn-sm" data-bs-toggle="modal" id="calButton" data-bs-target="#myModal" style="float:right;">ADD EVENT</button> &nbsp; &nbsp; &nbsp; &nbsp;
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addRoom" id="calButton" style="float:right;">ADD ROOM</button>&nbsp; &nbsp; &nbsp;
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#approveAll" id="calButton" style="float:right;">APPROVE ALL</button>&nbsp; &nbsp; &nbsp;
-        <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
+        <button type="button" class="gbutton btn btn-primary btn-sm" data-bs-toggle="modal" id="calButton"
+          data-bs-target="#myModal" style="float:right;">ADD EVENT</button> &nbsp; &nbsp; &nbsp; &nbsp;
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addRoom" id="calButton"
+          style="float:right;">ADD ROOM</button>&nbsp; &nbsp; &nbsp;
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#approveAll"
+          id="calButton" style="float:right;">APPROVE ALL</button>&nbsp; &nbsp; &nbsp;
+        <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';"
+          id="calButtonLogout">LOGOUT</button>
 
-      <?php
+        <?php
       } elseif ($row['category'] === "VIEWER") { ?>
         <center>
-          <img src="images/pcn.png" alt="" id="image_logo_viewer" width="15%" style="position: relative; margin-left: -50rem;">
+          <img src="images/pcn.png" alt="" id="image_logo_viewer" width="15%"
+            style="position: relative; margin-left: -50rem;">
         </center>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
-        <button type="hidden" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right; display: none;">Add Appointment</button> &nbsp;
-        <button type="hidden" class="btn btn-primary" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
-        <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
+        <button type="hidden" class="gbutton btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"
+          style="float:right; display: none;">Add Appointment</button> &nbsp;
+        <button type="hidden" class="btn btn-primary" data-toggle="modal" data-target="#addRoom"
+          style="float:right; display: none;">Add Room</button>&nbsp;
+        <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';"
+          id="calButtonLogout">LOGOUT</button>
       <?php } else {
-      ?>
+        ?>
         <center>
           <img src="images/pcn.png" alt="" id="image_logo" width="15%" style="margin-left: -20rem;">
         </center>
         <input class="btn" id="calAdd" type="hidden" value="+">&nbsp;
-        <button type="button" class="gbutton btn btn-primary btn-sm" id="calButton" data-bs-toggle="modal" data-bs-target="#myModal" style="float:right;">ADD EVENT</button> &nbsp;
-        <button type="button" class="btn btn-primary" id="calButton" data-toggle="modal" data-target="#addRoom" style="float:right; display: none;">Add Room</button>&nbsp;
-        <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';" id="calButtonLogout">LOGOUT</button>
+        <button type="button" class="gbutton btn btn-primary btn-sm" id="calButton" data-bs-toggle="modal"
+          data-bs-target="#myModal" style="float:right;">ADD EVENT</button> &nbsp;
+        <button type="button" class="btn btn-primary" id="calButton" data-toggle="modal" data-target="#addRoom"
+          style="float:right; display: none;">Add Room</button>&nbsp;
+        <button type="button" class="btn btn-danger btn-sm" onclick="location.href = 'logout.php';"
+          id="calButtonLogout">LOGOUT</button>
       <?php } ?>
 
 
@@ -542,24 +566,27 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     <!-- Modal for Approve all -->
     <div class="modal fade" id="approveAll" role="dialog" tabindex="1">
 
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomOpen').modal('hide')">
+            <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo"
+              style="width:100px;height:auto;padding-top:20px;justify-content: start;"
+              onclick="playAudio();$('#myModalroomOpen').modal('hide')">
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 
           <div class="modal-body">
             <form action="approve.php" method="POST" class="form-group">
-              <div class="col-md-7 mt-5">
-                <label for="" class="form-label">Select Date</label>
-                <input type="date" name="approveDate" id="approveDate" class="form-control" required style="width: 20vw !important; display: block !important;">
+              <div class="col-md-12 mb-5">
+                <label for="approveDate" class="form-label">Select Date</label>
+                <input type="date" name="approveDate" id="approveDate" class="form-control" required
+                  style="display: block !important;">
               </div>
-              <div class="col-md-7 mt-5">
-                <button type="submit" class="btn btn-primary" id="approveBtn" name="approveBtn">Approve All</button>
+              <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="approveBtn" name="approveBtn">Approve All</button>
               </div>
             </form>
 
@@ -620,7 +647,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
         if ($row['category'] === "ADMIN") {
 
-        ?>
+          ?>
           <div class="evt100">
             <select name="evtBG" id="evtBG" class="form-control" aria-placeholder="select" style="display: none;">
               <option value="#80c87e">Green (Approve)</option>
@@ -629,7 +656,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
             </select>
           </div>
         <?php } else {
-        ?>
+          ?>
           <div class="evt100">
             <select name="evtBG" id="evtBG" class="form-control" aria-placeholder="select" style="display: none;" disabled>
               <option value="#80c87e">Green (Approve)</option>
@@ -682,7 +709,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
         if ($row['category'] === "ADMIN") {
 
-        ?>
+          ?>
           <div class="evt100">
             <input type="hidden" id="evtID">
             <input type="hidden" class="btn btn-dark" name="evtCancel" id="evtCancel" value="Cancel">
@@ -690,18 +717,20 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
             <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Approve">
           </div>
         <?php } elseif ($row['category'] === "USER") {
-        ?>
+          ?>
           <div class="evt100">
             <input type="hidden" id="evtID">
             <input type="submit" class="btn btn-danger" name="evtCancel" id="evtCancel" value="Cancel">
-            <input class="btn btn-danger" type="hidden" id="evtDel" name="evtDel" value="Delete" style="display: none !important;">
+            <input class="btn btn-danger" type="hidden" id="evtDel" name="evtDel" value="Delete"
+              style="display: none !important;">
             <input class="btn btn-success" type="hidden" id="evtSave" name="evtSave" value="Accept" style="display: none;">
           </div>
         <?php } else { ?>
           <div class="evt100">
             <input type="hidden" id="evtID">
             <input type="hidden" class="btn btn-dark" name="evtCancel" id="evtCancel" value="Cancel">
-            <input class="btn btn-danger" type="hidden" id="evtDel" name="evtDel" value="Delete" style="display: none !important;">
+            <input class="btn btn-danger" type="hidden" id="evtDel" name="evtDel" value="Delete"
+              style="display: none !important;">
             <input class="btn btn-success" type="submit" id="evtSave" name="evtSave" value="Accept" style="display: none;">
           </div>
         <?php } ?>
@@ -710,19 +739,23 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
 
     <!-- Modal for Adding Rooms -->
-    <div class="modal" id="addRoom" role="dialog" tabindex="1">
+    <div class="modal fade" id="addRoom" role="dialog" tabindex="1">
       <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModal1').modal('show');" data-dismiss="modal">
+            <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo"
+              style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModal1').modal('show');"
+              data-dismiss="modal">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
           </div>
           <div class="modal-body">
-            <form action="action.php" method="POST" class="row g-3" enctype="multipart/form-data" accept="image/png, image/jpeg, image/jpg">
+            <form action="action.php" method="POST" class="row g-3" enctype="multipart/form-data"
+              accept="image/png, image/jpeg, image/jpg">
               <div class="mb-3">
                 <label for="">Room Name</label>
-                <input type="text" class="form-control form-control-lg" name="roomName" id="roomName" style="text-transform: uppercase;" required>
+                <input type="text" class="form-control form-control-lg" name="roomName" id="roomName"
+                  style="text-transform: uppercase;" required>
               </div>
 
               <div class="mb-3">
@@ -738,7 +771,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
               <div class="mb-3">
                 <label for="" class="form-label">Description</label>
-                <textarea name="description" maxlength="500" id="description" class="form-control form-control-lg" cols="30" rows="10"></textarea>
+                <textarea name="description" maxlength="500" id="description" class="form-control form-control-lg"
+                  cols="30" rows="10"></textarea>
               </div>
 
               <br><br>
@@ -762,7 +796,9 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModal1').modal('show');" data-dismiss="modal">
+            <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo"
+              style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModal1').modal('show');"
+              data-dismiss="modal">
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
@@ -790,15 +826,19 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                       <br>
                       <label for="" class="form-label">Select Date</label>
                       <br>
-                      <input id="evtStarts" name="evtStart" type="date" onchange="checkRoom()" required>
+                      <input id="evtStarts" name="evtStart" type="date" class="form-control" onchange="checkRoom()"
+                        required style="display: block !important;">
 
                     </div>
-                    <button type="button" class="btn btn-warning" id="selectingRoomButton" aria-label="Close" required style="display: none;"> Please select </button>
-                    <input type="text" name="roomko" id="roomko" class="form-control" placeholder="Place of Meeting" style="height:45px;width:250px;" required readonly>
+                    <button type="button" class="btn btn-warning" id="selectingRoomButton" aria-label="Close" required
+                      style="display: none;"> Please select </button>
+                    <input type="text" name="roomko" id="roomko" class="form-control" placeholder="Place of Meeting"
+                      style="height:45px;width:250px;" required readonly>
                     <p id="result"></p>
                     <div class="mb-3">
                       <label for="" class="form-label">Input Quantity</label>
-                      <input type="number" name="qty" id="qty" class="form-control" placeholder="Qty" style="height:45px;width:250px;" required>
+                      <input type="number" name="qty" id="qty" class="form-control" placeholder="Qty"
+                        style="height:45px;width:250px;" required>
                     </div>
 
                 </center>
@@ -819,62 +859,74 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     All day
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="67" style="text-align:center;padding-left:10px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="67"
+                    style="text-align:center;padding-left:10px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c67" id="x67" onclick="falldayx('67')" />
                     6am - 7am
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="78" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="78"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c78" id="x78" onclick="falldayx('78')" />
                     7am - 8am
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="89" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="89"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c89" id="x89" onclick="falldayx('89')" />
                     8am - 9am
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="910" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="910"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c910" id="x910" onclick="falldayx('910')" />
                     9am - 10am
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="1011" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="1011"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c1011" id="x1011" onclick="falldayx('1011')" />
                     10am - 11am
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="1112" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="1112"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c1112" id="x1112" onclick="falldayx('1112')" />
                     11am - 12nn
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="121" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="121"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c121" id="x121" onclick="falldayx('121')" />
                     12nn - 1pm
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="12" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="12"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c12" id="x12" onclick="falldayx('12')" />
                     1pm - 2pm
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="23" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="23"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c23" id="x23" onclick="falldayx('23')" />
                     2pm - 3pm
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="34" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="34"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c34" id="x34" onclick="falldayx('34')" />
                     3pm - 4pm
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="45" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="45"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c45" id="x45" onclick="falldayx('45')" />
                     4pm - 5pm
                   </label>
 
-                  <label class="form-control pt-3 addappointments" data-time="56" style="text-align:center;margin-top:2px;width:250px">
+                  <label class="form-control pt-3 addappointments" data-time="56"
+                    style="text-align:center;margin-top:2px;width:250px">
                     <input type="checkbox" class="time-checkbox" name="c56" id="x56" onclick="falldayx('56')" />
                     5pm - 6pm
                   </label>
@@ -909,12 +961,14 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     Sound system
                   </label>
 
-                  <label class="form-control pt-3 addappointments" style="margin-left:10px;text-align:left;margin-top:2px;width:200px">
+                  <label class="form-control pt-3 addappointments"
+                    style="margin-left:10px;text-align:left;margin-top:2px;width:200px">
                     <input type="radio" name="radios" id="s_simple" onclick="fsimple()" />
                     Simple
                   </label>
 
-                  <label class="form-control pt-3 addappointments" style="margin-left:10px;text-align:left;margin-top:2px;width:200px">
+                  <label class="form-control pt-3 addappointments"
+                    style="margin-left:10px;text-align:left;margin-top:2px;width:200px">
                     <input type="radio" name="radioa" id="s_advance" onclick="fadvance()" />
                     Advanced
                   </label>
@@ -928,12 +982,14 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     <input type="checkbox" name="checkbox" id="cleanme" onclick="fclean()" />
                     Clean Up / Disinfect
                   </label>
-                  <label class="form-control pt-3 addappointments" style="margin-left:10px;text-align:left;margin-top:2px;width:200px">
+                  <label class="form-control pt-3 addappointments"
+                    style="margin-left:10px;text-align:left;margin-top:2px;width:200px">
                     <input type="radio" name="c_before" id="c_before" onclick="fbefore()" />
                     Before
                   </label>
 
-                  <label class="form-control pt-3 addappointments" style="margin-left:10px;text-align:left;margin-top:2px;width:200px">
+                  <label class="form-control pt-3 addappointments"
+                    style="margin-left:10px;text-align:left;margin-top:2px;width:200px">
                     <input type="radio" name="c_after" id="c_after" onclick="fafter()" />
                     After
                   </label>
@@ -941,7 +997,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                   <label class="form-control pt-3 addappointments" style="text-align:left;margin-top:2px;width:300px">
                     <input type="checkbox" name="checkbox" id="equi_others" onclick="fdisplay()" />
                     Others
-                    <input type="text" name="others_rem" id="others_rem" class="form-control pt-3 addappointments" placeholder="Others" style="height:45px;width:250px;">
+                    <input type="text" name="others_rem" id="others_rem" class="form-control pt-3 addappointments"
+                      placeholder="Others" style="height:45px;width:250px;">
                   </label>
 
                   <br>
@@ -958,29 +1015,44 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
                 <center>
                   <label class="form-control pt-3 addappointments" style="text-align:left">
-                    <input type="radio" name="roomOrientation" value="Classroom" onclick="fdisplay1x()" checked /><a href="#" onclick="$('#myModalroomClassroom').modal('show');" aria-label="Close" style="display: inline; text-align: left; text-decoration: none; color: #555555;">Class Room<img src="images/classroom.png" alt="picture" style="float: right; box-shadow: 5px 5px 5px rgba(0,0,0,.3) !important;" width="20%"> </a>
+                    <input type="radio" name="roomOrientation" value="Classroom" onclick="fdisplay1x()" checked /><a
+                      href="#" onclick="$('#myModalroomClassroom').modal('show');" aria-label="Close"
+                      style="display: inline; text-align: left; text-decoration: none; color: #555555;">Class Room<img
+                        src="images/classroom.png" alt="picture"
+                        style="float: right; box-shadow: 5px 5px 5px rgba(0,0,0,.3) !important;" width="20%"> </a>
                   </label>
 
                   <label class="form-control pt-3 addappointments" style="text-align:left">
                     <input type="radio" name="roomOrientation" value="Workshop" onclick="fdisplay1x()" />
-                    <a href="#" onclick="$('#myModalroomworkshop').modal('show');" aria-label="Close" style="display: inline; text-align: left; text-decoration: none; color: #555555;">Workshop <img src="images/workshop.png" alt="picture" style="float: right; box-shadow: 5px 5px 5px rgba(0,0,0,.3) !important;" width="20%"> </a>
+                    <a href="#" onclick="$('#myModalroomworkshop').modal('show');" aria-label="Close"
+                      style="display: inline; text-align: left; text-decoration: none; color: #555555;">Workshop <img
+                        src="images/workshop.png" alt="picture"
+                        style="float: right; box-shadow: 5px 5px 5px rgba(0,0,0,.3) !important;" width="20%"> </a>
                   </label>
 
                   <label class="form-control pt-3 addappointments" style="text-align:left">
                     <input type="radio" name="roomOrientation" value="Training" onclick="fdisplay1x()" />
-                    <a href="#" onclick="$('#myModalroomTraining').modal('show');" aria-label="Close" style="display: inline; text-align: left; text-decoration: none; color: #555555;">Training (All Chairs) <img src="images/trainingroom.png" alt="picture" style="float: right; box-shadow: 5px 5px 5px rgba(0,0,0,.3) !important;" width="20%"> </a>
+                    <a href="#" onclick="$('#myModalroomTraining').modal('show');" aria-label="Close"
+                      style="display: inline; text-align: left; text-decoration: none; color: #555555;">Training (All
+                      Chairs) <img src="images/trainingroom.png" alt="picture"
+                        style="float: right; box-shadow: 5px 5px 5px rgba(0,0,0,.3) !important;" width="20%"> </a>
                   </label>
 
                   <label class="form-control pt-3 addappointments" style="text-align:left">
                     <input type="radio" name="roomOrientation" value="Open" onclick="fdisplay1x()" />
-                    <a href="#" onclick="$('#myModalroomOpen').modal('show');" aria-label="Close" style="display: inline; text-align: left; text-decoration: none; color: #555555;">Open <img src="images/openroom.png" alt="picture" style="float: right; box-shadow: 5px 5px 5px rgba(0,0,0,.3) !important;" width="20%"> </a>
+                    <a href="#" onclick="$('#myModalroomOpen').modal('show');" aria-label="Close"
+                      style="display: inline; text-align: left; text-decoration: none; color: #555555;">Open <img
+                        src="images/openroom.png" alt="picture"
+                        style="float: right; box-shadow: 5px 5px 5px rgba(0,0,0,.3) !important;" width="20%"> </a>
 
                   </label>
 
                   <label class="form-control pt-3 addappointments" style="text-align:left">
-                    <input type="radio" name="roomOrientation" id="room_others" onclick="fdisplay1()" onblur="fdisplay1x()" />
+                    <input type="radio" name="roomOrientation" id="room_others" onclick="fdisplay1()"
+                      onblur="fdisplay1x()" />
                     Others
-                    <input type="text" name="roomOrientationOther" id="others_rem1" class="form-control pt-3 addappointments" placeholder="Others" style="height:40px;width:250px;">
+                    <input type="text" name="roomOrientationOther" id="others_rem1"
+                      class="form-control pt-3 addappointments" placeholder="Others" style="height:40px;width:250px;">
                   </label>
                 </Center>
 
@@ -992,8 +1064,11 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomClassroom').modal('hide')">
-                        <button type="button" class="btn-close" onclick="$('#myModalroomClassroom').modal('hide')"></button>
+                        <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo"
+                          style="width:100px;height:auto;padding-top:20px;justify-content: start;"
+                          onclick="playAudio();$('#myModalroomClassroom').modal('hide')">
+                        <button type="button" class="btn-close"
+                          onclick="$('#myModalroomClassroom').modal('hide')"></button>
                       </div>
 
                       <div class="modal-body2">
@@ -1004,8 +1079,13 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
                           <center>
                             <p style="font-weight: bold;">C L A S S R O O M </p>
-                            <img src="./images/classroom.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
-                            <p style="padding: 1rem; text-align: justify; text-indent: 5rem;">A classroom seating arrangements may consist of learners sitting in a circle or around a single large table. This seating arrangement can also be formed using individual desks. Learners and teachers all face one another in this setup, which can support whole-class as well as pair-wise dialogue.</p>
+                            <img src="./images/classroom.png" id="imgko1" alt="logo" class=""
+                              style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
+                            <p style="padding: 1rem; text-align: justify; text-indent: 5rem;">A classroom seating
+                              arrangements may consist of learners sitting in a circle or around a single large table.
+                              This seating arrangement can also be formed using individual desks. Learners and teachers
+                              all face one another in this setup, which can support whole-class as well as pair-wise
+                              dialogue.</p>
                           </center>
                         </center>
 
@@ -1024,8 +1104,11 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomworkshop').modal('hide')">
-                        <button type="button" class="btn-close" onclick="$('#myModalroomworkshop').modal('hide')"></button>
+                        <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo"
+                          style="width:100px;height:auto;padding-top:20px;justify-content: start;"
+                          onclick="playAudio();$('#myModalroomworkshop').modal('hide')">
+                        <button type="button" class="btn-close"
+                          onclick="$('#myModalroomworkshop').modal('hide')"></button>
                       </div>
 
                       <div class="modal-body2">
@@ -1035,7 +1118,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                         <center>
 
                           <center>
-                            <img src="./images/workshop.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
+                            <img src="./images/workshop.png" id="imgko1" alt="logo" class=""
+                              style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
                             <p>Workshop Room</p>
                           </center>
                         </center>
@@ -1054,8 +1138,11 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomTraining').modal('hide')">
-                        <button type="button" class="btn-close" onclick="$('#myModalroomTraining').modal('hide')"></button>
+                        <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo"
+                          style="width:100px;height:auto;padding-top:20px;justify-content: start;"
+                          onclick="playAudio();$('#myModalroomTraining').modal('hide')">
+                        <button type="button" class="btn-close"
+                          onclick="$('#myModalroomTraining').modal('hide')"></button>
                       </div>
 
                       <div class="modal-body2">
@@ -1065,7 +1152,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                         <center>
 
                           <center>
-                            <img src="./images/trainingroom.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
+                            <img src="./images/trainingroom.png" id="imgko1" alt="logo" class=""
+                              style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
                             <p>Training Room</p>
                           </center>
                         </center>
@@ -1084,7 +1172,9 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px;justify-content: start;" onclick="playAudio();$('#myModalroomOpen').modal('hide')">
+                        <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo"
+                          style="width:100px;height:auto;padding-top:20px;justify-content: start;"
+                          onclick="playAudio();$('#myModalroomOpen').modal('hide')">
                         <button type="button" class="btn-close" onclick="$('#myModalroomOpen').modal('hide')"></button>
                       </div>
 
@@ -1095,7 +1185,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                         <center>
 
                           <center>
-                            <img src="./images/openroom.png" id="imgko1" alt="logo" class="" style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
+                            <img src="./images/openroom.png" id="imgko1" alt="logo" class=""
+                              style="width:500px;height:auto;padding:10px 10px 10px 10px;background-color:green">
                             <p>Open Room</p>
                           </center>
                         </center>
@@ -1106,7 +1197,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                 </div>
 
                 <br><br><br><br>
-                <input type="submit" name="SubButton" value="Process me" class="btn btn-primary loginButton" style="margin-top: 1.5rem;">
+                <input type="submit" name="SubButton" value="Process me" class="btn btn-primary loginButton"
+                  style="margin-top: 1.5rem;">
 
                 </form>
 
@@ -1124,7 +1216,9 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
               <!-- Modal content-->
               <div class="modal-content">
                 <div class="modal-header">
-                  <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModalroom').modal('hide')">
+                  <img src="./images/pcn.png" id="imgko1" alt="logo" class="logo"
+                    style="width:100px;height:auto;padding-top:20px"
+                    onclick="playAudio();$('#myModalroom').modal('hide')">
                   <button type="button" class="btn-close" onclick="$('#myModalroom').modal('hide')"></button>
                 </div>
                 <div class="modal-body2">
@@ -1144,20 +1238,28 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                             $roomName = $row['rooms'];
                             $descriptions = $row['description'];
 
-                        ?>
+                            ?>
                             <div class="cards">
                               <div class="contents">
                                 <div class="front">
                                   <div class="front-content">
-                                    <img src="images/<?php echo $imageUrl; ?>" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>" alt="logo" width="285" height="285" onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();">
-                                    <strong><?php echo $roomName; ?></strong>
+                                    <img src="images/<?php echo $imageUrl; ?>"
+                                      id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>" alt="logo" width="285"
+                                      height="285" onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();">
+                                    <strong>
+                                      <?php echo $roomName; ?>
+                                    </strong>
                                   </div>
                                 </div>
                                 <div class="back">
                                   <div class="back-content">
                                     <div class="description">
                                       <div class="card-body">
-                                        <p style="text-align: justify; cursor: pointer;" id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>" onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();"><?php echo $descriptions ?></p>
+                                        <p style="text-align: justify; cursor: pointer;"
+                                          id="<?php echo str_replace(' ', '-', strtolower($roomName)); ?>"
+                                          onclick="selectRoom('<?php echo $roomName; ?>');focusQtyInput();">
+                                          <?php echo $descriptions ?>
+                                        </p>
                                       </div>
                                     </div>
                                   </div>
@@ -1166,7 +1268,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                             </div>
 
 
-                        <?php  }
+                          <?php }
                         } ?>
                       </div>
                     </div>
@@ -1186,7 +1288,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
   <script>
     function focusQtyInput() {
       // Set focus on the "Qty" input field
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById('qty').focus();
       }, 100);
     }
@@ -1329,7 +1431,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       ];
 
       // Check if any checkbox is disabled
-      var anyDisabled = checkboxes.some(function(checkbox) {
+      var anyDisabled = checkboxes.some(function (checkbox) {
         return checkbox.disabled;
       });
 
@@ -1337,24 +1439,21 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       if (anyDisabled) {
         x.checked = false; // Uncheck "All day" if any checkbox is disabled
       } else if (x.checked && !anyDisabled) {
-        checkboxes.forEach(function(checkbox) {
+        checkboxes.forEach(function (checkbox) {
           checkbox.checked = true;
 
         });
       } else {
-        checkboxes.forEach(function(checkbox) {
+        checkboxes.forEach(function (checkbox) {
           checkbox.checked = false;
         });
       }
     }
 
-
     function falldayx1() {
 
       document.getElementById("allday").checked = false;
     }
-
-
 
     // Get references to all time slot checkboxes
     var checkboxes = [
@@ -1373,10 +1472,10 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     ];
 
     // Add an event listener to each checkbox
-    checkboxes.forEach(function(checkbox) {
-      checkbox.addEventListener("click", function() {
+    checkboxes.forEach(function (checkbox) {
+      checkbox.addEventListener("click", function () {
         // Check if any checkbox is disabled
-        var anyDisabled = checkboxes.some(function(checkbox) {
+        var anyDisabled = checkboxes.some(function (checkbox) {
           return checkbox.disabled;
         });
 
@@ -1390,10 +1489,6 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       // Your existing code for handling checkbox states
     }
 
-
-
-
-
     var selectedDate; // Global variable for selected date
     var selectedRoom; // Global variable for selected room
 
@@ -1405,7 +1500,6 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       checkRoomAvailability(); // Call checkRoomAvailability here
     }
 
-
     function checkRoomAvailability() {
       // Reset checkbox states (enable all checkboxes)
       document.querySelectorAll('.time-checkbox').forEach((checkbox) => {
@@ -1416,7 +1510,6 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       const image = document.getElementById("changeImageBackground");
       const timeCheckboxes = document.querySelectorAll('.time-checkbox');
 
-
       // Send an AJAX request to the server to check availability
       const xhr = new XMLHttpRequest();
       xhr.open("POST", "check_availability.php", true);
@@ -1425,7 +1518,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       // Define the data to be sent in the request
       const data = `roomName=${selectedRoom}&selectedDate=${selectedDate}`;
 
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) { // Check readyState only once
           if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
@@ -1434,7 +1527,6 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
               if (response.available) {
 
               } else {
-
 
                 // Disable unavailable time checkboxes
                 response.unavailableTimes.forEach((timeSlot) => {
@@ -1461,7 +1553,6 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       xhr.send(data);
     }
 
-
     // JavaScript code for checking room availability and setting border color
     function checkRoom() {
       // Always open the modal
@@ -1479,7 +1570,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
       // Define the data to be sent in the request (only selectedDate)
       const data = `selectedDate=${selectedDate}`;
 
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) { // Check readyState only once
           if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
@@ -1533,7 +1624,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     datePicker.min = today;
 
     // Add an event listener to handle date selection
-    datePicker.addEventListener("change", function() {
+    datePicker.addEventListener("change", function () {
       const selectedDate = this.value;
     });
   </script>
@@ -1561,14 +1652,14 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
     function saveSubscriberIdToDatabase(subscriberId) {
       fetch('save-id.php', {
-          method: 'POST',
-          body: JSON.stringify({
-            subscriberId: subscriberId
-          }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        method: 'POST',
+        body: JSON.stringify({
+          subscriberId: subscriberId
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
         .then(response => {
           if (response.ok) {
             console.log('Subscriber ID saved to the database.');
@@ -1582,13 +1673,8 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
     }
   </script>
 
-
-
-
-
-
   </html>
-<?php
+  <?php
 } else {
   header("Location: ../index.php");
   session_destroy();

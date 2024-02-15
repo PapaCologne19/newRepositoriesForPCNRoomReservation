@@ -373,17 +373,17 @@ class Calendar
 // define("DB_USER", "u685566035_pcn");
 // define("DB_PASSWORD", "Pcn123456789");
 
-// define("DB_HOST", "localhost");
-// define("DB_NAME", "calendar");
-// define("DB_CHARSET", "utf8mb4");
-// define("DB_USER", "root");
-// define("DB_PASSWORD", "");
-
 define("DB_HOST", "localhost");
-define("DB_NAME", "msileen_room");
+define("DB_NAME", "calendar");
 define("DB_CHARSET", "utf8mb4");
-define("DB_USER", "msileen_james");
-define("DB_PASSWORD", "James2023");
+define("DB_USER", "root");
+define("DB_PASSWORD", "");
+
+// define("DB_HOST", "localhost");
+// define("DB_NAME", "msileen_room");
+// define("DB_CHARSET", "utf8mb4");
+// define("DB_USER", "msileen_james");
+// define("DB_PASSWORD", "James2023");
 
 // (H) NEW CALENDAR OBJECT
 $_CAL = new Calendar();

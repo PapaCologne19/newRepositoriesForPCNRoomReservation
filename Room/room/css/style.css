@@ -17,7 +17,7 @@ body {
   margin: 0;
 }
 
-h3{
+h3 {
   font-weight: 900;
   color: red;
   text-transform: uppercase;
@@ -27,13 +27,10 @@ h3{
 form {
   display: grid;
   place-content: center;
-  /*min-height: 100vh;*/
 }
 
 
 .form-control {
-  /* font-size: 1.5rem; */
-  /*font-weight: bold;*/
   line-height: 1.1;
   display: grid;
   grid-template-columns: 1em auto;
@@ -51,15 +48,10 @@ form {
 }
 
 input[type="checkbox"] {
-  /* Add if not using autoprefixer */
   -webkit-appearance: none;
-  /* Remove most all native input styles */
   appearance: none;
-  /* For iOS < 15 */
   background-color: var(--form-background);
-  /* Not removed via appearance */
   margin: 0;
-
   font: inherit;
   color: currentColor;
   width: 1.15em;
@@ -105,34 +97,26 @@ input[type="checkbox"]:disabled::after {
   color: rgb(216, 102, 102);
   display: inline-block;
   width: 20px;
-  /* Adjust the size as needed */
   height: 20px;
-  /* Adjust the size as needed */
   text-align: center;
   vertical-align: middle;
-  /* background-color: red; Background color for the "X" mark */
   border: none;
-  /* Border for the container */
   border-radius: 50px;
-  /* Rounded corners for the container */
   margin-top: -9px;
   padding-top: 2px;
 }
 
 
-/* Float four columns side by side */
 .column {
   float: left;
   width: 25%;
   padding: 0 10px;
 }
 
-/* Remove extra left and right margins, due to padding */
 .row {
   margin: 0 -5px;
 }
 
-/* Clear floats after the columns */
 .row:after {
   content: "";
   display: table;
@@ -158,13 +142,9 @@ input[type="checkbox"]:disabled::after {
 }
 
 input[type="radio"] {
-  /* Add if not using autoprefixer */
   -webkit-appearance: none;
-  /* Remove most all native input styles */
   appearance: none;
-  /* For iOS < 15 */
   background-color: var(--form-background);
-  /* Not removed via appearance */
   margin: 0;
 
   font: inherit;
@@ -188,7 +168,6 @@ input[type="radio"]::before {
   transform: scale(0);
   transition: 120ms transform ease-in-out;
   box-shadow: inset 1em 1em var(--form-control-color);
-  /* Windows High Contrast Mode */
   background-color: CanvasText;
 }
 
@@ -201,20 +180,6 @@ input[type="radio"]:focus {
   outline-offset: max(2px, 0.15em);
 }
 
-
-input[type="date"] {
-  background-color: #0080ff;
-  padding: 15px;
-
-
-
-  font-family: "Roboto Mono", monospace;
-  color: #ffffff;
-  font-size: 18px;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-}
 
 ::-webkit-calendar-picker-indicator {
   background-color: #ffffff;
@@ -244,7 +209,8 @@ element.style {
   backdrop-filter: blurd(10px) !important;
   box-shadow: 5px 10px 20px rgba(0, 0, 0, .3) !important;
 }
-.addappointments{
+
+.addappointments {
   border: none;
 }
 
@@ -260,9 +226,7 @@ element.style {
   height: 100% !important;
   text-align: center !important;
   line-height: 20px !important;
-  /* Adjust this value as needed to center the 'X' vertically */
   background-color: rgba(255, 0, 0, 0.5) !important;
-  /* Red background with some opacity */
 }
 
 .inline-input {
@@ -280,7 +244,7 @@ element.style {
 .contents {
   width: 100%;
   height: 100%;
-  transition: transform .4s ease-in-out; /* Added transition property for smoothness */
+  transition: transform .4s ease-in-out;
   transform-style: preserve-3d;
 }
 
@@ -347,33 +311,37 @@ element.style {
   }
 }
 
-@media screen and (max-width: 1200px) and (min-width: 601px){
-  #form-row{
+@media screen and (max-width: 1200px) and (min-width: 601px) {
+  #form-row {
     display: flex;
     flex-direction: column !important;
     width: 100%;
   }
-  .column{
+
+  .column {
     display: flex;
     flex-direction: column-reverse;
     width: 100%;
     align-items: center;
     margin-bottom: 1rem;
   }
-  .card{
+
+  .card {
     width: 50%;
     height: 100%;
   }
-  #image_logo_viewer{
+
+  #image_logo_viewer {
     display: none;
   }
 }
 
-@media screen and (max-width: 991px) and (min-width: 601px){
-  .card{
+@media screen and (max-width: 991px) and (min-width: 601px) {
+  .card {
     width: 80%;
   }
 }
+
 /* Responsive columns */
 @media screen and (max-width: 600px) {
   .column {
@@ -381,11 +349,12 @@ element.style {
     display: block;
     margin-bottom: 20px;
   }
-   .card {
+
+  .card {
     height: 100%;
   }
-  .loginButton{
+
+  .loginButton {
     width: 100%;
   }
 }
-

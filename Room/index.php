@@ -34,12 +34,12 @@ if (isset($_POST['login-submit'])) {
                 $_SESSION['successMessage'] = "Welcome, Admin " . $_SESSION['firstname'] . "";
                 header("Location: room/index.php");
             } elseif ($row["status"] === "2" && $row["category"] === "USER") {
-                $_SESSION["error"] =  "Your account has been rejected. Contact Mr. Deo or Mr. Mike for more info. Thank you.";
+                $_SESSION["error"] = "Your account has been rejected. Contact Mr. Deo or Mr. Mike for more info. Thank you.";
             } elseif ($row['status'] === "0" && $row["category"] === "VIEWER") {
                 $SESSION['successMessage'] = "Welcome";
                 header("location: room/index.php");
             } else {
-                $_SESSION["warning"] =  "Please contact Mr. Deo or Mr. Mike for account approval. Thank you";
+                $_SESSION["warning"] = "Please contact Mr. Deo or Mr. Mike for account approval. Thank you";
             }
         } else {
             $_SESSION["error"] = "Wrong Username or Password";
@@ -86,14 +86,29 @@ if (isset($_POST['register'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
     <link rel="shortcut icon" href="room/images/pcn.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- Bootstrap Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -104,7 +119,9 @@ if (isset($_POST['register'])) {
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&family=Thasadith&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&family=Thasadith&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 
@@ -120,7 +137,7 @@ if (isset($_POST['register'])) {
                 title: "<?php echo $_SESSION['success']; ?>",
             })
         </script>
-    <?php unset($_SESSION['success']);
+        <?php unset($_SESSION['success']);
     }
     ?>
     <?php
@@ -131,7 +148,7 @@ if (isset($_POST['register'])) {
                 title: "<?php echo $_SESSION['error']; ?>",
             })
         </script>
-    <?php unset($_SESSION['error']);
+        <?php unset($_SESSION['error']);
     }
     ?>
     <?php
@@ -142,43 +159,70 @@ if (isset($_POST['register'])) {
                 title: "<?php echo $_SESSION['warning']; ?>",
             })
         </script>
-    <?php unset($_SESSION['warning']);
+        <?php unset($_SESSION['warning']);
     }
     ?>
     <center>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-6 col-sm-12 col-md-offset-3" style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
-                    <div class="panel">
-                        <div class="panel-heading pt-3">
-                            <img src="room/images/pcn.png" alt="PCN LOGO" class="img-responsive" width="20%">
-                            <div class="panel-title text-center" id="title">Room Reservation</div>
+        <div class="container position-absolute top-50 start-50 translate-middle">
+        <img src="room/images/pcn.png" alt="PCN LOGO" class="img-responsive"
+                                            width="20%">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-6 image_login">
+                        <div class="container w-100">
+                            <img src="room/images/bgs.jpg" width="100%" alt="" >
                         </div>
-                        <div class="panel-body mt-3">
-                            <div class="row">
-                                <div class="col-lg-12 forms">
-                                    <form id="login-form" class="col-lg-offset-1 col-lg-10 forms" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" role="form" style="display: block;">
-                                        <div class="form-floating mt-4">
-                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" autocomplete="on" required>
-                                            <label class="username" for="username" id="usernameLabel">Username</label>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="panel">
+                                    <div class="panel-heading pt-3">
+                                        <div class="panel-title mt-5 text-center" id="title">LOG IN</div>
+                                    </div>
+                                    <div class="panel-body mt-3">
+                                        <div class="row">
+                                            <div class="col-lg-12 forms">
+                                                <form id="login-form" class="col-lg-offset-1 col-lg-10 forms"
+                                                    action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>"
+                                                    method="post" role="form" style="display: block;">
+                                                    <div class="mt-4 d-flex align-items-center">
+                                                        <i class="bi bi-person-fill me-2"></i>
+                                                        <input type="text" name="username" id="username" tabindex="1"
+                                                            class="form-control" placeholder="Username"
+                                                            autocomplete="on" required>
+                                                        
+                                                    </div>
+                                                    <div class="mt-4 d-flex align-items-center">
+                                                        <i class="bi bi-key-fill me-2"></i>
+                                                        <input type="password" name="password" id="password"
+                                                            tabindex="2" class="form-control" placeholder="Password"
+                                                            autocomplete="current-password" required>
+                                                        
+                                                    </div>
+                                                    <div class="form-check mt-3">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            onclick="showPasswords()" id="showPassword"
+                                                            style="border: 1px solid gray !important;">
+                                                        <label class="form-check-label" for="showPassword"
+                                                            id="showPasswordLabel"
+                                                            style="transform: none !important; float: left;">
+                                                            Show password
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-sm-offset-3 mt-5">
+                                                        <button type="submit" name="login-submit" id="login-submit"
+                                                            tabindex="3" class="form-control btn btn-login"
+                                                            value="LOGIN"> Login</button>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-6 pt-4 pb-4 mb-5">
+                                                        <a href="javascript:void(0)" class="registerAccount link"
+                                                            style="color: #BABABA; ">Register Account here</a>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <div class="form-floating mt-4">
-                                            <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="current-password" required>
-                                            <label class="password" for="password" id="passwordLabel">Password</label>
-                                        </div>
-                                        <div class="form-check mt-3">
-                                            <input class="form-check-input" type="checkbox" value="" onclick="showPasswords()" id="showPassword" style="border: 1px solid gray !important;">
-                                            <label class="form-check-label" for="showPassword" id="showPasswordLabel" style="transform: none !important; float: left;">
-                                                Show password
-                                            </label>
-                                        </div>
-                                        <div class="col-md-12 col-sm-6 col-sm-offset-3 mt-5">
-                                            <button type="submit" name="login-submit" id="login-submit" tabindex="3" class="form-control btn btn-login" value="LOGIN"> Login</button>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 pt-4 pb-4 mb-5">
-                                            <a href="javascript:void(0)" class="registerAccount link" style="color: #BABABA; ">Register Account here</a>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -190,97 +234,98 @@ if (isset($_POST['register'])) {
 
     <!-- Modal For Registration -->
     <div class="modal fade" id="registerAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <img src="room/images/pcn.png" id="imgko1" alt="logo" class="logo" style="width:100px;height:auto;padding-top:20px" onclick="playAudio();$('#myModal1').modal('show');" data-dismiss="modal">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="text-center mt-3">
+                    <h3 class="text-center">User Account Form</h3>
+                    <p class="text-center">Please complete the form below</p>
                 </div>
                 <div class="modal-body">
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="row g-3 needs-validation">
-                        <div class="mb-3">
-                            <label for="" class="form-label">PCN ID Number</label>
-                            <input type="number" class="form-control" name="idnumber" id="idnumber" required>
-                        </div>
-                        <div class="col-md-4 col-sm-12 mb-3">
-                            <label for="" class="form-label">First Name</label>
-                            <input type="text" class="form-control" name="firstName" id="firstName" required>
-                        </div>
-                        <div class="col-md-4 col-sm-12 mb-3">
-                            <label for="" class="form-label">Middle Name</label>
-                            <input type="text" class="form-control" name="middleName" id="middleName" required>
-                        </div>
-                        <div class="col-md-4 col-sm-12 mb-3">
-                            <label for="" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" name="lastName" id="lastName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" name="email" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Contact Number</label>
-                            <input type="number" class="form-control" name="contactNumber" id="contactNumber" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Division</label>
-                            <select name="division" class="form-select" id="division" required>
-                                <option value="" disabled selected>Select Division Name</option>
-                                <option value="BD1">BD1</option>
-                                <option value="BD2">BD2</option>
-                                <option value="BD3">BD3</option>
-                                <option value="BSG">BSG</option>
-                                <option value="HR">HR</option>
-                                <option value="FINANCE">FINANCE</option>
-                                <option value="PPI">PPI</option>
-                                <option value="STRAT">STRAT</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Username</label>
-                            <input type="text" class="form-control" name="username" id="Username" placeholder="Username" autocomplete="off" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="form-label">Password</label>
-                            <input type="password" name="password" id="Password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" autocomplete="off" required>
-                            <span onclick="showPasswordRegistration()">
-                                <img src="room/images/eye-solid.svg" alt="img" width="5%" id="eye-open">
-                                <img src="room/images/eye-slash-solid.svg" alt="img" width="5%" id="eye-close">
-                            </span>
-                        </div>
-                        <div class="alert alert-warning password-alert" role="alert">
-                            <ul>
-                                <li class="requirements leng"><i class="fas fa-check green-text"></i></i></i><i class="fas fa-times red-text"></i> Your password must have at least 8 characters.</li>
-                                <li class="requirements big-letter"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 big letter.</li>
-                                <li class="requirements small-letter"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 small letter.</li>
-                                <li class="requirements num"><i class="fas fa-check green-text"></i><i class="fas fa-times red-text"></i> Your password must have at least 1 number.</li>
-                            </ul>
-                        </div>
-                        <div class="mb-3" style="margin-top: -1rem !important;">
-                            <label for="" class="form-label">Confirm Password</label>
-                            <input type="password" name="confirmpassword" id="ConfirmPassword" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" autocomplete="off" required>
-                            <span onclick="showConfirmPasswordRegistration()">
-                                <img src="room/images/eye-solid.svg" alt="img" width="5%" id="Coneye-open">
-                                <img src="room/images/eye-slash-solid.svg" alt="img" width="5%" id="Coneye-close">
-                            </span>
-                        </div>
-                        <span id='message' style="margin-top: -2rem !important;"></span>
-                        <script type="text/javascript" charset="utf-8">
-                            $('#Password, #ConfirmPassword').on('keyup', function() {
-                                if ($('#Password').val() && $('#ConfirmPassword').val() == null) {
-                                    $('');
-                                } else if ($('#Password').val() == $('#ConfirmPassword').val()) {
-                                    $('#message').html('Password Matched').css('color', 'green');
-                                } else
-                                    $('#message').html('Password Unmatched').css('color', 'red');
-                            });
-                        </script>
+                    <div class="container">
+                        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="row">
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">PCN ID Number</label>
+                                <input type="number" class="form-control" name="idnumber" id="idnumber" required>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">First Name</label>
+                                <input type="text" class="form-control" name="firstName" id="firstName" required>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" name="middleName" id="middleName" required>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" name="lastName" id="lastName" required>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" name="email" id="email" required>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">Contact Number</label>
+                                <input type="number" class="form-control" name="contactNumber" id="contactNumber"
+                                    required>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">Division</label>
+                                <select name="division" class="form-select" id="division" required>
+                                    <option value="" disabled selected>Select Division Name</option>
+                                    <option value="BD1">BD1</option>
+                                    <option value="BD2">BD2</option>
+                                    <option value="BD3">BD3</option>
+                                    <option value="BSG">BSG</option>
+                                    <option value="HR">HR</option>
+                                    <option value="FINANCE">FINANCE</option>
+                                    <option value="PPI">PPI</option>
+                                    <option value="STRAT">STRAT</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">Username</label>
+                                <input type="text" class="form-control" name="username" id="Username"
+                                    placeholder="Username" autocomplete="off" required>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">Password</label>
+                                <input type="password" name="password" id="Password" class="form-control"
+                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password"
+                                    autocomplete="off" required>
+                                <span onclick="showPasswordRegistration()">
+                                    <img src="room/images/eye-solid.svg" alt="img" width="3%" id="eye-open">
+                                    <img src="room/images/eye-slash-solid.svg" alt="img" width="3%" id="eye-close">
+                                </span>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label for="" class="form-label">Confirm Password</label>
+                                <input type="password" name="confirmpassword" id="ConfirmPassword" class="form-control"
+                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password"
+                                    autocomplete="off" required>
+                                <span onclick="showConfirmPasswordRegistration()">
+                                    <img src="room/images/eye-solid.svg" alt="img" width="3%" id="Coneye-open">
+                                    <img src="room/images/eye-slash-solid.svg" alt="img" width="3%" id="Coneye-close">
+                                </span>
+                            </div>
+                            <span id='message' style="margin-top: -2rem !important;"></span>
+                            <script type="text/javascript" charset="utf-8">
+                                $('#Password, #ConfirmPassword').on('keyup', function () {
+                                    if ($('#Password').val() && $('#ConfirmPassword').val() == null) {
+                                        $('');
+                                    } else if ($('#Password').val() == $('#ConfirmPassword').val()) {
+                                        $('#message').html('Password Matched').css('color', 'green');
+                                    } else
+                                        $('#message').html('Password Unmatched').css('color', 'red');
+                                });
+                            </script>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary button" name="register" id="register">Save
+                            changes</button>
+                    </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary button" name="register" id="register">Save changes</button>
-                </div>
-                </form>
             </div>
         </div>
 
@@ -288,13 +333,13 @@ if (isset($_POST['register'])) {
 </body>
 <script>
     // Account Registration
-    $(document).ready(function() {
-        $('.registerAccount').on('click', function() {
+    $(document).ready(function () {
+        $('.registerAccount').on('click', function () {
             $('#registerAccount').modal('show');
 
             $tr = $(this).closest('tr');
 
-            var data = $tr.children("td").map(function() {
+            var data = $tr.children("td").map(function () {
                 return $(this).text();
             }).get();
 
@@ -353,7 +398,7 @@ if (isset($_POST['register'])) {
 
 
     // Password Input Checker
-    $(function() {
+    $(function () {
         var $password = $(".form-control[type='password']");
         var $passwordAlert = $(".password-alert");
         var $requirements = $(".requirements");
@@ -366,11 +411,11 @@ if (isset($_POST['register'])) {
         var lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
 
         $requirements.addClass("wrong");
-        $password.on("focus", function() {
+        $password.on("focus", function () {
             $passwordAlert.show();
         });
 
-        $password.on("input blur", function(e) {
+        $password.on("input blur", function (e) {
             var el = $(this);
             var val = el.val();
             $passwordAlert.show();
