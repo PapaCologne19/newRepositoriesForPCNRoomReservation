@@ -128,13 +128,13 @@ input:-webkit-autofill:active {
 }
 
 #title {
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 35px;
   font-weight: 900;
-  font-family: 'Inter', sans-serif !important;
-  font-size: 40px;
-  color: black;
-
-  /* Uncomment this if you want to make the text jingle bells */
-  /* animation: colorChange 10s linear infinite !important; */
+  background: -webkit-linear-gradient(#003cff, #4b4b4b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: colorChange !important;
 }
 
 .form-label {

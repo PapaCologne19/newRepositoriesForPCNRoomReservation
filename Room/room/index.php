@@ -1645,6 +1645,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
     (pushalertbyiw = window.pushalertbyiw || []).push(['onFailure', callbackOnFailure]);
 
+
     function callbackOnFailure(result) {
       console.log(result.status); //-1 - blocked, 0 - canceled or 1 - unsubscribed
     }
