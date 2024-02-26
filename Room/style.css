@@ -2,6 +2,10 @@
   font-family: 'Inter', sans-serif;
 }
 
+.card {
+  border: none !important;
+}
+
 .container {
   font-family: "Arial", sans-serif;
 }
@@ -131,10 +135,7 @@ input:-webkit-autofill:active {
   font-family: 'Roboto', sans-serif !important;
   font-size: 35px;
   font-weight: 900;
-  background: -webkit-linear-gradient(#003cff, #4b4b4b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: colorChange !important;
+  color: #121212;
 }
 
 .form-label {
@@ -213,5 +214,22 @@ input:-webkit-autofill:active {
 @media screen and (max-width: 767px) {
   .image_login {
     display: none;
+  }
+
+  #username,
+  #password {
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 1rem;
+  }
+
+  #username:focus,
+  #password:focus {
+    padding: 1rem;
+    border: 1px solid gray;
+  }
+
+  .btn-login {
+    border-radius: 30px;
   }
 }

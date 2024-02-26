@@ -164,7 +164,7 @@ if (isset($_POST['register'])) {
     ?>
     <center>
         <div class="container position-absolute top-50 start-50 translate-middle">
-            <img src="room/images/pcn.png" alt="PCN LOGO" class="img-responsive" width="20%">
+            <img src="room/images/pcn.png" alt="PCN LOGO" class="img-responsive" width="10%">
             <div class="card">
                 <div class="row">
                     <div class="col-md-6 image_login">
@@ -177,7 +177,7 @@ if (isset($_POST['register'])) {
                             <div class="row justify-content-center">
                                 <div class="panel">
                                     <div class="panel-heading pt-3">
-                                        <div class="panel-title mt-5 text-center" id="title">LOG IN</div>
+                                        <div class="panel-title mt-5 text-center" id="title">Login to your account</div>
                                     </div>
                                     <div class="panel-body mt-3">
                                         <div class="row">

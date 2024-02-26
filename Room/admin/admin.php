@@ -221,7 +221,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                     Rooms</button>
                             </div>
                             <table
-                                class="table p-3 table-sm align-middle mb-0 p-3 bg-info bg-opacity-10 border border-info border-start-0 border-end-0 rounded-end mdc-data-table"
+                                class="table p-3 table-sm align-middle mb-0 p-3 "
                                 id="roomTable">
                                 <thead>
                                     <tr>
@@ -280,10 +280,10 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
 
 
-                                        <!-- Modal for Updating Room Information -->
+                                        <!-- Modal for Updating Room Images -->
                                         <div class="modal fade" id="updateRoomImage-<?php echo $rows['id']; ?>" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-xl">
+                                            <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <img src="../room/images/pcn.png" id="imgko1" alt="logo" class="logo"
@@ -358,17 +358,33 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="">Description</label>
-                                                                <textarea class="form-control" name="updateDescription"
-                                                                    maxlength="500" id="updateDescription" cols="30" rows="10"
-                                                                    required><?php echo $rowss['description']; ?></textarea>
+                                                                <textarea 
+                                                                    class="form-control" 
+                                                                    name="updateDescription"
+                                                                    maxlength="500" 
+                                                                    id="updateDescription" 
+                                                                    cols="30" 
+                                                                    rows="10"
+                                                                    required>
+                                                                    <?php echo $rowss['description']; ?>
+                                                                </textarea>
                                                             </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary" name="updateRoom"
-                                                            id="updateRoom">Save
-                                                            changes</button>
+                                                        <button 
+                                                            type="button" 
+                                                            class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">
+                                                            Close
+                                                        </button>
+
+                                                        <button 
+                                                            type="submit" 
+                                                            class="btn btn-primary" 
+                                                            name="updateRoom"
+                                                            id="updateRoom">
+                                                            Save changes
+                                                        </button>
                                                     </div>
                                                     </form>
                                                 </div>
@@ -386,7 +402,9 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
 
             </div>
         </center>
-        <br><br><br><br><br>
+
+
+
         <!-- Modal For Adding Rooms -->
         <div class="modal fade" id="addRooms" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -425,7 +443,7 @@ if (isset($_SESSION["username"], $_SESSION["password"])) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" name="addRoom" id="addRoom">Save changes</button>
+                        <button type="submit" class="btn btn-primary" name="addRoom" id="addRoom">Submit</button>
                     </div>
                     </form>
                 </div>
